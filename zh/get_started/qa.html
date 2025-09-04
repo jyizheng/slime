@@ -432,7 +432,6 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="q-a">
 <h1>常见 Q&amp;A<a class="headerlink" href="#q-a" title="Link to this heading">#</a></h1>
-<p><a class="reference internal" href="#../en/qa.md"><span class="xref myst">English</span></a></p>
 <ol class="arabic">
 <li><p><strong>训练过程中为什么会出现乱码？</strong></p>
 <p>一般来说这种情况是 megatron 没有被正确加载。请检查 <code class="docutils literal notranslate"><span class="pre">--load</span></code> 或 <code class="docutils literal notranslate"><span class="pre">--ref-load</span></code> 是否有对应的 ckpt。注意 megatron 只能加载其中有 <code class="docutils literal notranslate"><span class="pre">latest_checkpointed_iteration.txt</span></code> 的目录。</p>
