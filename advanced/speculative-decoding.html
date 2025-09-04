@@ -51,7 +51,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Debugging" href="../developer_guide/debug.html" />
-    <link rel="prev" title="SFT Qwen3-4B-Base with OpenHermes-2.5" href="../examples/qwen3-4b-base-openhermes.html" />
+    <link rel="prev" title="Retool: from SFT to RL" href="../_examples_synced/retool/README.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
     <meta name="docbuild:last-update" content="Sep 04, 2025"/>
@@ -181,7 +181,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Usage</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4b-base-openhermes.html">SFT Qwen3-4B-Base with OpenHermes-2.5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4b-base-openhermes.html">SFT Qwen3-4B-Base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/search-r1/README.html">Search-R1 lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/fully_async/README.html">Fully Asynchronous Rollout Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/retool/README.html">Retool: from SFT to RL</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Features</span></p>
 <ul class="current nav bd-sidenav">
@@ -497,7 +500,7 @@ document.write(`
 <li><p><strong>Notice:</strong> Disabling CUDA graph padding with <code class="docutils literal notranslate"><span class="pre">--sglang-disable-cuda-graph-padding</span></code> is currently ineffective for speculative decoding. See <a class="reference internal" href="#tbd"><span class="xref myst">SGLang <code class="docutils literal notranslate"><span class="pre">cuda_graph_runner.py</span></code></span></a>.</p></li>
 </ol>
 </li>
-<li><p>For debugging, enable Slime’s <code class="docutils literal notranslate"><span class="pre">--debug-rollout-only</span></code> flag to isolate rollout behavior from parameter updates or model offloading.</p></li>
+<li><p>For debugging, enable slime’s <code class="docutils literal notranslate"><span class="pre">--debug-rollout-only</span></code> flag to isolate rollout behavior from parameter updates or model offloading.</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># If speculative decoding fails, this can help debug</span>
 --debug-rollout-only
@@ -546,12 +549,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../examples/qwen3-4b-base-openhermes.html"
+       href="../_examples_synced/retool/README.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">SFT Qwen3-4B-Base with OpenHermes-2.5</p>
+        <p class="prev-next-title">Retool: from SFT to RL</p>
       </div>
     </a>
     <a class="right-next"
