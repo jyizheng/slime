@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Training Qwen3-30B-A3B with 8xH100 &#8212; slime</title>
+    <title>Qwen3-30B-A3B with 8xH100 &#8212; slime</title>
   
   
   
@@ -50,8 +50,8 @@
     <link rel="icon" href="../_static/logo.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Training GLM-4.5 with 64xH100" href="glm4.5-355B-A32B.html" />
-    <link rel="prev" title="Training GLM4-9B with 8xH100" href="glm4-9B.html" />
+    <link rel="next" title="GLM-4.5 with 64xH100" href="glm4.5-355B-A32B.html" />
+    <link rel="prev" title="GLM4-9B with 8xH100" href="glm4-9B.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
     <meta name="docbuild:last-update" content="Sep 04, 2025"/>
@@ -168,13 +168,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../get_started/usage.html">Usage Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../get_started/qa.html">FAQ</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Dense</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="qwen3-4B.html">Qwen3-4B with 8xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glm4-9B.html">GLM4-9B with 8xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MoE</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="qwen3-4B.html">Training Qwen3-4B with 8xH100</a></li>
-<li class="toctree-l1"><a class="reference internal" href="glm4-9B.html">Training GLM4-9B with 8xH100</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Training Qwen3-30B-A3B with 8xH100</a></li>
-<li class="toctree-l1"><a class="reference internal" href="glm4.5-355B-A32B.html">Training GLM-4.5 with 64xH100</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Qwen3-30B-A3B with 8xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glm4.5-355B-A32B.html">GLM-4.5 with 64xH100</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deepseek-r1.html">Training DeepSeek R1 with 128xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Usage</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="qwen3-4b-base-openhermes.html">SFT Qwen3-4B-Base with OpenHermes-2.5</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Features</span></p>
@@ -407,7 +413,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Training Qwen3-30B-A3B with 8xH100</h1>
+    <h1>Qwen3-30B-A3B with 8xH100</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -434,8 +440,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="training-qwen3-30b-a3b-with-8xh100">
-<h1>Training Qwen3-30B-A3B with 8xH100<a class="headerlink" href="#training-qwen3-30b-a3b-with-8xh100" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="qwen3-30b-a3b-with-8xh100">
+<h1>Qwen3-30B-A3B with 8xH100<a class="headerlink" href="#qwen3-30b-a3b-with-8xh100" title="Link to this heading">#</a></h1>
 <section id="environment-preparation">
 <h2>Environment Preparation<a class="headerlink" href="#environment-preparation" title="Link to this heading">#</a></h2>
 <p>The environment setup, model download, data, and checkpoint conversion are the same as for the Qwen3-4B model. You can refer to <a class="reference internal" href="qwen3-4B.html"><span class="std std-doc">Example: Qwen3-4B Model</span></a>, replacing mentions of Qwen3-4B with Qwen3-30B-A3B.</p>
@@ -548,7 +554,7 @@ bash<span class="w"> </span>scripts/run-qwen3-30B-A3B.sh
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Training GLM4-9B with 8xH100</p>
+        <p class="prev-next-title">GLM4-9B with 8xH100</p>
       </div>
     </a>
     <a class="right-next"
@@ -556,7 +562,7 @@ bash<span class="w"> </span>scripts/run-qwen3-30B-A3B.sh
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Training GLM-4.5 with 64xH100</p>
+        <p class="prev-next-title">GLM-4.5 with 64xH100</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
