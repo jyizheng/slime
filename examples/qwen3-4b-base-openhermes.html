@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Qwen3-4B-Base with OpenHermes-2.5 &#8212; slime</title>
+    <title>SFT Qwen3-4B-Base with OpenHermes-2.5 &#8212; slime</title>
   
   
   
@@ -50,8 +50,8 @@
     <link rel="icon" href="../_static/logo.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Training DeepSeek R1 with 128xH100" href="deepseek-r1.html" />
-    <link rel="prev" title="FAQ" href="../get_started/qa.html" />
+    <link rel="next" title="Speculative Decoding – Usage Guide" href="../advanced/speculative-decoding.html" />
+    <link rel="prev" title="Training DeepSeek R1 with 128xH100" href="deepseek-r1.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
     <meta name="docbuild:last-update" content="Sep 04, 2025"/>
@@ -170,12 +170,12 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Qwen3-4B-Base with OpenHermes-2.5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deepseek-r1.html">Training DeepSeek R1 with 128xH100</a></li>
-<li class="toctree-l1"><a class="reference internal" href="glm4.5-355B-A32B.html">Training GLM-4.5 with 64xH100</a></li>
-<li class="toctree-l1"><a class="reference internal" href="glm4-9B.html">GLM4-9B</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qwen3-4B.html">Qwen3-4B</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qwen3-4B.html">Training Qwen3-4B with 8xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glm4-9B.html">Training GLM4-9B with 8xH100</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qwen3-30B-A3B.html">Training Qwen3-30B-A3B with 8xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glm4.5-355B-A32B.html">Training GLM-4.5 with 64xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deepseek-r1.html">Training DeepSeek R1 with 128xH100</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">SFT Qwen3-4B-Base with OpenHermes-2.5</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Features</span></p>
 <ul class="nav bd-sidenav">
@@ -407,7 +407,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Qwen3-4B-Base with OpenHermes-2.5</h1>
+    <h1>SFT Qwen3-4B-Base with OpenHermes-2.5</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -433,8 +433,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="qwen3-4b-base-with-openhermes-2-5">
-<h1>Qwen3-4B-Base with OpenHermes-2.5<a class="headerlink" href="#qwen3-4b-base-with-openhermes-2-5" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="sft-qwen3-4b-base-with-openhermes-2-5">
+<h1>SFT Qwen3-4B-Base with OpenHermes-2.5<a class="headerlink" href="#sft-qwen3-4b-base-with-openhermes-2-5" title="Link to this heading">#</a></h1>
 <section id="environment-preparation">
 <h2>Environment Preparation<a class="headerlink" href="#environment-preparation" title="Link to this heading">#</a></h2>
 <p>First, we need to create a mirror environment and convert the <code class="docutils literal notranslate"><span class="pre">Qwen3-4B-Base</span></code> model by following the <a class="reference internal" href="#./models/qwen3-4B.md"><span class="xref myst">Example: Qwen3-4B Model</span></a>.</p>
@@ -524,20 +524,20 @@ bash<span class="w"> </span>script/run-qwen3-4B-base-sft.sh
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../get_started/qa.html"
+       href="deepseek-r1.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">FAQ</p>
+        <p class="prev-next-title">Training DeepSeek R1 with 128xH100</p>
       </div>
     </a>
     <a class="right-next"
-       href="deepseek-r1.html"
+       href="../advanced/speculative-decoding.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Training DeepSeek R1 with 128xH100</p>
+        <p class="prev-next-title">Speculative Decoding – Usage Guide</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
