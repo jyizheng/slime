@@ -1,0 +1,836 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>AMD &#8212; slime</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=731335ad" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=731335ad" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'platform_support/amd_tutorial';</script>
+    <link rel="icon" href="../_static/logo.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Debugging" href="../developer_guide/debug.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 04, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="slime - Home"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="slime - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/usage.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/qa.html">FAQ</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4b-base-openhermes.html">Qwen3-4B-Base with OpenHermes-2.5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/deepseek-r1.html">Training DeepSeek R1 with 128xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/glm4.5-355B-A32B.html">Training GLM-4.5 with 64xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/glm4-9B.html">GLM4-9B</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4B.html">Qwen3-4B</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-30B-A3B.html">Training Qwen3-30B-A3B with 8xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Features</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/speculative-decoding.html">Speculative Decoding – Usage Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/debug.html">Debugging</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Hardware Platforms</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">AMD</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/sgl-project/sgl-project.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sgl-project/sgl-project.github.io/blob/main/platform_support/amd_tutorial.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sgl-project/sgl-project.github.io/edit/main/platform_support/amd_tutorial.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sgl-project/sgl-project.github.io/issues/new?title=Issue%20on%20page%20%2Fplatform_support/amd_tutorial.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/platform_support/amd_tutorial.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>AMD</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">Docker</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-setup">Environment Setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checkpoint-format-conversion">Checkpoint Format Conversion</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hf-megatron-torch-dist-ckpt">HF → Megatron torch_dist ckpt</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-qwen3-4b">Example: Qwen3-4B</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="amd">
+<h1>AMD<a class="headerlink" href="#amd" title="Link to this heading">#</a></h1>
+<p>⚠️ If you encounter problems on AMD instinct, feel free to reach out <a class="reference external" href="https://yushengsu-thu.github.io/">Yusheng Su</a>.</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>If you are running Slime on AMD’s Instinct, please refer to the following materials. This tutorial will explain how to set up the development environment (Docker), use the modified ROCm dependencies, and provide an example for running the experiments. The current rocm docker only support AMD’s MI300 and MI325 GPUs.</p>
+<!-- First, you need to configure the slime runtime environment according to the [Readme](../../README.md) documentation and cd to the slime project directory. -->
+</section>
+<section id="docker">
+<h2>Docker<a class="headerlink" href="#docker" title="Link to this heading">#</a></h2>
+<p>You can download the prebuilt image from DockerHub: <a class="reference external" href="https://hub.docker.com/r/rlsys/slime/tags">rlsys/slime</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>rlsys/slime:slime_ubuntu22.04_rocm6.3.4-patch-numa-patch_sglang0.4.9_megatron-patch_ray2.47.1_apex_torch-memory-saver0.0.8-patch-vim
+</pre></div>
+</div>
+<p>Or you can use the <a class="reference external" href="https://github.com/THUDM/slime/blob/main/docker/Dockerfile.rocm">Dockerfile.rocm</a> to build it on your side.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docker
+docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Dockerfile.rocm<span class="w"> </span>-t<span class="w"> </span>slime_ubuntu22.04_rocm6.3.4-patch-numa-patch_sglang0.4.9_megatron-patch_ray2.47.1_apex_torch-memory-saver0.0.8-patch-vim<span class="w"> </span>.
+</pre></div>
+</div>
+<p>Acknowledgement: Thanks to <a class="reference external" href="https://www.microsoft.com/en-us/research/people/yangwang5/">Yang Wang</a> for working on the patch for this <a class="reference external" href="https://hub.docker.com/r/rlsys/rocm-6.3.4-patch/tags">ROCm base Docker image</a> to support virtual memory management on MI300X.</p>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
+<section id="environment-setup">
+<h3>Environment Setup<a class="headerlink" href="#environment-setup" title="Link to this heading">#</a></h3>
+<p>Based on the <a class="reference external" href="https://hub.docker.com/r/rlsys/slime/tags">rlsys/slime</a> image (pre-installed with SGLang 0.4.9 and Megatron-LM):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--device<span class="w"> </span>/dev/dri<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--device<span class="w"> </span>/dev/kfd<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">8265</span>:8265<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--group-add<span class="w"> </span>video<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cap-add<span class="w"> </span>SYS_PTRACE<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--security-opt<span class="w"> </span><span class="nv">seccomp</span><span class="o">=</span>unconfined<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--privileged<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="nv">$HOME</span>/.ssh:/root/.ssh<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="nv">$HOME</span>:<span class="nv">$HOME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--shm-size<span class="w"> </span>128G<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>slime_dev<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ulimit<span class="w"> </span><span class="nv">memlock</span><span class="o">=</span>-1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ulimit<span class="w"> </span><span class="nv">stack</span><span class="o">=</span><span class="m">67108864</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-w<span class="w"> </span><span class="nv">$PWD</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>rlsys/slime:slime_ubuntu22.04_rocm6.3.4-patch-numa-patch_sglang0.4.9_megatron-patch_ray2.47.1_apex_torch-memory-saver0.0.8-patch-vim<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>/bin/bash
+</pre></div>
+</div>
+<p>Then, download and install slime.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/THUDM/slime.git
+<span class="nb">cd</span><span class="w"> </span>slime
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="checkpoint-format-conversion">
+<h3>Checkpoint Format Conversion<a class="headerlink" href="#checkpoint-format-conversion" title="Link to this heading">#</a></h3>
+<p>Since slime uses Megatron, and Megatron does not support loading Hugging Face checkpoints directly, we need to convert the model to the <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code> format that Megatron supports.</p>
+<section id="hf-megatron-torch-dist-ckpt">
+<h4>HF → Megatron torch_dist ckpt<a class="headerlink" href="#hf-megatron-torch-dist-ckpt" title="Link to this heading">#</a></h4>
+<p>Use <a class="reference external" href="https://github.com/ISEEKYAN/mbridge.git">mbridge</a> or <a class="reference external" href="https://github.com/yushengsu-thu/Megatron-LM-amd_version.git">Megatron-LM-amd_version-amd</a> for conversion:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>slime/
+<span class="nb">source</span><span class="w"> </span>scripts/models/qwen3-4B.sh
+<span class="nv">MEGATRON_LM_PATH</span><span class="o">=</span><span class="k">$(</span>pip<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>megatron-core<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $NF}&#39;</span><span class="k">)</span>
+<span class="nv">PYTHONPATH</span><span class="o">=</span><span class="si">${</span><span class="nv">MEGATRON_LM_PATH</span><span class="si">}</span><span class="w"> </span>python<span class="w"> </span>tools/convert_hf_to_torch_dist.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="si">${</span><span class="nv">MODEL_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--hf-checkpoint<span class="w"> </span>model/Qwen3-4B<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--save<span class="w"> </span>model/Qwen3-4B_torch_dist
+</pre></div>
+</div>
+<p>Note: You might encounter some issue in the current model convert script on AMD GPUs. You can go <a class="reference external" href="https://huggingface.co/zyzshishui0627/models">here</a> to dowload the converted models.</p>
+<p>⚠️ If you encounter an issue where slime cannot be found, please run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code> in the slime directory.</p>
+</section>
+</section>
+<section id="example-qwen3-4b">
+<h3>Example: Qwen3-4B<a class="headerlink" href="#example-qwen3-4b" title="Link to this heading">#</a></h3>
+<p>We provide examples to use <a class="reference external" href="https://huggingface.co/Qwen/Qwen3-4B">Qwen3-4B</a>, please refer to:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#scripts/run-qwen3-4B-amd.sh"><span class="xref myst">Example: Qwen3-4B Model</span></a>: Just run <code class="docutils literal notranslate"><span class="pre">scripts/run-qwen3-4B-amd.sh</span></code></p></li>
+</ul>
+<p>⚠️ TODO: The <a class="reference external" href="https://github.com/yushengsu-thu/torch_memory_saver.git">ROCm-version torch_memory_saver</a> does not seem to clear memory properly; thus, we set <code class="docutils literal notranslate"><span class="pre">--sglang-mem-fraction-static</span></code> as <code class="docutils literal notranslate"><span class="pre">0.4</span></code> currently. We will continue investigating and focus on ROCm’s virtual memory management for further modifications.</p>
+<p>⚠️ TODO: ROCM seems to not support <code class="docutils literal notranslate"><span class="pre">apex</span></code> yet. Thus, we need to disable <code class="docutils literal notranslate"><span class="pre">--no-gradient-accumulation-fusion</span></code> currently. We will continue investigating how to enable this.</p>
+<p>⚠️ Note: The main difference between ROCm’s training script and NVIDIA’s script is that you need to set <code class="docutils literal notranslate"><span class="pre">RAY_EXPERIMENTAL_NOSET_HIP_VISIBLE_DEVICES</span></code> and <code class="docutils literal notranslate"><span class="pre">HIP_VISIBLE_DEVICES</span></code> for ray to function properly on AMD GPUs.</p>
+<ul class="simple">
+<li><p>We show the training script below:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1">####clear before training</span>
+pkill<span class="w"> </span>-9<span class="w"> </span>sglang
+sleep<span class="w"> </span><span class="m">3</span>
+ray<span class="w"> </span>stop<span class="w"> </span>--force
+pkill<span class="w"> </span>-9<span class="w"> </span>ray
+pkill<span class="w"> </span>-9<span class="w"> </span>python
+sleep<span class="w"> </span><span class="m">3</span>
+pkill<span class="w"> </span>-9<span class="w"> </span>ray
+pkill<span class="w"> </span>-9<span class="w"> </span>python
+
+<span class="nb">set</span><span class="w"> </span>-euxo<span class="w"> </span>pipefail
+
+<span class="c1">### ROCm Support ###</span>
+<span class="nv">SLIME_DIR</span><span class="o">=</span><span class="s2">&quot;/home/yushensu/projects/slime&quot;</span><span class="w"> </span><span class="c1"># Need to change to your own path</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SLIME_DIR</span><span class="o">=</span><span class="nv">$SLIME_DIR</span>
+
+<span class="nv">MODEL_DIR</span><span class="o">=</span><span class="s2">&quot;/home/yushensu/projects/model&quot;</span><span class="w"> </span><span class="c1"># Need to change to your own path</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MODEL_DIR</span><span class="o">=</span><span class="nv">$MODEL_DIR</span>
+
+<span class="nv">DATA_DIR</span><span class="o">=</span><span class="s2">&quot;/home/yushensu/projects/data&quot;</span><span class="w">  </span><span class="c1"># Need to change to your own path</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$DATA_DIR</span>
+
+<span class="c1"># For AMD GPU</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">RAY_EXPERIMENTAL_NOSET_HIP_VISIBLE_DEVICES</span><span class="o">=</span><span class="si">${</span><span class="nv">RAY_EXPERIMENTAL_NOSET_HIP_VISIBLE_DEVICES</span><span class="k">:-</span><span class="s2">&quot;1&quot;</span><span class="si">}</span><span class="w"> </span><span class="c1"># Must set to 1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">HIP_VISIBLE_DEVICES</span><span class="o">=</span><span class="si">${</span><span class="nv">HIP_VISIBLE_DEVICES</span><span class="k">:-</span><span class="s2">&quot;0,1,2,3,4,5,6,7&quot;</span><span class="si">}</span><span class="w"> </span><span class="c1">#You can choose which gpus to use</span>
+<span class="c1">####################</span>
+
+<span class="c1"># ### ROCm Support ### (If you do not istall, please install them)</span>
+<span class="c1"># # # Clone and install Megatron-LMi-amd_version</span>
+<span class="c1"># export MAX_JOBS=512</span>
+<span class="c1"># cd $SLIME_DIR</span>
+<span class="c1"># pip uninstall megatron-core -y</span>
+<span class="c1"># if [ ! -d &quot;Megatron-LM-amd_version&quot; ]; then</span>
+<span class="c1">#     git clone git@github.com:yushengsu-thu/Megatron-LM-amd_version.git</span>
+<span class="c1"># else</span>
+<span class="c1">#     echo &quot;Megatron-LM-amd_version directory already exists, skipping clone&quot;</span>
+<span class="c1"># fi</span>
+<span class="c1"># cd Megatron-LM-amd_version</span>
+<span class="c1"># pip install -vvv -e . </span>
+<span class="c1"># cd $SLIME_DIR</span>
+
+<span class="c1"># # Install slime</span>
+<span class="c1"># pip install -e .</span>
+<span class="c1"># ####################</span>
+
+<span class="c1"># will prevent ray from buffering stdout/stderr</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONBUFFERED</span><span class="o">=</span><span class="m">16</span>
+
+
+<span class="nv">SCRIPT_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dirname<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;/dev/null<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SCRIPT_DIR</span><span class="si">}</span><span class="s2">/models/qwen3-4B.sh&quot;</span>
+
+<span class="nv">CKPT_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--hf-checkpoint<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_DIR</span><span class="si">}</span>/Qwen3-4B
+<span class="w">   </span><span class="c1">#--hf-checkpoint /root/Qwen3-4B-FP8</span>
+<span class="w">   </span>--ref-load<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_DIR</span><span class="si">}</span>/Qwen3-4B_torch
+<span class="w">   </span>--load<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_DIR</span><span class="si">}</span>/Qwen3-4B_slime/
+<span class="w">   </span>--save<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_DIR</span><span class="si">}</span>/Qwen3-4B_slime/
+<span class="w">   </span>--save-interval<span class="w"> </span><span class="m">20</span>
+<span class="o">)</span>
+
+<span class="nv">ROLLOUT_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--prompt-data<span class="w"> </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/dapo-math-17k/dapo-math-17k.jsonl
+<span class="w">   </span>--input-key<span class="w"> </span>prompt
+<span class="w">   </span>--label-key<span class="w"> </span>label
+<span class="w">   </span>--apply-chat-template
+<span class="w">   </span>--rollout-shuffle
+
+<span class="w">   </span>--rm-type<span class="w"> </span>deepscaler
+
+<span class="w">   </span>--num-rollout<span class="w"> </span><span class="m">3000</span>
+<span class="w">   </span>--rollout-batch-size<span class="w"> </span><span class="m">32</span>
+<span class="w">   </span>--n-samples-per-prompt<span class="w"> </span><span class="m">8</span>
+<span class="w">   </span>--rollout-max-response-len<span class="w"> </span><span class="m">8192</span>
+<span class="w">   </span>--rollout-temperature<span class="w"> </span><span class="m">0</span>.8
+
+<span class="w">   </span>--global-batch-size<span class="w"> </span><span class="m">256</span>
+<span class="w">   </span>--balance-data
+<span class="o">)</span>
+
+<span class="nv">EVAL_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--eval-interval<span class="w"> </span><span class="m">20</span>
+<span class="w">   </span>--eval-prompt-data<span class="w"> </span>aime<span class="w"> </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span>/aime-2024/aime-2024.jsonl
+<span class="w">   </span>--n-samples-per-eval-prompt<span class="w"> </span><span class="m">16</span>
+<span class="w">   </span>--eval-max-response-len<span class="w"> </span><span class="m">16384</span>
+<span class="w">   </span>--eval-top-p<span class="w"> </span><span class="m">0</span>.7
+<span class="o">)</span>
+
+<span class="nv">PERF_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--tensor-model-parallel-size<span class="w"> </span><span class="m">2</span>
+<span class="w">   </span>--sequence-parallel
+<span class="w">   </span>--pipeline-model-parallel-size<span class="w"> </span><span class="m">1</span>
+<span class="w">   </span>--context-parallel-size<span class="w"> </span><span class="m">1</span>
+<span class="w">   </span>--expert-model-parallel-size<span class="w"> </span><span class="m">1</span>
+<span class="w">   </span>--expert-tensor-parallel-size<span class="w"> </span><span class="m">1</span>
+
+<span class="w">   </span>--recompute-granularity<span class="w"> </span>full
+<span class="w">   </span>--recompute-method<span class="w"> </span>uniform
+<span class="w">   </span>--recompute-num-layers<span class="w"> </span><span class="m">1</span>
+
+<span class="w">   </span><span class="c1"># --micro-batch-size 1</span>
+<span class="w">   </span>--use-dynamic-batch-size
+<span class="w">   </span>--max-tokens-per-gpu<span class="w"> </span><span class="m">9216</span>
+<span class="o">)</span>
+
+<span class="nv">GRPO_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--advantage-estimator<span class="w"> </span>grpo
+<span class="w">   </span>--use-kl-loss
+<span class="w">   </span>--kl-loss-coef<span class="w"> </span><span class="m">0</span>.00
+<span class="w">   </span>--kl-loss-type<span class="w"> </span>low_var_kl
+<span class="w">   </span>--entropy-coef<span class="w"> </span><span class="m">0</span>.00
+<span class="w">   </span>--eps-clip<span class="w"> </span><span class="m">0</span>.2
+<span class="w">   </span>--eps-clip-high<span class="w"> </span><span class="m">0</span>.28
+<span class="o">)</span>
+
+<span class="nv">OPTIMIZER_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--optimizer<span class="w"> </span>adam
+<span class="w">   </span>--lr<span class="w"> </span>1e-6
+<span class="w">   </span>--lr-decay-style<span class="w"> </span>constant
+<span class="w">   </span>--weight-decay<span class="w"> </span><span class="m">0</span>.1
+<span class="w">   </span>--adam-beta1<span class="w"> </span><span class="m">0</span>.9
+<span class="w">   </span>--adam-beta2<span class="w"> </span><span class="m">0</span>.98
+<span class="o">)</span>
+
+<span class="nv">WANDB_ARGS</span><span class="o">=(</span>
+<span class="w">   </span><span class="c1">#--use-wandb</span>
+<span class="w">   </span><span class="c1"># --wandb-project slime-dev</span>
+<span class="w">   </span><span class="c1"># --wandb-group qwen3-4B-test</span>
+<span class="w">   </span><span class="c1"># --wandb-key ${WANDB_KEY}</span>
+<span class="o">)</span>
+
+<span class="c1">### AMD Support ###</span>
+<span class="c1"># Need to fix some issue with torch_memory_saver in rocm to support larger  --sglang-mem-fraction-static </span>
+<span class="c1"># SGLANG_ARGS=(</span>
+<span class="c1">#    --rollout-num-gpus-per-engine 2</span>
+<span class="c1">#    --sglang-mem-fraction-static 0.7</span>
+<span class="c1"># )</span>
+<span class="nv">SGLANG_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--rollout-num-gpus-per-engine<span class="w"> </span><span class="m">2</span>
+<span class="w">   </span>--sglang-mem-fraction-static<span class="w"> </span><span class="m">0</span>.4
+<span class="o">)</span>
+<span class="c1">####################</span>
+
+
+<span class="nv">MISC_ARGS</span><span class="o">=(</span>
+<span class="w">   </span><span class="c1"># default dropout in megatron is 0.1</span>
+<span class="w">   </span>--attention-dropout<span class="w"> </span><span class="m">0</span>.0
+<span class="w">   </span>--hidden-dropout<span class="w"> </span><span class="m">0</span>.0
+<span class="w">   </span><span class="c1"># should be good for model performance</span>
+<span class="w">   </span>--accumulate-allreduce-grads-in-fp32
+<span class="w">   </span>--attention-softmax-in-fp32
+<span class="w">   </span><span class="c1"># need to comment this when using model with MLA</span>
+<span class="w">   </span>--attention-backend<span class="w"> </span>flash
+<span class="w">   </span><span class="c1">### AMD Support ###</span>
+<span class="w">   </span><span class="c1"># disable gradient accumulation fusion: Need to add apex to enable this</span>
+<span class="w">   </span>--no-gradient-accumulation-fusion
+<span class="w">   </span><span class="c1">###################</span>
+<span class="o">)</span>
+
+<span class="c1"># launch the master node of ray in container</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MASTER_ADDR</span><span class="o">=</span><span class="si">${</span><span class="nv">MASTER_ADDR</span><span class="k">:-</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="si">}</span>
+
+<span class="nv">NUM_GPUS</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">HIP_VISIBLE_DEVICES</span><span class="si">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;,&#39;</span><span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
+ray<span class="w"> </span>start<span class="w"> </span>--head<span class="w"> </span>--node-ip-address<span class="w"> </span><span class="si">${</span><span class="nv">MASTER_ADDR</span><span class="si">}</span><span class="w"> </span>--num-gpus<span class="w"> </span><span class="si">${</span><span class="nv">NUM_GPUS</span><span class="si">}</span><span class="w"> </span>--disable-usage-stats
+
+
+<span class="c1"># &quot;PYTHONPATH&quot;: &quot;$(dirname $(python3 -c &#39;import megatron.core; print(megatron.core.__file__)&#39;))&quot;</span>
+ray<span class="w"> </span>job<span class="w"> </span>submit<span class="w"> </span>--address<span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8265&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--runtime-env-json<span class="o">=</span><span class="s1">&#39;{</span>
+<span class="s1">     &quot;env_vars&quot;: {</span>
+<span class="s1">        &quot;PYTHONPATH&quot;: &quot;&#39;</span><span class="si">${</span><span class="nv">SLIME_DIR</span><span class="si">}</span><span class="s1">&#39;/Megatron-LM-amd_version/&quot;,</span>
+<span class="s1">        &quot;CUDA_DEVICE_MAX_CONNECTIONS&quot;: &quot;1&quot;</span>
+<span class="s1">     }</span>
+<span class="s1">   }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--<span class="w"> </span>python3<span class="w"> </span>train.py<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--actor-num-nodes<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--actor-num-gpus-per-node<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--colocate<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">MODEL_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">CKPT_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">ROLLOUT_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">OPTIMIZER_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">GRPO_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">DISTRIBUTED_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">WANDB_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">PERF_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">EVAL_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">SGLANG_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="si">${</span><span class="nv">MISC_ARGS</span><span class="p">[@]</span><span class="si">}</span>
+
+
+<span class="c1">####clear after training</span>
+pkill<span class="w"> </span>-9<span class="w"> </span>sglang
+sleep<span class="w"> </span><span class="m">3</span>
+ray<span class="w"> </span>stop<span class="w"> </span>--force
+pkill<span class="w"> </span>-9<span class="w"> </span>ray
+pkill<span class="w"> </span>-9<span class="w"> </span>python
+sleep<span class="w"> </span><span class="m">3</span>
+pkill<span class="w"> </span>-9<span class="w"> </span>ray
+pkill<span class="w"> </span>-9<span class="w"> </span>python
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../developer_guide/debug.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Debugging</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">Docker</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-setup">Environment Setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checkpoint-format-conversion">Checkpoint Format Conversion</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hf-megatron-torch-dist-ckpt">HF → Megatron torch_dist ckpt</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-qwen3-4b">Example: Qwen3-4B</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By slime Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025-2025, slime.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 04, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

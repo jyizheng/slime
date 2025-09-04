@@ -1,0 +1,1166 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>快速使用 &#8212; slime</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=731335ad" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=731335ad" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'get_started/quick_start';</script>
+    <link rel="icon" href="../_static/logo.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="使用文档" href="usage.html" />
+    <link rel="prev" title="slime文档" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 04, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="slime - Home"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="slime - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">开始使用</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">快速使用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">使用文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qa.html">常见 Q&amp;A</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">示例</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4b-base-openhermes.html">Qwen3-4B-Base + OpenHermes-2.5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/deepseek-r1.html">128xH100 训练 DeepSeek R1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/glm4.5-355B-A32B.html">64xH100 训练 GLM-4.5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/glm4-9B.html">GLM4-9B</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4B.html">Qwen3-4B</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-30B-A3B.html">8xH100 训练 Qwen3-30B-A3B</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">高级特性</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/speculative-decoding.html">Speculative decoding 使用指南</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">开发指南</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/debug.html">Debug 指南</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/sgl-project/sgl-project.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sgl-project/sgl-project.github.io/blob/main/get_started/quick_start.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sgl-project/sgl-project.github.io/edit/main/get_started/quick_start.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/sgl-project/sgl-project.github.io/issues/new?title=Issue%20on%20page%20%2Fget_started/quick_start.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/get_started/quick_start.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>快速使用</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">基础环境搭建</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">拉取并启动 Docker 容器</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slime">安装 slime</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">模型与数据集下载</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型权重转换</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hugging-face-megatron">Hugging Face 格式 转换为 Megatron 格式</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#megatron-hugging-face">Megatron 格式 转换为 Hugging Face 格式</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">训练脚本与参数概览</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-args">MODEL_ARGS: 模型配置参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ckpt-args">CKPT_ARGS: 检查点与路径参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout-args-rollout">ROLLOUT_ARGS: 数据生成（Rollout）参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eval-args">EVAL_ARGS: 评估参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perf-args">PERF_ARGS: 性能与并行参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grpo-args-grpo">GRPO_ARGS: GRPO 算法参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimizer-args">OPTIMIZER_ARGS: 优化器参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sglang-args-sglang">SGLANG_ARGS: SGLang 服务参数</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">特性介绍</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colocated-actor-and-rollout">Colocated Actor and Rollout</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-sampling">Dynamic Sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-rollout">Partial Rollout</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bf16-fp8">bf16 训练 fp8 推理</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiturn">Multiturn 适配</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">适配思路总结</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">数据准备与映射</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">步骤一：在数据集中构造 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 字段</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">步骤二：在训练脚本中指定映射</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">编写自定义生成函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">编写自定义奖励函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">在训练脚本中配置</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moe">大规模 MOE 模型的多机训练</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>快速使用<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>本文档从搭建环境开始，在一小时内带您快速上手 slime，涵盖环境配置，数据准备，训练启动和关键代码解析和魔改。</p>
+<section id="id2">
+<h2>基础环境搭建<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>由于 slime 可能会包含针对 sglang/megatron 的临时补丁（patch）。为避免潜在的环境配置问题，强烈建议<strong>用户使用我们提供的最新 Docker 镜像</strong>，它已预置好所有依赖。</p>
+<ul class="simple">
+<li><p>对于不方便使用 docker 的场景，请参考 <a class="reference internal" href="#./../../build_conda.sh"><span class="xref myst">build_conda.sh</span></a>；</p></li>
+<li><p>对于 AMD 支持，请参考 <a class="reference internal" href="#../en/amd_tutorial.md"><span class="xref myst">AMD 使用教程</span></a>。</p></li>
+</ul>
+<section id="docker">
+<h3>拉取并启动 Docker 容器<a class="headerlink" href="#docker" title="Link to this heading">#</a></h3>
+<p>请执行以下命令，拉取最新镜像并启动一个交互式容器：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 拉取最新镜像</span>
+docker<span class="w"> </span>pull<span class="w"> </span>zhuzilin/slime:latest
+
+<span class="c1"># 启动容器</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--gpus<span class="w"> </span>all<span class="w"> </span>--ipc<span class="o">=</span>host<span class="w"> </span>--shm-size<span class="o">=</span>16g<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ulimit<span class="w"> </span><span class="nv">memlock</span><span class="o">=</span>-1<span class="w"> </span>--ulimit<span class="w"> </span><span class="nv">stack</span><span class="o">=</span><span class="m">67108864</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-it<span class="w"> </span>zhuzilin/slime:latest<span class="w"> </span>/bin/bash
+</pre></div>
+</div>
+</section>
+<section id="slime">
+<h3>安装 slime<a class="headerlink" href="#slime" title="Link to this heading">#</a></h3>
+<p>进入 Docker 容器后，请按照以下步骤克隆 slime 仓库并进行安装：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 路径可根据实际情况调整</span>
+<span class="nb">cd</span><span class="w"> </span>/root/
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/THUDM/slime.git
+<span class="nb">cd</span><span class="w"> </span>slime
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>模型与数据集下载<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>可以从 Hugging Face、ModelScope 等平台下载所需的模型和数据集。以下是使用 <code class="docutils literal notranslate"><span class="pre">huggingface_hub</span></code> 下载示例资源的命令：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>huggingface_hub
+
+<span class="c1"># 下载模型权重 (GLM-Z1-9B)</span>
+hf<span class="w"> </span>download<span class="w"> </span>zai-org/GLM-Z1-9B-0414<span class="w"> </span>--local-dir<span class="w"> </span>/root/GLM-Z1-9B-0414
+
+<span class="c1"># 下载训练数据集 (dapo-math-17k)</span>
+hf<span class="w"> </span>download<span class="w"> </span>--repo-type<span class="w"> </span>dataset<span class="w"> </span>zhuzilin/dapo-math-17k<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--local-dir<span class="w"> </span>/root/dapo-math-17k
+
+<span class="c1"># 下载评估数据集 (aime-2024)</span>
+hf<span class="w"> </span>download<span class="w"> </span>--repo-type<span class="w"> </span>dataset<span class="w"> </span>zhuzilin/aime-2024<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--local-dir<span class="w"> </span>/root/aime-2024
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>模型权重转换<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="hugging-face-megatron">
+<h3>Hugging Face 格式 转换为 Megatron 格式<a class="headerlink" href="#hugging-face-megatron" title="Link to this heading">#</a></h3>
+<p>当使用 Megatron 作为训练后端时，需要先将 Hugging Face 格式的模型权重转换为 Megatron <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code> 格式。</p>
+<p>首先，加载目标模型的配置文件。<code class="docutils literal notranslate"><span class="pre">slime/scripts/models</span></code> 目录下包含了支持模型的配置文件。需要 <code class="docutils literal notranslate"><span class="pre">source</span></code> 对应模型的脚本，将配置参数加载到当前环境中。此处我们以 GLM4-9B 模型为例子，对于 Qwen3-4B，Qwen3-30B-A3B，是类似的。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/root/slime
+<span class="nb">source</span><span class="w"> </span>scripts/models/glm4-9B.sh
+</pre></div>
+</div>
+<p>接下来，运行转换脚本。请注意以下参数：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--hf-checkpoint</span></code>: 指定已下载的 Hugging Face 模型权重路径。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--save</span></code>: 指定转换后 <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code> 格式权重的保存路径。</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PYTHONPATH</span><span class="o">=</span>/root/Megatron-LM<span class="w"> </span>python<span class="w"> </span>tools/convert_hf_to_torch_dist.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="si">${</span><span class="nv">MODEL_ARGS</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--hf-checkpoint<span class="w"> </span>/root/GLM-Z1-9B-0414<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--save<span class="w"> </span>/root/GLM-Z1-9B-0414_torch_dist
+</pre></div>
+</div>
+<p>对于更大的模型，可以使用 <code class="docutils literal notranslate"><span class="pre">torchrun</span></code> 来启动转换脚本，从而使用多张 GPU 甚至多机进行权重转换。</p>
+</section>
+<section id="megatron-hugging-face">
+<h3>Megatron 格式 转换为 Hugging Face 格式<a class="headerlink" href="#megatron-hugging-face" title="Link to this heading">#</a></h3>
+<p>可以通过这样的方式将训练过程中保存的 Megatron 格式的权重转换回 Huggingface 格式：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PYTHONPATH</span><span class="o">=</span>/root/Megatron-LM<span class="w"> </span>python<span class="w"> </span>tools/convert_torch_dist_to_hf.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input-dir<span class="w"> </span>/path/to/torch_dist_ckpt/iter_xxx/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output-dir<span class="w"> </span>/root/GLM-Z1-9B-0414-iter_xxx<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--origin-hf-dir<span class="w"> </span>/root/GLM-Z1-9B-0414
+</pre></div>
+</div>
+<p>由于 Megatron 会对 embedding 做 padding，可能会出现转换出来的权重的 embedding 形状不匹配的问题。这时需要在转换时设置 <code class="docutils literal notranslate"><span class="pre">--vocab-size</span></code>。</p>
+</section>
+</section>
+<section id="id5">
+<h2>训练脚本与参数概览<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>完成上述准备工作后，即可运行训练脚本。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/root/slime
+bash<span class="w"> </span>scripts/run-glm4-9B.sh
+</pre></div>
+</div>
+<p>我们还是以 run-glm4-9B.sh 脚本为例，简单分析主要参数的作用。</p>
+<section id="model-args">
+<h3>MODEL_ARGS: 模型配置参数<a class="headerlink" href="#model-args" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">SCRIPT_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dirname<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span>&gt;/dev/null<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SCRIPT_DIR</span><span class="si">}</span><span class="s2">/models/glm4-9B.sh&quot;</span>
+</pre></div>
+</div>
+<p>此部分通过 <code class="docutils literal notranslate"><span class="pre">source</span></code> 命令从 <code class="docutils literal notranslate"><span class="pre">scripts/models/glm4-9B.sh</span></code> 文件中加载模型配置。这些配置均为 Megatron 所需的超参数。由于 Megatron 无法直接从检查点（checkpoint）中读取模型配置，因此需要手动指定。我们在 <code class="docutils literal notranslate"><span class="pre">scripts/models/</span></code> 目录下提供了一些常用模型的配置示例。</p>
+<blockquote>
+<div><p>⚠️ <strong>注意</strong>：
+请务必检查模型配置文件中的参数（如 <code class="docutils literal notranslate"><span class="pre">--rotary-base</span></code>）是否与您当前使用的模型完全匹配。同一模型结构的不同版本可能使用不同的配置值。如果需要修改，您可以在 <code class="docutils literal notranslate"><span class="pre">source</span></code> 之后直接覆盖，例如：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SCRIPT_DIR</span><span class="si">}</span><span class="s2">/models/glm4-9B.sh&quot;</span>
+<span class="nv">MODEL_ARGS</span><span class="o">+=(</span>--rotary-base<span class="w"> </span><span class="m">10000</span><span class="o">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="ckpt-args">
+<h3>CKPT_ARGS: 检查点与路径参数<a class="headerlink" href="#ckpt-args" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CKPT_ARGS</span><span class="o">=(</span>
+<span class="w">   </span><span class="c1"># 用于加载 tokenizer 等其他信息，实际上不会使用 hf 路径中的模型权重参数</span>
+<span class="w">   </span>--hf-checkpoint<span class="w"> </span>/root/GLM-Z1-9B-0414
+<span class="w">   </span><span class="c1"># 参考模型 (Reference Model) 的 Megatron 格式检查点</span>
+<span class="w">   </span>--ref-load<span class="w"> </span>/root/GLM-Z1-9B-0414_torch_dist
+<span class="w">   </span><span class="c1"># Actor 模型的加载路径。若为空，则从 --ref-load 加载</span>
+<span class="w">   </span>--load<span class="w"> </span>/root/GLM-Z1-9B-0414_slime/
+<span class="w">   </span><span class="c1"># 训练过程中模型的保存路径</span>
+<span class="w">   </span>--save<span class="w"> </span>/root/GLM-Z1-9B-0414_slime/
+<span class="w">   </span><span class="c1"># 模型保存间隔（步数）</span>
+<span class="w">   </span>--save-interval<span class="w"> </span><span class="m">20</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="rollout-args-rollout">
+<h3>ROLLOUT_ARGS: 数据生成（Rollout）参数<a class="headerlink" href="#rollout-args-rollout" title="Link to this heading">#</a></h3>
+<p>整个训练流程可视为一个 <strong>“数据采样 → 权重更新”</strong> 的闭环。</p>
+<p><strong>阶段一：数据采样 (Rollout)</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--rollout-batch-size</span></code>：定义每轮采样的 <strong>Prompt 数量</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--n-samples-per-prompt</span></code>：定义每个 Prompt 生成的 <strong>回复数量</strong> (用于 GRPO 类似算法)</p></li>
+</ul>
+<blockquote>
+<div><p>两者相乘，决定了 <strong>单轮采样产生的总样本数</strong>。</p>
+</div></blockquote>
+<p><strong>阶段二：模型训练 (Training)</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--global-batch-size</span></code>：定义 <strong>执行一次参数更新（optimizer.step）</strong> 所需的样本量</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--num-steps-per-rollout</span></code>：定义使用当前采样数据，<strong>总共执行多少次参数更新</strong>  (我们默认为 1，使用 on-policy 训练)</p></li>
+</ul>
+<blockquote>
+<div><p>两者相乘，决定了 <strong>单轮训练消耗的总样本数</strong>。</p>
+</div></blockquote>
+<blockquote>
+<div><p>⚠️ 这里的 <strong>参数更新</strong> 指训练环节的 optimizer.step()，不同于训练引擎向推理引擎发起的权重同步(Weight Sync)。</p>
+</div></blockquote>
+<p>在这个过程中，每轮的“产出”与“消耗”必须相等，遵循以下约束：
+<strong><code class="docutils literal notranslate"><span class="pre">(rollout-batch-size</span> <span class="pre">×</span> <span class="pre">n-samples-per-prompt)</span> <span class="pre">=</span> <span class="pre">(global-batch-size</span> <span class="pre">×</span> <span class="pre">num-steps-per-rollout)</span></code></strong></p>
+<ul class="simple">
+<li><p>在 slime 中，如果设置了 <code class="docutils literal notranslate"><span class="pre">--num-steps-per-rollout</span></code> ，<code class="docutils literal notranslate"><span class="pre">--global-batch-size</span></code> 未设置则会被自动设置，设置了则会被用上述公式校验。</p></li>
+</ul>
+<p><strong>训练流程次数控制</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--num-rollout</span></code>: 控制整个 <strong>“采样→训练”</strong> 循环的<strong>总执行轮次</strong>。</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ROLLOUT_ARGS</span><span class="o">=(</span>
+<span class="w">   </span><span class="c1"># Prompt 数据集，JSONL 格式</span>
+<span class="w">   </span>--prompt-data<span class="w"> </span>/root/dapo-math-17k/dapo-math-17k.jsonl
+<span class="w">   </span>--input-key<span class="w"> </span>prompt
+<span class="w">   </span>--label-key<span class="w"> </span>label
+<span class="w">   </span><span class="c1"># 若 Prompt 的 `input_key` 是 OpenAI message 格式，则应用 Chat Template</span>
+<span class="w">   </span>--apply-chat-template
+<span class="w">   </span><span class="c1"># 是否在 Rollout 阶段打乱数据</span>
+<span class="w">   </span>--rollout-shuffle
+
+<span class="w">   </span><span class="c1"># Reward Model 类型。slime 内置多种类型，也支持通过 --custom-rm-path 自定义</span>
+<span class="w">   </span>--rm-type<span class="w"> </span>deepscaler
+
+<span class="w">   </span><span class="c1"># 这五个参数来控制 rollout 与 train 的关系</span>
+<span class="w">   </span>--num-rollout<span class="w"> </span><span class="m">3000</span>
+<span class="w">   </span>--rollout-batch-size<span class="w"> </span><span class="m">16</span>
+<span class="w">   </span>--n-samples-per-prompt<span class="w"> </span><span class="m">8</span>
+<span class="w">   </span>--num-steps-per-rollout<span class="w"> </span><span class="m">1</span>
+<span class="w">   </span>--global-batch-size<span class="w"> </span><span class="m">128</span>
+<span class="w">   </span>
+<span class="w">   </span><span class="c1"># Rollout 采样参数</span>
+<span class="w">   </span>--rollout-max-response-len<span class="w"> </span><span class="m">8192</span>
+<span class="w">   </span>--rollout-temperature<span class="w"> </span><span class="m">0</span>.8
+
+<span class="w">   </span><span class="c1"># 对 rollout 阶段收集的数据进行负载均衡。它确保了分配到每个训练进程（DP rank）的计算任务量大致相等，可能对训练速度有好处</span>
+<span class="w">   </span>--balance-data
+<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="eval-args">
+<h3>EVAL_ARGS: 评估参数<a class="headerlink" href="#eval-args" title="Link to this heading">#</a></h3>
+<p>评估过程会继承大部分 Rollout 参数，但您可以通过以下参数进行覆盖，以实现与训练不同的评估策略。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">EVAL_ARGS</span><span class="o">=(</span>
+<span class="w">   </span><span class="c1"># 评估间隔（Rollout 数）</span>
+<span class="w">   </span>--eval-interval<span class="w"> </span><span class="m">5</span>
+<span class="w">   </span><span class="c1"># 评估用的 Prompt 数据集</span>
+<span class="w">   </span>--eval-prompt-data<span class="w"> </span>aime<span class="w"> </span>/root/aime-2024/aime-2024.jsonl
+<span class="w">   </span><span class="c1"># 每个评估 Prompt 的采样数量</span>
+<span class="w">   </span>--n-samples-per-eval-prompt<span class="w"> </span><span class="m">16</span>
+<span class="w">   </span><span class="c1"># 评估时最大响应长度</span>
+<span class="w">   </span>--eval-max-response-len<span class="w"> </span><span class="m">16384</span>
+<span class="w">   </span><span class="c1"># 评估时采样参数</span>
+<span class="w">   </span>--eval-top-p<span class="w"> </span><span class="m">0</span>.7
+<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="perf-args">
+<h3>PERF_ARGS: 性能与并行参数<a class="headerlink" href="#perf-args" title="Link to this heading">#</a></h3>
+<p>这部分主要包含 Megatron 的并行配置。<code class="docutils literal notranslate"><span class="pre">--use-dynamic-batch-size</span></code> 和 <code class="docutils literal notranslate"><span class="pre">--max-tokens-per-gpu</span></code> 是 slime 添加的特有优化。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--max-tokens-per-gpu</span></code>: 每张 GPU 处理的最大 Token 数。启用动态批处理（<code class="docutils literal notranslate"><span class="pre">use_dynamic_batch_size</span></code>）后，系统会智能地将长短不一的样本打包，使每个 micro-batch 的总 Token 数接近此限制，从而提升训练效率。如果单个样本长度超过该值，它将独立形成一个 batch。在上下文并行（CP）模式下，<code class="docutils literal notranslate"><span class="pre">N</span></code> 张 CP 卡共享 <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">*</span> <span class="pre">max_tokens_per_gpu</span></code> 的总长度。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--use-dynamic-batch-size</span></code>: 启用动态批处理。此时会忽略 <code class="docutils literal notranslate"><span class="pre">--micro-batch-size</span></code>。</p></li>
+</ul>
+<blockquote>
+<div><p>💡 <strong>提示</strong>：
+slime 总是会通过 data packing 的方法训练模型，并且严格保证 per sample loss 或 per token loss 是正确的。因此，开启 dynamic batch size 不会对 loss 计算有影响，强烈推荐开启。</p>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PERF_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--tensor-model-parallel-size<span class="w"> </span><span class="m">2</span>
+<span class="w">   </span>--sequence-parallel
+<span class="w">   </span>--pipeline-model-parallel-size<span class="w"> </span><span class="m">1</span>
+<span class="w">   </span>--context-parallel-size<span class="w"> </span><span class="m">2</span>
+<span class="w">   </span>--expert-model-parallel-size<span class="w"> </span><span class="m">1</span>
+<span class="w">   </span>--expert-tensor-parallel-size<span class="w"> </span><span class="m">1</span>
+
+<span class="w">   </span>--recompute-granularity<span class="w"> </span>full
+<span class="w">   </span>--recompute-method<span class="w"> </span>uniform
+<span class="w">   </span>--recompute-num-layers<span class="w"> </span><span class="m">1</span>
+
+<span class="w">   </span><span class="c1"># --micro-batch-size 1 # 启用动态批处理后此项被忽略</span>
+<span class="w">   </span>--use-dynamic-batch-size
+<span class="w">   </span>--max-tokens-per-gpu<span class="w"> </span><span class="m">4608</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="grpo-args-grpo">
+<h3>GRPO_ARGS: GRPO 算法参数<a class="headerlink" href="#grpo-args-grpo" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--use-kl-loss</span></code>: 启用此选项将加载一个参考模型（Reference Model），并计算当前模型与参考模型之间的 KL 散度（KL Divergence）作为一项监控指标。KL 散度是否被计入最终的训练损失（Loss），取决于 <code class="docutils literal notranslate"><span class="pre">--kl-loss-coef</span></code> 参数。若该参数设置为 0，则 KL 散度仅作为观测指标显示，而不会参与损失计算。</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">GRPO_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--advantage-estimator<span class="w"> </span>grpo
+<span class="w">   </span>--use-kl-loss
+<span class="w">   </span>--kl-loss-coef<span class="w"> </span><span class="m">0</span>.00
+<span class="w">   </span>--kl-loss-type<span class="w"> </span>low_var_kl
+<span class="w">   </span>--entropy-coef<span class="w"> </span><span class="m">0</span>.00
+<span class="w">   </span>--eps-clip<span class="w"> </span><span class="m">0</span>.2
+<span class="w">   </span>--eps-clip-high<span class="w"> </span><span class="m">0</span>.28
+<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="optimizer-args">
+<h3>OPTIMIZER_ARGS: 优化器参数<a class="headerlink" href="#optimizer-args" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">OPTIMIZER_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--optimizer<span class="w"> </span>adam
+<span class="w">   </span>--lr<span class="w"> </span>1e-6
+<span class="w">   </span>--lr-decay-style<span class="w"> </span>constant
+<span class="w">   </span>--weight-decay<span class="w"> </span><span class="m">0</span>.1
+<span class="w">   </span>--adam-beta1<span class="w"> </span><span class="m">0</span>.9
+<span class="w">   </span>--adam-beta2<span class="w"> </span><span class="m">0</span>.98
+<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="sglang-args-sglang">
+<h3>SGLANG_ARGS: SGLang 服务参数<a class="headerlink" href="#sglang-args-sglang" title="Link to this heading">#</a></h3>
+<p>这部分参数用于配置 SGLang 推理服务。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--rollout-num-gpus-per-engine</span></code>: 基本等同于 SGLang 的 <code class="docutils literal notranslate"><span class="pre">tp_size</span></code>。</p></li>
+<li><p>其他 SGLang 参数可以通过添加 <code class="docutils literal notranslate"><span class="pre">--sglang-</span></code> 前缀传递给 slime,  slime 会自动透传给 SGLang。例如，要设置 SGLang 的 <code class="docutils literal notranslate"><span class="pre">--log-level</span> <span class="pre">INFO</span></code> 参数，只需使用 <code class="docutils literal notranslate"><span class="pre">--sglang-log-level</span> <span class="pre">INFO</span></code> 即可。</p></li>
+</ul>
+<blockquote>
+<div><p>⚠️ <strong>注意</strong>：
+slime 使用 <code class="docutils literal notranslate"><span class="pre">sgl-router</span></code> 调度多个 SGLang Server。在不开启 DP Attention 的情况下， <code class="docutils literal notranslate"><span class="pre">dp_size</span></code> 会通过 <code class="docutils literal notranslate"><span class="pre">rollout-num-gpus</span> <span class="pre">/</span> <span class="pre">rollout-num-gpus-per-engine</span></code> 计算得到。</p>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">SGLANG_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--rollout-num-gpus-per-engine<span class="w"> </span><span class="m">2</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id6">
+<h2>特性介绍<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="colocated-actor-and-rollout">
+<h3>Colocated Actor and Rollout<a class="headerlink" href="#colocated-actor-and-rollout" title="Link to this heading">#</a></h3>
+<p>在默认的配置下，训练（Actor）和推理（Rollout）的资源是分开指定的，通过 ray 给训练部分分配 <code class="docutils literal notranslate"><span class="pre">actor_num_nodes</span> <span class="pre">*</span> <span class="pre">actor_num_gpus_per_node</span></code> 张 GPU，给推理分配 <code class="docutils literal notranslate"><span class="pre">rollout_num_gpus</span></code> 张 GPU，也即训推分离。</p>
+<p><strong>标准（分离）配置</strong>：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ray<span class="w"> </span>job<span class="w"> </span>submit<span class="w"> </span>...<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--<span class="w"> </span>python3<span class="w"> </span>train.py<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--actor-num-nodes<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--actor-num-gpus-per-node<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--rollout-num-gpus<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>...
+</pre></div>
+</div>
+<p>上述配置中，Actor 使用 4 张卡，Rollout 也使用 4 张卡，两者并行运行。</p>
+<p><strong>训推一体化（Colocated）配置</strong>：
+要将训练和推理部署在同一组 GPU 上，请添加 <code class="docutils literal notranslate"><span class="pre">--colocate</span></code> 参数，开启后会忽略 <code class="docutils literal notranslate"><span class="pre">--rollout-num-gpus</span></code> 让训练和推理的卡数相等。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ray<span class="w"> </span>job<span class="w"> </span>submit<span class="w"> </span>...<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--<span class="w"> </span>python3<span class="w"> </span>train.py<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--actor-num-nodes<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--actor-num-gpus-per-node<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--colocate<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>...
+</pre></div>
+</div>
+<p>此时，训练和推理将共享全部 8 张 GPU。</p>
+<blockquote>
+<div><p>⚠️ <strong>注意</strong>：
+在训推一体化模式下，Megatron 初始化后才能被 offload 掉，会占据一定量的显存。您需要通过调整 <code class="docutils literal notranslate"><span class="pre">--sglang-mem-fraction-static</span></code> 参数来降低 SGLang 的显存占用比例，以避免显存不足。通常我们建议为 0.8。</p>
+</div></blockquote>
+<blockquote>
+<div><p>此外，<a class="reference external" href="https://github.com/fzyzcjy/torch_memory_saver">torch_memory_saver</a> 里面的一些优化只能在训推一体模式中使用，因为需要释放 GPU 显存。训推分离模式暂不支持。</p>
+</div></blockquote>
+</section>
+<section id="dynamic-sampling">
+<h3>Dynamic Sampling<a class="headerlink" href="#dynamic-sampling" title="Link to this heading">#</a></h3>
+<p>slime 支持更复杂的采样策略，例如 <a class="reference external" href="https://dapo-sia.github.io/">DAPO</a> 中使用的动态采样。要启用此功能，需配置以下参数：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">   </span>--over-sampling-batch-size<span class="w"> </span><span class="m">64</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--dynamic-sampling-filter-path<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>slime.rollout.filter_hub.dynamic_sampling_filters.check_reward_nonzero_std
+</pre></div>
+</div>
+<p>这里 <code class="docutils literal notranslate"><span class="pre">over_sampling_batch_size</span></code> 需要大于 <code class="docutils literal notranslate"><span class="pre">rollout_batch_size</span></code>，例如配置为：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">   </span>--rollout-batch-size<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--n-samples-per-prompt<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--over-sampling-batch-size<span class="w"> </span><span class="m">64</span><span class="w"> </span><span class="se">\</span>
+</pre></div>
+</div>
+<p>那么 sampling 会直接采样 64 条 prompt，每条 prompt 采样 8 次。因为 slime 内部进行的是异步采样，所以我们会先后获得每个 prompt 的 8 条回复。在收到回复时，会用 <code class="docutils literal notranslate"><span class="pre">dynamic_sampling_filter_path</span></code> 对应的函数进行筛选，如果通过，则留下这 8 条数据，否则则丢掉。</p>
+<p>示例中的过滤函数 <code class="docutils literal notranslate"><span class="pre">check_reward_nonzero_std</span></code> 会检查一组样本的奖励（reward）标准差是否大于零，确保留下的每组样本其奖励分数都存在差异，从而避免数据过于单一，提升了数据的多样性。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">check_reward_nonzero_std</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Sample</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">rewards</span> <span class="o">=</span> <span class="p">[</span><span class="n">sample</span><span class="o">.</span><span class="n">reward</span> <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">rewards</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>如果过滤函数非常严格，导致大量 prompt 组被丢弃，系统会监控 <code class="docutils literal notranslate"> <span class="pre">remaining_batch_size</span></code> 中待处理的任务数量。一旦待处理的任务数因丢弃过多而降至目标数 (32) 以下，系统会自动触发新一轮的过采样，再次请求  <code class="docutils literal notranslate"><span class="pre">over_sampling_batch_size</span></code> (64) 个新的 prompt 重复上述流程。</p>
+</section>
+<section id="partial-rollout">
+<h3>Partial Rollout<a class="headerlink" href="#partial-rollout" title="Link to this heading">#</a></h3>
+<p>在动态采样过程中，大量请求可能会被提前中止（abort），造成计算资源浪费。通过启用 <code class="docutils literal notranslate"><span class="pre">--partial-rollout</span></code> 参数，可以将这些生成到一半的样本缓存起来，在下一个 Rollout 阶段继续生成，从而提升性能。</p>
+<p>您还可以通过 <code class="docutils literal notranslate"><span class="pre">--buffer-filter-path</span></code> 自定义从缓存中提取数据的策略。默认策略是 <code class="docutils literal notranslate"><span class="pre">pop_first</span></code>，即按先进先出的顺序提取所需数量的样本。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">pop_first</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">rollout_id</span><span class="p">,</span> <span class="n">buffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Sample</span><span class="p">]],</span> <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Sample</span><span class="p">]]:</span>
+    <span class="n">num_to_pop</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="n">num_samples</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">buffer</span><span class="p">[:</span><span class="n">num_to_pop</span><span class="p">]</span>
+    <span class="k">del</span> <span class="n">buffer</span><span class="p">[:</span><span class="n">num_to_pop</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">samples</span>
+</pre></div>
+</div>
+<p>即每次取出前 <code class="docutils literal notranslate"><span class="pre">num_samples</span></code> 个 prompt 对应的 <code class="docutils literal notranslate"><span class="pre">num_samples</span> <span class="pre">*</span> <span class="pre">n_samples_per_prompt</span></code> 条数据。</p>
+<blockquote>
+<div><p>💡 <strong>提示</strong>：
+每条 partial rollout sample 的 <code class="docutils literal notranslate"><span class="pre">sample.metadata</span></code> 中存储了第一次进行生成的 rollout id，可以用于数据过滤。</p>
+</div></blockquote>
+</section>
+<section id="bf16-fp8">
+<h3>bf16 训练 fp8 推理<a class="headerlink" href="#bf16-fp8" title="Link to this heading">#</a></h3>
+<p>slime 直接支持 bf16 训练，fp8 推理。对于 Qwen3-4B 模型，只需要下载如下模型：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>hf<span class="w"> </span>download<span class="w"> </span>Qwen/Qwen3-4B-FP8<span class="w"> </span>--local-dir<span class="w"> </span>/root/Qwen3-4B-FP8
+</pre></div>
+</div>
+<p>并将 <code class="docutils literal notranslate"><span class="pre">--hf-checkpoint</span></code> 替换为：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="c1"># 用于加载 tokenizer 等其他信息，实际上不会使用 hf 路径中的模型权重参数</span>
+<span class="w">   </span>--hf-checkpoint<span class="w"> </span>/root/Qwen3-4B-FP8
+
+<span class="w">   </span><span class="c1">#  megatron checkpoint 还需要是最开始用 bf16 的 huggingface 转换的 dist 权重，不因为 FP rollout 而去做修改。</span>
+<span class="w">   </span>--ref-load<span class="w"> </span>/root/Qwen3-4B_torch_dist
+</pre></div>
+</div>
+<p>即可触发 fp8 推理。目前我们会将 bf16 权重直接 cast 为 fp8，后续会逐渐添加对精度影响更小的量化方案。</p>
+<p>⚠️  训练的 megatron checkpoint 还需要是最开始用 bf16 的 huggingface 转换的。</p>
+</section>
+</section>
+<section id="multiturn">
+<h2>Multiturn 适配<a class="headerlink" href="#multiturn" title="Link to this heading">#</a></h2>
+<p>slime 框架高度可扩展，支持复杂的 Agent 场景（如多轮交互与工具调用）。其核心机制是通过自定义函数，重写默认的数据生成 (Rollout) 与奖励计算 (Reward) 逻辑。</p>
+<p>本部分以一个基于 <a class="reference external" href="https://github.com/PeterGriffinJin/Search-R1">Search-R1</a> 的实现为例，说明如何适配 slime 以支持多轮交互。</p>
+<section id="id7">
+<h3>适配思路总结<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>适配 slime 以支持多轮交互主要包含三个步骤：</p>
+<ol class="arabic simple">
+<li><p><strong>数据准备</strong>：将多轮交互数据集适配为 slime 的 <code class="docutils literal notranslate"><span class="pre">Sample</span></code> 对象。将对话历史、真实标签等映射到 <code class="docutils literal notranslate"><span class="pre">prompt</span></code> 和 <code class="docutils literal notranslate"><span class="pre">label</span></code> 字段，并将工具定义、中间状态等额外信息存入 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 字段，供后续函数调用。</p></li>
+<li><p><strong>实现自定义生成函数</strong>：编写函数模拟“模型生成动作 → 执行工具 → 拼接观察结果”的交互循环，并正确处理 Loss Masking。</p></li>
+<li><p><strong>实现自定义奖励函数</strong>：编写函数评估完整的交互轨迹，返回最终的奖励分数。</p></li>
+</ol>
+</section>
+<section id="id8">
+<h3>数据准备与映射<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>为了向自定义函数传递复杂的上下文信息，您需要在<strong>数据预处理阶段</strong>就将所有相关的额外字段聚合起来。</p>
+<p><strong>核心思想</strong>：将数据集中除 <code class="docutils literal notranslate"><span class="pre">prompt</span></code> 和 <code class="docutils literal notranslate"><span class="pre">label</span></code> 之外的所有附加信息（如 <code class="docutils literal notranslate"><span class="pre">session_id</span></code>, <code class="docutils literal notranslate"><span class="pre">user_profile</span></code>, <code class="docutils literal notranslate"><span class="pre">tool_code</span></code> 等）合并，构造成一个<strong>单一的、结构化的字段</strong>（例如，一个名为 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 的列，其内容为 JSON 字符串）。</p>
+</section>
+<section id="metadata">
+<h3>步骤一：在数据集中构造 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 字段<a class="headerlink" href="#metadata" title="Link to this heading">#</a></h3>
+<p>在训练开始前，您需要对原始数据集进行处理。例如，您的原始数据可能如下：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>question</p></th>
+<th class="head text-left"><p>final_answer</p></th>
+<th class="head text-left"><p>session_id</p></th>
+<th class="head text-left"><p>tool_code</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>“…”</p></td>
+<td class="text-left"><p>“…”</p></td>
+<td class="text-left"><p>“sess_123”</p></td>
+<td class="text-left"><p>“code_A”</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>您需要将其转换为：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>question</p></th>
+<th class="head text-left"><p>final_answer</p></th>
+<th class="head text-left"><p>metadata</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>“…”</p></td>
+<td class="text-left"><p>“…”</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{&quot;session_id&quot;:</span> <span class="pre">&quot;sess_123&quot;,</span> <span class="pre">&quot;tool_code&quot;:</span> <span class="pre">&quot;code_A&quot;}</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id9">
+<h3>步骤二：在训练脚本中指定映射<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>完成数据准备后，在训练脚本中，通过 <code class="docutils literal notranslate"><span class="pre">ROLLOUT_ARGS</span></code> 将这个预处理好的 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 列映射到 slime 的 <code class="docutils literal notranslate"><span class="pre">Sample.metadata</span></code> 字段。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ROLLOUT_ARGS</span><span class="o">=(</span>
+<span class="w">   </span><span class="c1"># 1. 指定预处理后的数据集文件</span>
+<span class="w">   </span>--prompt-data<span class="w"> </span>/root/nq_search/train_processed.json
+
+<span class="w">   </span><span class="c1"># 2. 将 &quot;question&quot; 列映射为输入 prompt</span>
+<span class="w">   </span>--prompt-key<span class="w"> </span>question
+
+<span class="w">   </span><span class="c1"># 3. 将 &quot;final_answer&quot; 列映射为评估标签</span>
+<span class="w">   </span>--label-key<span class="w"> </span>final_answer
+
+<span class="w">   </span><span class="c1"># 4. 将预先构造好的 &quot;metadata&quot; 列加载到 Sample.metadata</span>
+<span class="w">   </span><span class="c1">#    slime 会自动将其解析为 Python 字典</span>
+<span class="w">   </span>--metadata-key<span class="w"> </span>metadata
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>通过这种方式，您就可以在自定义的 <code class="docutils literal notranslate"><span class="pre">generate</span></code> 或 <code class="docutils literal notranslate"><span class="pre">reward</span></code> 函数中，通过 <code class="docutils literal notranslate"><span class="pre">sample.metadata['session_id']</span></code> 等方式，方便地访问到所有预先准备好的结构化信息。</p>
+</section>
+<section id="id10">
+<h3>编写自定义生成函数<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>首先，通过 <code class="docutils literal notranslate"><span class="pre">--custom-generate-function-path</span></code> 参数指定一个自定义的异步 Python 函数。</p>
+<p><strong>函数签名</strong>: <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">generate(args,</span> <span class="pre">sample:</span> <span class="pre">Sample,</span> <span class="pre">sampling_params)</span> <span class="pre">-&gt;</span> <span class="pre">Sample:</span></code></p>
+<p><strong>核心实现要点</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>构建交互循环</strong>: 创建循环以控制最大交互轮次（如 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">_</span> <span class="pre">in</span> <span class="pre">range(max_turns):</span></code>）。</p></li>
+<li><p><strong>调用模型生成动作</strong>: 每轮循环中，调用 SGLang 服务，让模型根据当前对话历史生成下一步动作（如 <code class="docutils literal notranslate"><span class="pre">&lt;search&gt;query&lt;/search&gt;</span></code>）。</p></li>
+<li><p><strong>解析并执行动作</strong>: 解析模型输出，识别动作与参数，并调用外部工具或 API（如 Google 搜索）。</p></li>
+<li><p><strong>构建观察结果</strong>: 将工具返回的结果格式化后，追加到对话历史中，作为下一轮的输入。</p></li>
+<li><p><strong>处理 Loss Masking</strong>: 这是 Agent 训练的关键。</p>
+<ul class="simple">
+<li><p>需要注意的是： <code class="docutils literal notranslate"><span class="pre">loss_mask</span></code> 应该和 <code class="docutils literal notranslate"><span class="pre">response</span></code> 一样长，其中需要算 loss 的 token 为 1，mask 掉的为 0</p></li>
+<li><p><strong>模型生成</strong>的 token (如思考、动作指令) → <code class="docutils literal notranslate"><span class="pre">loss_mask</span></code> 设为 <code class="docutils literal notranslate"><span class="pre">1</span></code>，参与损失计算。</p></li>
+<li><p><strong>工具或环境返回</strong>的 token (如 API 结果) → <code class="docutils literal notranslate"><span class="pre">loss_mask</span></code> 设为 <code class="docutils literal notranslate"><span class="pre">0</span></code>，不参与损失计算。</p></li>
+</ul>
+</li>
+<li><p><strong>终止条件</strong>: 当模型生成终止标签（如 <code class="docutils literal notranslate"><span class="pre">&lt;answer&gt;...</span></code>）或达到最大轮次时，结束循环。</p></li>
+<li><p><strong>封装返回</strong>: 将完整的交互历史、token ID 和 <code class="docutils literal notranslate"><span class="pre">loss_masks</span></code> 填充到 <code class="docutils literal notranslate"><span class="pre">Sample</span></code> 对象中并返回。</p></li>
+</ol>
+<p><strong>代码示例（概念）</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">sample</span><span class="p">:</span> <span class="n">Sample</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sample</span><span class="p">:</span>
+    <span class="c1"># ... 初始化 ...</span>
+    <span class="n">prompt</span><span class="p">,</span> <span class="n">full_response</span><span class="p">,</span> <span class="n">loss_masks</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">prompt</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_turns</span><span class="p">):</span>
+        <span class="c1"># 1. 模型生成动作</span>
+        <span class="n">model_output</span> <span class="o">=</span> <span class="k">await</span> <span class="n">call_sglang</span><span class="p">(</span><span class="n">prompt</span> <span class="o">+</span> <span class="n">full_response</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+        <span class="c1"># ... tokenization and appending ...</span>
+        <span class="n">loss_masks</span> <span class="o">+=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">model_tokens</span><span class="p">)</span> <span class="c1"># loss_mask = 1</span>
+        <span class="n">full_response</span> <span class="o">+=</span> <span class="n">model_output</span>
+
+        <span class="c1"># 2. 解析并执行动作</span>
+        <span class="n">action</span><span class="p">,</span> <span class="n">content</span> <span class="o">=</span> <span class="n">parse_action</span><span class="p">(</span><span class="n">model_output</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;search&quot;</span><span class="p">:</span>
+            <span class="c1"># 3 &amp; 4. 获取并追加观察结果</span>
+            <span class="n">tool_output</span> <span class="o">=</span> <span class="k">await</span> <span class="n">google_search</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+            <span class="c1"># ... tokenization and appending ...</span>
+            <span class="n">loss_masks</span> <span class="o">+=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">tool_tokens</span><span class="p">)</span> <span class="c1"># loss_mask = 0</span>
+            <span class="n">full_response</span> <span class="o">+=</span> <span class="n">tool_output</span>
+            
+        <span class="k">elif</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span>
+            <span class="k">break</span> <span class="c1"># 结束循环</span>
+
+    <span class="c1"># 7. 填充并返回 Sample 对象</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">full_response</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">loss_masks</span> <span class="o">=</span> <span class="n">loss_masks</span>
+    <span class="k">return</span> <span class="n">sample</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3>编写自定义奖励函数<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>类似地，通过 <code class="docutils literal notranslate"><span class="pre">--custom-rm-path</span></code> 指定自定义奖励函数。</p>
+<p><strong>函数签名</strong>: <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">reward_func(args,</span> <span class="pre">sample:</span> <span class="pre">Sample,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">float:</span></code></p>
+<p>该函数接收完整的 <code class="docutils literal notranslate"><span class="pre">Sample</span></code> 对象，根据最终交互结果计算得分。可以在此实现自定义计分逻辑，或调用外部的 Reward Model 服务。</p>
+</section>
+<section id="id12">
+<h3>在训练脚本中配置<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<p>最后，在训练脚本中，通过以下参数启用上述自定义函数：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CUSTOM_ARGS</span><span class="o">=(</span>
+<span class="w">   </span><span class="c1"># 指定自定义生成函数的路径 (格式: path.to.your.file:function_name)</span>
+<span class="w">   </span>--custom-generate-function-path<span class="w"> </span>your_module.multiturn_logic:generate
+
+<span class="w">   </span><span class="c1"># 指定自定义奖励函数的路径</span>
+<span class="w">   </span>--custom-rm-path<span class="w"> </span>your_module.multiturn_logic:reward_func
+<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="moe">
+<h2>大规模 MOE 模型的多机训练<a class="headerlink" href="#moe" title="Link to this heading">#</a></h2>
+<p>为了启动多机任务，首先需要启动一个 ray 集群，即在 node 0 运行：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Node0（HEAD）</span>
+ray<span class="w"> </span>start<span class="w"> </span>--head<span class="w"> </span>--node-ip-address<span class="w"> </span><span class="si">${</span><span class="nv">MASTER_ADDR</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--num-gpus<span class="w"> </span><span class="m">8</span><span class="w"> </span>--disable-usage-stats
+
+<span class="c1"># 其他 Node</span>
+ray<span class="w"> </span>start<span class="w"> </span>--address<span class="o">=</span><span class="si">${</span><span class="nv">MASTER_ADDR</span><span class="si">}</span>:6379<span class="w"> </span>--num-gpus<span class="w"> </span><span class="m">8</span>
+</pre></div>
+</div>
+<p>在 ray 集群启动后，可以在 node 0 提交任务，例如：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ray<span class="w"> </span>job<span class="w"> </span>submit<span class="w"> </span>--address<span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8265&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--runtime-env-json<span class="o">=</span><span class="s1">&#39;{</span>
+<span class="s1">     &quot;env_vars&quot;: {</span>
+<span class="s1">        &quot;PYTHONPATH&quot;: &quot;/root/Megatron-LM/&quot;,</span>
+<span class="s1">        ... # e.g. no_proxy、接口变量等</span>
+<span class="s1">     }</span>
+<span class="s1">   }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--<span class="w"> </span>python3<span class="w"> </span>train.py<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--...（其他<span class="w"> </span>Megatron/SGLang/slime<span class="w"> </span>参数）
+</pre></div>
+</div>
+<p>slime 针对大规模混合专家（MoE）模型的分布式训练进行了深度优化。我们提供了一些端到端的训练案例以供参考：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#models/glm4.5-355B-A32B.md"><span class="xref myst">示例：64xH100 训练 GLM-4.5</span></a></p></li>
+<li><p><a class="reference internal" href="#models/deepseek-r1.md"><span class="xref myst">示例：128xH100 训练 DeepSeek-R1</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">slime文档</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="usage.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">使用文档</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">基础环境搭建</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">拉取并启动 Docker 容器</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slime">安装 slime</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">模型与数据集下载</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型权重转换</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hugging-face-megatron">Hugging Face 格式 转换为 Megatron 格式</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#megatron-hugging-face">Megatron 格式 转换为 Hugging Face 格式</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">训练脚本与参数概览</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-args">MODEL_ARGS: 模型配置参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ckpt-args">CKPT_ARGS: 检查点与路径参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout-args-rollout">ROLLOUT_ARGS: 数据生成（Rollout）参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eval-args">EVAL_ARGS: 评估参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perf-args">PERF_ARGS: 性能与并行参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grpo-args-grpo">GRPO_ARGS: GRPO 算法参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimizer-args">OPTIMIZER_ARGS: 优化器参数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sglang-args-sglang">SGLANG_ARGS: SGLang 服务参数</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">特性介绍</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colocated-actor-and-rollout">Colocated Actor and Rollout</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-sampling">Dynamic Sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-rollout">Partial Rollout</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bf16-fp8">bf16 训练 fp8 推理</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiturn">Multiturn 适配</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">适配思路总结</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">数据准备与映射</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">步骤一：在数据集中构造 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 字段</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">步骤二：在训练脚本中指定映射</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">编写自定义生成函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">编写自定义奖励函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">在训练脚本中配置</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moe">大规模 MOE 模型的多机训练</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By slime Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025-2025, slime.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 04, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
