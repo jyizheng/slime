@@ -1,0 +1,661 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>slime: An SGLang-Native Post-Training Framework for RL Scaling &#8212; slime</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=731335ad" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=731335ad" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'blogs/introducing_slime';</script>
+    <link rel="icon" href="../_static/logo.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="v0.1.0: Redefining High-Performance RL Training Frameworks" href="release_v0.1.0.html" />
+    <link rel="prev" title="AMD" href="../platform_support/amd_tutorial.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 04, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="slime - Home"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="slime - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/usage.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/qa.html">FAQ</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Dense</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4B.html">Qwen3-4B with 8xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/glm4-9B.html">GLM4-9B with 8xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MoE</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-30B-A3B.html">Qwen3-30B-A3B with 8xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/glm4.5-355B-A32B.html">GLM-4.5 with 64xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/deepseek-r1.html">DeepSeek R1 with 128xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4b-base-openhermes.html">SFT Qwen3-4B-Base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/search-r1/README.html">Search-R1 lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/fully_async/README.html">Fully Asynchronous Rollout Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/retool/README.html">Retool: from SFT to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Features</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/speculative-decoding.html">Speculative Decoding – Usage Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/debug.html">Debugging</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Hardware Platforms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../platform_support/amd_tutorial.html">AMD</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Blogs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">slime: An SGLang-Native Post-Training Framework for RL Scaling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_v0.1.0.html">v0.1.0: Redefining High-Performance RL Training Frameworks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime/blob/main/blogs/introducing_slime.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime/edit/main/blogs/introducing_slime.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime/issues/new?title=Issue%20on%20page%20%2Fblogs/introducing_slime.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/blogs/introducing_slime.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>slime: An SGLang-Native Post-Training Framework for RL Scaling</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vision-that-drives-slime">Vision That Drives slime</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#customizability-brings-freedom">Customizability Brings Freedom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#built-for-performance">Built for Performance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lightweight-and-extensible">Lightweight and Extensible</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#roadmap">Roadmap</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="slime-an-sglang-native-post-training-framework-for-rl-scaling">
+<h1>slime: An SGLang-Native Post-Training Framework for RL Scaling<a class="headerlink" href="#slime-an-sglang-native-post-training-framework-for-rl-scaling" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>This article was first released in <a class="reference external" href="https://lmsys.org/blog/2025-07-09-slime/">lmsys.org</a>.</p>
+</div></blockquote>
+<section id="vision-that-drives-slime">
+<h2>Vision That Drives slime<a class="headerlink" href="#vision-that-drives-slime" title="Link to this heading">#</a></h2>
+<p>We believe in RL. We believe RL is the final piece toward AGI.</p>
+<p>If you feel the same way, you’ll share our vision:</p>
+<ul class="simple">
+<li><p>Every field should be end-to-end RLed and every task should become an agent environment.</p></li>
+<li><p>Every RL run should last longer, and every model should scale larger.</p></li>
+<li><p>RL systems should integrate seamlessly with existing infrastructure, letting us focus on new ideas instead of boilerplate engineering.</p></li>
+</ul>
+<p>That’s why we present <a class="reference external" href="https://github.com/THUDM/slime">slime</a>, a post-training framework designed to be:</p>
+<ul class="simple">
+<li><p><strong>Versatile</strong> – with a fully customizable rollout interface and flexible training setups (colocated or decoupled, synchronous or asynchronous, RL or SFT cold start).</p></li>
+<li><p><strong>Performant</strong> - integrating SGLang for inference and Megatron-LM for training, natively.</p></li>
+<li><p><strong>Maintainable</strong> - with a lightweight codebase and smooth transition from Megatron pretraining to SGLang deployment.</p></li>
+</ul>
+<p>In short, a post-training framework for RL scaling.</p>
+<p>Here’s how we made it happen.</p>
+</section>
+<section id="customizability-brings-freedom">
+<h2>Customizability Brings Freedom<a class="headerlink" href="#customizability-brings-freedom" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>We should stop trying to find simple ways to think about the contents of minds, such as simple ways to think about space, objects, multiple agents, or symmetries.</p>
+<p>— <em>The Bitter Lesson</em></p>
+</div></blockquote>
+<p>A prevailing misconception within the RL community is the need for separate frameworks for different tasks: one for plain math, one for multi-turn tool calling, one for asynchronous training, one for agentic tasks, and so on. Forking and maintaining multiple frameworks is dreadful, leading to time-wasting bugfix cherry-picking, or worse, training crashes by missing patches.</p>
+<p>It wasn’t always like this: no one forks PyTorch just for a new dataloader. We believe the current chaos stems from the trap of dictating how people should build their applications. If we insist on defining a universal template for every rollout scenario, we’ll inevitably create an RL framework that meets only a fraction of real-world needs.</p>
+<p>slime views the data sampling in RL differently. We manage all SGLang servers within slime with <a class="reference external" href="https://github.com/sgl-project/sglang/tree/main/sgl-router">sgl-router</a> and provide an interface for the data generation component, <strong>allowing users to inject custom logic and freely interact with SGLang servers</strong>. Unleash their creativity.</p>
+<p><img alt="slime architecture" src="images/blog/slime/slime-arch.png" /></p>
+<p>With the sgl-router, users only need to send HTTP requests to a single endpoint. By exposing this endpoint, complex agent environments can directly interact with slime through an OpenAI-compatible API — no need to modify the environment, and training-deployment consistency is preserved.</p>
+<p>Regarding training schemes, slime uses Ray for resource management, enabling <strong>colocated</strong> (same GPUs) or <strong>decoupled</strong> (separate GPUs) setups with a single flag (<code class="docutils literal notranslate"><span class="pre">--colocate</span></code>).</p>
+<p>And with Ray’s asynchronous execution via <code class="docutils literal notranslate"><span class="pre">.remote()</span></code>, slime naturally supports asynchronous training. Changing synchronization behavior is as simple as moving the <code class="docutils literal notranslate"><span class="pre">ray.get</span></code> operation. And to make experimenting with different strategies easy, we didn’t wrap the code with trainer classes, but simply exposed the training loop in entrypoint  <code class="docutils literal notranslate"><span class="pre">train.py</span></code>.</p>
+</section>
+<section id="built-for-performance">
+<h2>Built for Performance<a class="headerlink" href="#built-for-performance" title="Link to this heading">#</a></h2>
+<p><strong>A decent RL framework must be fast and consistently fast.</strong></p>
+<p><strong>Fast</strong> means leveraging the fastest inference and training frameworks.</p>
+<p>Unlike pre-training, RL workloads involve tons of online sampling during training, which makes the inference performance crucial. Therefore, slime exclusively integrates SGLang, and deliberately delivers an SGLang-native experience.</p>
+<p>So what does ‘SGLang-native’ mean? It means you can take full advantage of all SGLang optimizations — using SGLang inside slime feels just like using it standalone. To make that possible:</p>
+<ul class="simple">
+<li><p>slime internally launches SGLang servers in a <strong>server-based mode</strong>.</p></li>
+<li><p>slime implements <strong>seamless pass-through</strong> for all SGLang parameters (with a <code class="docutils literal notranslate"><span class="pre">--sglang</span></code> prefix), ensuring that all optimization options can be enabled. For instance, you can pass <code class="docutils literal notranslate"><span class="pre">--sglang-enable-ep-moe</span></code>, <code class="docutils literal notranslate"><span class="pre">--sglang-enable-dp-attention</span></code> and <code class="docutils literal notranslate"><span class="pre">--sglang-enable-deepep-moe</span></code> for the powerful multi-node MoE inference capabilities.</p></li>
+<li><p>slime provides an <strong>SGLang-only debug mode</strong> (<code class="docutils literal notranslate"><span class="pre">--debug-rollout-only</span></code>) for easy performance tuning.</p></li>
+</ul>
+<p>Together, we can reproduce the standalone performance of SGLang within slime. Even the base image of slime is built on <code class="docutils literal notranslate"><span class="pre">lmsysorg/sglang:dev</span></code>.</p>
+<p>For training, slime integrates the battle-tested Megatron-LM, aiming for a similarly native pre-training experience:</p>
+<ul class="simple">
+<li><p>slime also implements <strong>seamless pass-through</strong> for all Megatron parameters.</p></li>
+<li><p>slime supports <strong>all Megatron parallelisms</strong> (TP, PP, EP, CP) and monitors training MFU.</p></li>
+<li><p>slime offers a <strong>Megatron-only debug mode</strong> (<code class="docutils literal notranslate"><span class="pre">--debug-train-only</span></code>) and supports storing sampling data for reproducibility.</p></li>
+</ul>
+<p>Megatron can be notoriously complex, so we also provide checkpoint conversion tools to simplify its use.</p>
+<p><strong>Consistently fast</strong> means keeping pace with the evolving inference and training frameworks.</p>
+<p>If you ever followed the <a class="reference external" href="https://github.com/sgl-project/sglang/pulls">SGLang PR list</a>, you will be astonished by its rapid evolution. Megatron, on the other hand, is often heavily customized, with every organization maintaining its own fork. slime is designed to keep pace with upstream changes in SGLang and adapt to optimizations in in-house Megatron variants. This is another reason why we pursue native support for SGLang and Megatron. The parameter pass-through makes upgrading effortless.</p>
+<p>Beyond optimizing inference and training frameworks, we also tackled RL-specific workloads. When SGLang needs changes to support these workflows, we work closely with the SGLang team to upstream patches—so slime can stay native, even as RL logic evolves. Examples include:</p>
+<p><strong>Optimizing weight updates</strong>: Unlike inference tasks, RL training involves frequent updates to model weights. To address this, we’ve introduced several optimizations in SGLang:</p>
+<ul class="simple">
+<li><p>Parameter updates for MoE models under various parallelism strategies (<a class="reference external" href="https://github.com/sgl-project/sglang/pull/6265">#6265</a>, <a class="reference external" href="https://github.com/sgl-project/sglang/pull/6308">#6308</a>, <a class="reference external" href="https://github.com/sgl-project/sglang/pull/6311">#6311</a>).</p></li>
+<li><p>Bucketed parameter update support to reduce overhead (<a class="reference external" href="https://github.com/sgl-project/sglang/pull/7292">#7292</a>).</p></li>
+</ul>
+<p><strong><code class="docutils literal notranslate"><span class="pre">/abort_request</span></code> for dynamic sampling</strong>: In RL algorithms that require oversampling, such as <a class="reference external" href="https://arxiv.org/abs/2503.14476">DAPO</a>, some requests may continue running even after sufficient data has been collected. In collaboration with the <a class="reference external" href="https://github.com/inclusionAI/AReaL">AReal</a> team, we designed an new endpoint: <code class="docutils literal notranslate"><span class="pre">/abort_request</span></code>. This endpoint enables:</p>
+<ul class="simple">
+<li><p>Immediate termination of on-going requests.</p></li>
+<li><p>Reclaiming partially generated content, which enables partial rollouts.</p></li>
+</ul>
+<p>Implemented in <a class="reference external" href="https://github.com/sgl-project/sglang/pull/6698">#6698</a>, <a class="reference external" href="https://github.com/sgl-project/sglang/pull/6855">#6855</a>, <a class="reference external" href="https://github.com/sgl-project/sglang/pull/6184">#6184</a>, <a class="reference external" href="https://github.com/sgl-project/sglang/pull/5966">#5966</a>.</p>
+</section>
+<section id="lightweight-and-extensible">
+<h2>Lightweight and Extensible<a class="headerlink" href="#lightweight-and-extensible" title="Link to this heading">#</a></h2>
+<p>Focusing on customization and performance, slime:</p>
+<ol class="arabic simple">
+<li><p>Provides a customizable rollout interface.</p></li>
+<li><p>Uses Ray for GPU management and asynchronous execution.</p></li>
+<li><p>Integrates SGLang for inference and Megatron for training.</p></li>
+<li><p>Provides weight updates between training and inference.</p></li>
+</ol>
+<p>Pretty straightforward, right? slime transfers complexity from the framework to user-defined pipelines and core libraries (SGLang and Megatron), resulting in a lightweight, easily maintainable codebase.</p>
+<p>But it doesn’t stop at RL.</p>
+<p>Thanks to its modular design and powerful backends, slime can naturally extend to other post-training workflows with minimal extra code:</p>
+<ul class="simple">
+<li><p><strong>SFT</strong>: Load Megatron and use token prediction loss.</p></li>
+<li><p><strong>Rejection Sampling</strong>: Use SGLang for filter, followed by Megatron SFT.</p></li>
+</ul>
+<p><em>(Note that SFT feature is now in experimental state.)</em></p>
+<p>Beyond that, slime’s native integration <strong>seamlessly bridges pre-training to online services</strong>. We can use Megatron for pre-training, switch to slime (which integrates both Megatron and SGLang) for post-training, and finally use SGLang directly for evaluation and deployment. This eliminates the cumbersome and error-prone steps of converting checkpoint formats and aligning precision between frameworks.</p>
+<p>The unified pipeline saves us from tedious glue code, freeing us to focus on what really matters: better RL. Hurray!</p>
+</section>
+<section id="roadmap">
+<h2>Roadmap<a class="headerlink" href="#roadmap" title="Link to this heading">#</a></h2>
+<p>The journey of RL scaling has just begun, and slime is continuously evolving. In the next phase, we will focus on:</p>
+<ol class="arabic simple">
+<li><p>Collaborating with the SGLang team to explore optimal RL training strategies for large-scale MoE models.</p></li>
+<li><p>Supporting broader post-training workflows, strengthening the pre-training-to-production bridge.</p></li>
+<li><p>Adding native PyTorch training backend support to lower the entry barrier.</p></li>
+</ol>
+<p>We hope slime accelerates your RL scaling journey and turns your innovative ideas into reality. Contributions and conversations are always welcome!</p>
+<p>Special thanks to the AMD GenAI - Foundation Model Team for Day-1 AMD hardware support.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../platform_support/amd_tutorial.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">AMD</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="release_v0.1.0.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">v0.1.0: Redefining High-Performance RL Training Frameworks</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vision-that-drives-slime">Vision That Drives slime</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#customizability-brings-freedom">Customizability Brings Freedom</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#built-for-performance">Built for Performance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lightweight-and-extensible">Lightweight and Extensible</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#roadmap">Roadmap</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By slime Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025-2025, slime.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 04, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

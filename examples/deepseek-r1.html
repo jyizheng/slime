@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Training DeepSeek R1 with 128xH100 &#8212; slime</title>
+    <title>DeepSeek R1 with 128xH100 &#8212; slime</title>
   
   
   
@@ -177,7 +177,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="qwen3-30B-A3B.html">Qwen3-30B-A3B with 8xH100</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glm4.5-355B-A32B.html">GLM-4.5 with 64xH100</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Training DeepSeek R1 with 128xH100</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DeepSeek R1 with 128xH100</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Usage</span></p>
 <ul class="nav bd-sidenav">
@@ -197,6 +197,11 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Hardware Platforms</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../platform_support/amd_tutorial.html">AMD</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Blogs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../blogs/introducing_slime.html">slime: An SGLang-Native Post-Training Framework for RL Scaling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../blogs/release_v0.1.0.html">v0.1.0: Redefining High-Performance RL Training Frameworks</a></li>
 </ul>
 
     </div>
@@ -416,7 +421,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Training DeepSeek R1 with 128xH100</h1>
+    <h1>DeepSeek R1 with 128xH100</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -450,8 +455,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="training-deepseek-r1-with-128xh100">
-<h1>Training DeepSeek R1 with 128xH100<a class="headerlink" href="#training-deepseek-r1-with-128xh100" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="deepseek-r1-with-128xh100">
+<h1>DeepSeek R1 with 128xH100<a class="headerlink" href="#deepseek-r1-with-128xh100" title="Link to this heading">#</a></h1>
 <p>This is an example of doing DeepSeek R1 RL training using 128xH100 GPUs.</p>
 <p>We will use bf16 for training, and an fp8 format with 128x128 blockwise quantization for inference. The maximum response length is 32k, and dynamic sampling will be used to filter data during training.</p>
 <p>Regarding parallelism, for sglang we will enable EP64, activate dp attention, and deepep. For the Megatron part, we will use TP8, PP4, EP32, and CP4.</p>

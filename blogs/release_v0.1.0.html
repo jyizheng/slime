@@ -1,0 +1,697 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>v0.1.0: Redefining High-Performance RL Training Frameworks &#8212; slime</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=731335ad" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=731335ad" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'blogs/release_v0.1.0';</script>
+    <link rel="icon" href="../_static/logo.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="slime: An SGLang-Native Post-Training Framework for RL Scaling" href="introducing_slime.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 04, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="slime - Home"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="slime - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/usage.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/qa.html">FAQ</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Dense</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4B.html">Qwen3-4B with 8xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/glm4-9B.html">GLM4-9B with 8xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MoE</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-30B-A3B.html">Qwen3-30B-A3B with 8xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/glm4.5-355B-A32B.html">GLM-4.5 with 64xH100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/deepseek-r1.html">DeepSeek R1 with 128xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4b-base-openhermes.html">SFT Qwen3-4B-Base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/search-r1/README.html">Search-R1 lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/fully_async/README.html">Fully Asynchronous Rollout Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/retool/README.html">Retool: from SFT to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Features</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/speculative-decoding.html">Speculative Decoding – Usage Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/debug.html">Debugging</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Hardware Platforms</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../platform_support/amd_tutorial.html">AMD</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Blogs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="introducing_slime.html">slime: An SGLang-Native Post-Training Framework for RL Scaling</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">v0.1.0: Redefining High-Performance RL Training Frameworks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime/blob/main/blogs/release_v0.1.0.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime/edit/main/blogs/release_v0.1.0.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime/issues/new?title=Issue%20on%20page%20%2Fblogs/release_v0.1.0.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/blogs/release_v0.1.0.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>v0.1.0: Redefining High-Performance RL Training Frameworks</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-optimization-pushing-the-limits-of-rl-training-speed">Performance Optimization: Pushing the Limits of RL Training Speed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doing-more-experiments-with-fewer-cards-fully-offloading-megatron">Doing More Experiments with Fewer Cards: Fully Offloading Megatron</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-offload-gpu-tensors-generically">How to Offload GPU Tensors Generically</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-offload-nccl">How to Offload NCCL</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-update-optimization">Parameter Update Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-optimization">Training Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-optimization-check-list">Performance Optimization Check List</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-algorithm-support">New Algorithm Support</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correctness-verification">Correctness Verification</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="v0-1-0-redefining-high-performance-rl-training-frameworks">
+<h1>v0.1.0: Redefining High-Performance RL Training Frameworks<a class="headerlink" href="#v0-1-0-redefining-high-performance-rl-training-frameworks" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>The origin version of this article is in Chinese and was first released in <a class="reference external" href="https://zhuanlan.zhihu.com/p/1945237948166547268">zhihu</a>.</p>
+</div></blockquote>
+<p>With the help of the community, we’ve finally released the first version of <strong>slime</strong>, <strong>v0.1.0</strong>, just two months after it was open-sourced.</p>
+<p>In a nutshell, this version can be summarized as follows:</p>
+<blockquote>
+<div><p><strong>slime v0.1.0 provides all the essential performance optimizations needed for large-scale MoE RL training.</strong></p>
+</div></blockquote>
+<p>Specifically, this version brings the following improvements:</p>
+<ul class="simple">
+<li><p><strong>Performance</strong>:</p>
+<ul>
+<li><p>Provides <strong>efficient inference for MoE models</strong>, especially with <code class="docutils literal notranslate"><span class="pre">fp8</span></code> rollout + <code class="docutils literal notranslate"><span class="pre">deepep</span></code> + <code class="docutils literal notranslate"><span class="pre">mtp</span></code>.</p></li>
+<li><p>Designed a generic <strong>training framework memory offload solution</strong> to save more KV Cache space, thus increasing inference concurrency.</p></li>
+<li><p><strong>Faster parameter updates</strong>.</p></li>
+<li><p>Achieves more training with fewer GPUs through <strong>CPU Adam</strong>.</p></li>
+<li><p>Supports <strong>all of Megatron’s parallel strategies</strong> as well as <code class="docutils literal notranslate"><span class="pre">deepep</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Features</strong>:</p>
+<ul>
+<li><p>Added support for <strong>GSPO</strong> for MoE model training.</p></li>
+<li><p>Added support for <strong>TIS</strong> for <code class="docutils literal notranslate"><span class="pre">fp8</span></code> rollout.</p></li>
+</ul>
+</li>
+<li><p><strong>Correctness</strong>:</p>
+<ul>
+<li><p>Implemented <strong>Dense and MoE model CI</strong> to strictly check metrics like <code class="docutils literal notranslate"><span class="pre">kl</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p>We hope to use slime v0.1.0 to demonstrate our understanding of high-performance RL training frameworks and have it become a baseline for future performance comparisons.</p>
+<p>Next, I’ll elaborate on the design philosophy behind these features.</p>
+<hr class="docutils" />
+<section id="performance-optimization-pushing-the-limits-of-rl-training-speed">
+<h2>Performance Optimization: Pushing the Limits of RL Training Speed<a class="headerlink" href="#performance-optimization-pushing-the-limits-of-rl-training-speed" title="Link to this heading">#</a></h2>
+<p>In traditional deep learning training, there’s a universal solution for speedup: <strong>add more cards</strong>. By reducing the amount of data processed per card, you can significantly lower end-to-end training latency.</p>
+<p>However, this method doesn’t work for RL training because <strong>inference latency cannot be reduced by adding more GPUs</strong>. Even with more GPUs, we still have to wait for the longest sample to finish decoding. While increasing throughput can improve the amount of training data per rollout, the off-policy issues caused by an excessively large inference batch size still have some limitations.</p>
+<p>I believe this is the biggest challenge for infrastructure under the current RL paradigm, which is:</p>
+<blockquote>
+<div><p><strong>We want to scale inference compute, but we cannot scale inference latency.</strong></p>
+</div></blockquote>
+<p>The decoding speed of a single data point determines the upper limit of RL training speed. For larger MoE models, there are currently three common optimization methods to push this limit, and we’ve tried all of them:</p>
+<ol class="arabic simple">
+<li><p><strong>Reduce memory access through quantization</strong>: Considering that long calibration is not feasible in RL training, slime opts for <code class="docutils literal notranslate"><span class="pre">fp8</span></code> quantization.</p></li>
+<li><p><strong>Use <code class="docutils literal notranslate"><span class="pre">deepep</span></code> low-latency mode to reduce <code class="docutils literal notranslate"><span class="pre">all2all</span></code> latency across machines</strong>: To work with <code class="docutils literal notranslate"><span class="pre">deepep</span></code>, slime recommends using blockwise quantization with <code class="docutils literal notranslate"><span class="pre">fp8</span></code> to enable related SGLang configurations.</p></li>
+<li><p><strong>Enable Speculative Sampling</strong>: slime allows loading any <code class="docutils literal notranslate"><span class="pre">draft</span> <span class="pre">model</span></code> for the inference part (currently, it doesn’t support updating the <code class="docutils literal notranslate"><span class="pre">draft</span> <span class="pre">model</span></code> during training).</p></li>
+</ol>
+<p>By using the three optimizations mentioned above, we can increase a model like <strong>GLM4.5 355B-A32B</strong> from less than 10 tokens/s for a single data point to <strong>60-70 tokens/s</strong>, which significantly raises the upper limit of RL training speed.</p>
+<p>In addition to monitoring inference throughput, slime also monitors <code class="docutils literal notranslate"><span class="pre">perf/longest_sample_tokens_per_sec</span></code> to better understand the potential for performance optimization in the inference part.</p>
+</section>
+<hr class="docutils" />
+<section id="doing-more-experiments-with-fewer-cards-fully-offloading-megatron">
+<h2>Doing More Experiments with Fewer Cards: Fully Offloading Megatron<a class="headerlink" href="#doing-more-experiments-with-fewer-cards-fully-offloading-megatron" title="Link to this heading">#</a></h2>
+<p>After optimizing the upper limit, we noticed another characteristic of RL training: as long as the <strong>KV Cache doesn’t overflow</strong>, increasing the inference batch size doesn’t significantly affect training latency.</p>
+<p><strong>KV Cache overflow</strong> occurs during inference when the response lengths of the data are all very long, leading to insufficient KV Cache space. This requires kicking out some half-generated data from the queue and then re-running <code class="docutils literal notranslate"><span class="pre">prefill</span></code> and subsequent inference steps after other data has been processed and freed up space. If a data point with a response length of 64k has to wait for 32k tokens to be decoded by other data during its inference, its total time is equivalent to decoding 96k tokens. This greatly impacts the RL training speed.</p>
+<p>Therefore, a more suitable training configuration is to calculate the minimum number of GPUs needed to prevent KV Cache overflow based on the inference batch size, the average response length, and the available KV Cache space on a single server. A group of these GPUs is then used for training. For example, if we have 512 cards and the calculation shows that 256 cards provide enough KV Cache, we should run two experiments in parallel instead of launching one experiment with all 512 cards.</p>
+<p>Based on this consideration, we noticed two points for optimization:</p>
+<ol class="arabic simple">
+<li><p><strong>The optimal number of cards may not be sufficient to load the training part</strong>. Inference only needs to load the <code class="docutils literal notranslate"><span class="pre">fp8</span></code> parameters, while training generally requires more than 18 times the parameter size of GPU memory (bf16 param, fp32 grad, fp32 master param, fp32 m and v). To solve this, slime uses <strong>Megatron’s built-in CPU Adam</strong> to save GPU memory for the training part. This strategy allowed us to provide solutions for training GLM 4.5 355B-A32B with 8 nodes and DeepSeek R1 with 16 nodes.</p></li>
+<li><p><strong>Increase the KV Cache space available per SGLang Server</strong>, which means increasing <code class="docutils literal notranslate"><span class="pre">--mem-fraction</span></code>. For the more common integrated training and inference tasks, the main limitation for <code class="docutils literal notranslate"><span class="pre">mem_fraction</span></code> is the residual GPU memory after offloading the training part to the CPU. Therefore, we need to find a generic way to offload the GPU memory used by the Megatron part.</p></li>
+</ol>
+<section id="how-to-offload-gpu-tensors-generically">
+<h3>How to Offload GPU Tensors Generically<a class="headerlink" href="#how-to-offload-gpu-tensors-generically" title="Link to this heading">#</a></h3>
+<p>One crude approach is to find all the GPU Tensors allocated by Megatron and call <code class="docutils literal notranslate"><span class="pre">.to(&quot;cpu&quot;)</span></code> on all of them. This method has three difficulties:</p>
+<ul class="simple">
+<li><p>It’s hard to capture all GPU Tensors allocated by Megatron.</p></li>
+<li><p>Because Megatron’s <code class="docutils literal notranslate"><span class="pre">distributed</span> <span class="pre">optimizer</span></code> reorganizes all parameters into some contiguous GPU buffers and then divides them with various <code class="docutils literal notranslate"><span class="pre">slices</span></code>, it’s difficult to properly handle all references to correctly free the GPU Tensors.</p></li>
+<li><p>It requires checking the source code again with every new Megatron version, which is hard to maintain.</p></li>
+</ul>
+<p>Is there a more generic solution?</p>
+<p>We noticed that SGLang’s <code class="docutils literal notranslate"><span class="pre">torch_memory_saver</span></code> and VLLM’s <code class="docutils literal notranslate"><span class="pre">cumem_allocator</span></code> provide a more general offload solution. Their principle is that CUDA 10.2 provides a <strong>series of Virtual Memory Management APIs</strong>, similar to an operating system’s virtual and physical addresses (VA and PA). When allocating GPU memory, they return a handle to a memory mapping instead of the actual physical address. Therefore, when offloading, we only need to “secretly” release the memory corresponding to this mapping and reallocate it when this memory is needed. The upper-level application doesn’t need to be aware of this.</p>
+<p>A natural idea is to use this method to take over the entire training process in RL. However, this prevents the reuse of PyTorch’s <code class="docutils literal notranslate"><span class="pre">CUDACachingAllocator</span></code>, and without the cache, memory fragmentation becomes more pronounced, easily leading to <strong>OOM</strong> during training.</p>
+<p>To continue reusing the native, cached allocator, we cannot use <code class="docutils literal notranslate"><span class="pre">CUDAPluggableAllocator</span></code>. Noticing again that slime’s architecture has training and inference in different processes, we only need to <strong>directly replace <code class="docutils literal notranslate"><span class="pre">cudaMalloc</span></code> and <code class="docutils literal notranslate"><span class="pre">cudaFree</span></code> used by <code class="docutils literal notranslate"><span class="pre">CUDACachingAllocator</span></code> in the training process with VMM APIs via <code class="docutils literal notranslate"><span class="pre">LD_PRELOAD</span></code></strong>. This allows us to completely and generically offload all GPU Tensors allocated by PyTorch.</p>
+<p>At the same time, we must also note one detail: VMM APIs and <code class="docutils literal notranslate"><span class="pre">cudaIPC</span> <span class="pre">APIs</span></code> (such as <code class="docutils literal notranslate"><span class="pre">cudaIpcGetMemHandle</span></code>) are incompatible. Therefore, for integrated training and inference tasks and DeepEP, we need to disable the <code class="docutils literal notranslate"><span class="pre">LD_PRELOAD</span></code> replacement and switch back to <code class="docutils literal notranslate"><span class="pre">cudaMalloc</span></code>.</p>
+<p>With help from the SGLang community, we updated <code class="docutils literal notranslate"><span class="pre">torch_memory_saver</span></code> for slime’s needs, implementing this offload solution.</p>
+</section>
+<section id="how-to-offload-nccl">
+<h3>How to Offload NCCL<a class="headerlink" href="#how-to-offload-nccl" title="Link to this heading">#</a></h3>
+<p>After thoroughly offloading the GPU Tensors in Megatron, we found that a large amount of GPU memory still remained, which was caused by <strong>NCCL</strong>. In PyTorch, each NCCL group involved in communication allocates a substantial buffer. This issue is particularly noticeable for larger MoE models due to the various parallel strategies, potentially taking up <strong>more than 10GB</strong>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">LD_PRELOAD</span></code> solution mentioned above doesn’t handle the NCCL issue well, and we don’t want to modify the NCCL source code to avoid having to maintain a separate NCCL fork in addition to slime. So, slime’s approach is to use <code class="docutils literal notranslate"><span class="pre">destroy_process_group</span></code> to destroy the NCCL group when offloading Megatron and then recreate it before loading Megatron. To do this, we mimicked the VMM API and <code class="docutils literal notranslate"><span class="pre">monkey</span> <span class="pre">patched</span></code> <code class="docutils literal notranslate"><span class="pre">dist.new_group</span></code> to add a layer of <code class="docutils literal notranslate"><span class="pre">ReloadableProcessGroup</span></code>.</p>
+<p>In this way, we achieved a generic <strong>NCCL offload</strong>. However, because we need to rebuild the NCCL group, this operation has a slight impact on the speed of the first communication in each training iteration. But we believe this approach offers a significant advantage in terms of maintainability and the GPU memory it saves.</p>
+<p>Combining these two optimizations, we reduced Megatron’s residual GPU memory from around <strong>15-18GB</strong> to <strong>3-5GB</strong>, which allows us to increase the <code class="docutils literal notranslate"><span class="pre">mem_fraction</span></code> for MoE models to <strong>0.7-0.8</strong>. This significantly boosts the available KV Cache, increases the concurrency each server can support, and allows us to launch more training tasks with fewer GPUs.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="parameter-update-optimization">
+<h2>Parameter Update Optimization<a class="headerlink" href="#parameter-update-optimization" title="Link to this heading">#</a></h2>
+<p>Parameter update is another special step in RL training. For this, slime v0.1.0 provides the best optimization solution for scenarios where training and inference are in different processes. This work was heavily optimized by Biao He. I recommend reading his blog post:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://hebiao064.github.io/rl-weight-sync">Efficient Reinforcement Learning Training - Optimizing Weight Synchronization in slime</a></p></li>
+</ul>
+<p>Currently, slime can complete weight synchronization for a GLM4.5 355B-A32B model with bf16 weights in <strong>48s</strong> and complete <code class="docutils literal notranslate"><span class="pre">fp8</span></code> blockwise quantization + parameter update in <strong>100s</strong> (the <code class="docutils literal notranslate"><span class="pre">fp8</span></code> branch is still being optimized).</p>
+</section>
+<hr class="docutils" />
+<section id="training-optimization">
+<h2>Training Optimization<a class="headerlink" href="#training-optimization" title="Link to this heading">#</a></h2>
+<p>For the pure training part of slime, we believe Megatron already provides ample optimizations, so our main focus was to <strong>ensure compatibility with all of Megatron’s parallel strategies</strong>.</p>
+<p>During this adaptation, we found an interesting bugfix: we discovered that when SGLang enabled <code class="docutils literal notranslate"><span class="pre">mtp</span></code>, the Megatron part couldn’t start DeepEP. It turned out that when <code class="docutils literal notranslate"><span class="pre">mtp</span></code> is enabled, SGLang <code class="docutils literal notranslate"><span class="pre">disables</span> <span class="pre">the</span> <span class="pre">overlap</span> <span class="pre">schedule</span></code>, which causes a certain metadata communication to use <code class="docutils literal notranslate"><span class="pre">nccl</span></code> instead of <code class="docutils literal notranslate"><span class="pre">gloo</span></code> after being offloaded to the CPU, and this conflicts with DeepEP.</p>
+</section>
+<hr class="docutils" />
+<section id="performance-optimization-check-list">
+<h2>Performance Optimization Check List<a class="headerlink" href="#performance-optimization-check-list" title="Link to this heading">#</a></h2>
+<p>Since the release of slime, I’ve often been asked about its performance comparison with other frameworks.</p>
+<p>My understanding of benchmarks is that they should not be used as a weapon for frameworks to attack each other, but rather as a <strong>tool for identifying gaps</strong>. To that end, we will gradually release performance benchmarks that slime focuses on to improve ourselves.</p>
+<p>I also believe that before running benchmarks, you can analyze a framework’s focus on performance from a qualitative perspective. Here’s a basic feature check list for optimizations:</p>
+<ul class="simple">
+<li><p>Does it support MoE training? (Currently, large-scale experiments are focused on MoE)</p></li>
+<li><p>Can the internal <code class="docutils literal notranslate"><span class="pre">sglang</span> <span class="pre">mem</span> <span class="pre">fraction</span></code> or <code class="docutils literal notranslate"><span class="pre">vllm</span> <span class="pre">gpu</span> <span class="pre">utilization</span></code> be adjusted to over 0.7? (Ensures KV Cache space)</p></li>
+<li><p>Does it support <code class="docutils literal notranslate"><span class="pre">fp8</span></code> or lower precision inference? (Reduces inference memory access, boosts speed)</p></li>
+<li><p>Does it support enabling <code class="docutils literal notranslate"><span class="pre">deepep</span></code> for both training and inference? (Optimizes MoE <code class="docutils literal notranslate"><span class="pre">all2all</span></code> communication)</p></li>
+<li><p>Does it support speculative sampling? (Improves inference latency and throughput)</p></li>
+<li><p>Does it have an efficient training backend, such as Megatron or torchtitan, and support all necessary parallelization strategies? (Reuses mature training optimizations)</p></li>
+</ul>
+<p>slime v0.1.0 has made preliminary attempts at all the above optimizations, and there’s still a lot of room for improvement. We hope this version can serve as a baseline for future slime versions or for performance comparisons between different frameworks. We also welcome all friends who share our pursuit of performance to try out slime and join the slime community!</p>
+</section>
+<hr class="docutils" />
+<section id="new-algorithm-support">
+<h2>New Algorithm Support<a class="headerlink" href="#new-algorithm-support" title="Link to this heading">#</a></h2>
+<p>To better train MoE models and perform <code class="docutils literal notranslate"><span class="pre">fp8</span></code> rollouts, we implemented <strong>GSPO</strong> and <strong>TIS</strong>. Additionally, community experts have helped implement algorithms like <code class="docutils literal notranslate"><span class="pre">reinforce++</span></code> and <code class="docutils literal notranslate"><span class="pre">reinforce++</span> <span class="pre">baseline</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="correctness-verification">
+<h2>Correctness Verification<a class="headerlink" href="#correctness-verification" title="Link to this heading">#</a></h2>
+<p>slime v0.1.0 adds <strong>end-to-end CI</strong>: we run single-machine GLM4 9B and Qwen3 30B-A3B training for each PR, ensuring correctness through strict checks. For example, we explicitly require:</p>
+<ul class="simple">
+<li><p>The recomputed <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">prob</span></code> of the first rollout must be exactly equal to the <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">prob</span></code> of the <code class="docutils literal notranslate"><span class="pre">reference</span> <span class="pre">model</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ppo_kl</span></code> of the first training step within each rollout must be exactly 0.</p></li>
+</ul>
+<p>Such precise verification is rarely achieved in training frameworks, and it’s something we are very proud of.</p>
+<hr class="docutils" />
+<p>This is a brief introduction to slime v0.1.0. I hope it sparks your curiosity about slime and that it can be helpful in your work.</p>
+<p>Everyone is welcome to join the slime community. Let’s work together to build an open RL Infra and contribute to RL scaling!</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="introducing_slime.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">slime: An SGLang-Native Post-Training Framework for RL Scaling</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-optimization-pushing-the-limits-of-rl-training-speed">Performance Optimization: Pushing the Limits of RL Training Speed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doing-more-experiments-with-fewer-cards-fully-offloading-megatron">Doing More Experiments with Fewer Cards: Fully Offloading Megatron</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-offload-gpu-tensors-generically">How to Offload GPU Tensors Generically</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-offload-nccl">How to Offload NCCL</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-update-optimization">Parameter Update Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-optimization">Training Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-optimization-check-list">Performance Optimization Check List</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-algorithm-support">New Algorithm Support</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correctness-verification">Correctness Verification</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By slime Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025-2025, slime.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 04, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

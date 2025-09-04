@@ -1,0 +1,656 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>slime：为 RL Scaling 设计的 SGLang-Native 后训练框架 &#8212; slime</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=731335ad" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=731335ad" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'blogs/introducing_slime';</script>
+    <link rel="icon" href="../_static/logo.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="v0.1.0: 重新定义高性能 RL 训练框架" href="release_v0.1.0.html" />
+    <link rel="prev" title="Debug 指南" href="../developer_guide/debug.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 04, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="slime - Home"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="slime - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">开始使用</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">快速使用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/usage.html">使用文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/qa.html">常见 Q&amp;A</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Dense</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4B.html">8xH100 训练 Qwen3-4B</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/glm4-9B.html">8xH100 训练 GLM4-9B</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MoE</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-30B-A3B.html">8xH100 训练 Qwen3-30B-A3B</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/glm4.5-355B-A32B.html">64xH100 训练 GLM-4.5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/deepseek-r1.html">128xH100 训练 DeepSeek R1</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">其他用法</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4b-base-openhermes.html">SFT Qwen3-4B-Base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/search-r1/README.html">Search-R1 lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/fully_async/README.html">Fully Asynchronous Rollout Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/retool/README.html">Retool: from SFT to RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">高级特性</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/speculative-decoding.html">Speculative decoding 使用指南</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">开发指南</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/debug.html">Debug 指南</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">博客</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">slime：为 RL Scaling 设计的 SGLang-Native 后训练框架</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_v0.1.0.html">v0.1.0: 重新定义高性能 RL 训练框架</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime/blob/main/blogs/introducing_slime.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime/edit/main/blogs/introducing_slime.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/THUDM/slime/issues/new?title=Issue%20on%20page%20%2Fblogs/introducing_slime.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/blogs/introducing_slime.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>slime：为 RL Scaling 设计的 SGLang-Native 后训练框架</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">愿景</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">自定义才能自由</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">为性能而生</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">轻量且可扩展</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">发展蓝图</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="slime-rl-scaling-sglang-native">
+<h1>slime：为 RL Scaling 设计的 SGLang-Native 后训练框架<a class="headerlink" href="#slime-rl-scaling-sglang-native" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>本文由英文版翻译而来，首发于 <a class="reference external" href="https://lmsys.org/blog/2025-07-09-slime/">lmsys.org</a>。</p>
+</div></blockquote>
+<section id="id1">
+<h2>愿景<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>我们相信强化学习。我们相信强化学习是通往 AGI 的最后一块拼图。</p>
+<p>所以我们相信：</p>
+<ul class="simple">
+<li><p>应该在每个领域上都尝试端到端强化学习，把所有任务都转变为 agent 环境。</p></li>
+<li><p>强化学习训练运行都应持续更久，每个模型都应扩展得更大。</p></li>
+<li><p>强化学习系统应与现有基础设施无缝集成，让我们能够专注于新的想法，而不是琐碎的杂活。</p></li>
+</ul>
+<p>所以我们实现了 <a class="reference external" href="https://github.com/THUDM/slime">slime</a>，它是一个专为后训练设计的框架，旨在实现以下特性：</p>
+<ul class="simple">
+<li><p><strong>多功能性</strong>——具有完全可定制的推理接口和灵活的训练设置（同地或解耦，同步或异步，强化学习或 SFT 冷启动）。</p></li>
+<li><p><strong>高性能</strong>——原生集成了 SGLang 进行推理，以及 Megatron-LM 进行训练。</p></li>
+<li><p><strong>可维护性</strong>——代码库轻量，并能从 Megatron 预训练平滑过渡到 SGLang 部署。</p></li>
+</ul>
+<p>简而言之，它是一个为强化学习扩展而生的后训练框架。</p>
+<p>以下是我们如何实现这一切的。</p>
+</section>
+<section id="id2">
+<h2>自定义才能自由<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>我们应该停止尝试用简单的方式来思考心智的内容，例如简单地思考空间、物体、多智能体或对称性。</p>
+<p>— <em>The Bitter Lesson</em></p>
+</div></blockquote>
+<p>强化学习社区中一个普遍的误解是，不同任务需要不同的框架：一个用于纯粹的数学，一个用于多轮工具调用，一个用于异步训练，一个用于智能体任务，等等。维护和分叉多个框架令人沮丧，这导致了浪费时间的 bug 修复挑选，甚至更糟的是，因为遗漏补丁而导致的训练崩溃。</p>
+<p>事情并非总是如此：没有人会为了一个新的数据加载器而分叉 PyTorch。我们认为目前的混乱源于一种陷阱，即规定人们应该如何构建他们的应用。如果我们坚持为每种推理场景定义一个通用模板，我们最终只会创建一个只满足一小部分实际需求的强化学习框架。</p>
+<p>slime 以不同的方式看待强化学习中的数据采样。我们在 slime 内部通过 <a class="reference external" href="https://github.com/sgl-project/sglang/tree/main/sgl-router">sgl-router</a> 管理所有 SGLang 服务器，并为数据生成组件提供一个接口，<strong>允许用户注入自定义逻辑并自由地与 SGLang 服务器交互</strong>。这能释放他们的创造力。</p>
+<p>使用 sgl-router，用户只需向一个单一端点发送 HTTP 请求。通过暴露这个端点，复杂的智能体环境可以直接通过一个与 OpenAI 兼容的 API 与 slime 交互——无需修改环境，并且训练与部署的一致性也得到了保留。</p>
+<p>在训练方案方面，slime 使用 Ray 进行资源管理，通过一个简单的标志 (<code class="docutils literal notranslate"><span class="pre">--colocate</span></code>)，即可启用<strong>同地</strong>（相同 GPU）或<strong>解耦</strong>（不同 GPU）的设置。</p>
+<p>凭借 Ray 通过 <code class="docutils literal notranslate"><span class="pre">.remote()</span></code> 实现的异步执行，slime 自然支持异步训练。改变同步行为就像移动 <code class="docutils literal notranslate"><span class="pre">ray.get</span></code> 操作一样简单。为了便于尝试不同的策略，我们没有将代码封装在训练器类中，而是简单地将训练循环暴露在入口文件 <code class="docutils literal notranslate"><span class="pre">train.py</span></code> 中。</p>
+</section>
+<section id="id3">
+<h2>为性能而生<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p><strong>一个合格的强化学习框架必须既快，又持续地快。</strong></p>
+<p><strong>快</strong>意味着要利用最快的推理和训练框架。</p>
+<p>与预训练不同，强化学习工作负载在训练过程中涉及大量的在线采样，这使得推理性能至关重要。因此，slime 专门集成了 SGLang，并刻意提供了 SGLang 原生体验。</p>
+<p>那么，“SGLang 原生”意味着什么？这意味着你可以充分利用所有 SGLang 的优化——在 slime 内部使用 SGLang 就像单独使用它一样。为了实现这一点：</p>
+<ul class="simple">
+<li><p>slime 在内部以<strong>服务器模式</strong>启动 SGLang 服务器。</p></li>
+<li><p>slime 对所有 SGLang 参数实现了<strong>无缝传递</strong>（带有 <code class="docutils literal notranslate"><span class="pre">--sglang</span></code> 前缀），确保所有优化选项都可以启用。例如，你可以传递 <code class="docutils literal notranslate"><span class="pre">--sglang-enable-ep-moe</span></code>、<code class="docutils literal notranslate"><span class="pre">--sglang-enable-dp-attention</span></code> 和 <code class="docutils literal notranslate"><span class="pre">--sglang-enable-deepep-moe</span></code>，以实现强大的多节点 MoE 推理功能。</p></li>
+<li><p>slime 提供了一个<strong>仅限 SGLang 的调试模式</strong> (<code class="docutils literal notranslate"><span class="pre">--debug-rollout-only</span></code>)，以便轻松进行性能调优。</p></li>
+</ul>
+<p>通过这些，我们可以在 slime 内部重现 SGLang 的独立性能。甚至 slime 的基础镜像也是基于 <code class="docutils literal notranslate"><span class="pre">lmsysorg/sglang:dev</span></code> 构建的。</p>
+<p>对于训练，slime 集成了久经考验的 Megatron-LM，旨在提供同样原生的预训练体验：</p>
+<ul class="simple">
+<li><p>slime 也对所有 Megatron 参数实现了<strong>无缝传递</strong>。</p></li>
+<li><p>slime 支持<strong>所有 Megatron 并行策略</strong>（TP, PP, EP, CP），并监控训练 MFU。</p></li>
+<li><p>slime 提供了<strong>仅限 Megatron 的调试模式</strong> (<code class="docutils literal notranslate"><span class="pre">--debug-train-only</span></code>)，并支持存储采样数据以供重现。</p></li>
+</ul>
+<p>Megatron 可能非常复杂，因此我们还提供了检查点转换工具来简化其使用。</p>
+<p><strong>持续地快</strong>意味着要跟上不断发展的推理和训练框架。</p>
+<p>如果你曾关注 <a class="reference external" href="https://github.com/sgl-project/sglang/pulls">SGLang 的 PR 列表</a>，你会被其快速的演进所震惊。另一方面，Megatron 通常被深度定制，每个组织都维护着自己的分叉。slime 旨在跟上游 SGLang 的变化，并适应内部 Megatron 变体中的优化。这也是我们追求对 SGLang 和 Megatron 原生支持的另一个原因。参数传递使得升级毫不费力。</p>
+<p>除了优化推理和训练框架，我们还处理了强化学习特有的工作负载。当 SGLang 需要修改以支持这些工作流时，我们与 SGLang 团队紧密合作，将补丁合并到上游——这样即使强化学习逻辑演变，slime 也能保持原生。例如：</p>
+<p><strong>优化权重更新</strong>：与推理任务不同，强化学习训练涉及频繁的模型权重更新。为了解决这个问题，我们在 SGLang 中引入了几项优化：</p>
+<ul class="simple">
+<li><p>在各种并行策略下对 MoE 模型进行参数更新（<a class="reference external" href="https://github.com/sgl-project/sglang/pull/6265">#6265</a>、<a class="reference external" href="https://github.com/sgl-project/sglang/pull/6308">#6308</a>、<a class="reference external" href="https://github.com/sgl-project/sglang/pull/6311">#6311</a>）。</p></li>
+<li><p>支持桶式参数更新以减少开销（<a class="reference external" href="https://github.com/sgl-project/sglang/pull/7292">#7292</a>）。</p></li>
+</ul>
+<p><strong>用于动态采样的 <code class="docutils literal notranslate"><span class="pre">/abort_request</span></code></strong>：在需要过采样的强化学习算法中，例如 <a class="reference external" href="https://arxiv.org/abs/2503.14476">DAPO</a>，即使已收集到足够的数据，某些请求可能仍会继续运行。我们与 <a class="reference external" href="https://github.com/inclusionAI/AReaL">AReal</a> 团队合作，设计了一个新的端点：<code class="docutils literal notranslate"><span class="pre">/abort_request</span></code>。这个端点能够：</p>
+<ul class="simple">
+<li><p>立即终止正在进行的请求。</p></li>
+<li><p>重新获取部分生成的内容，从而实现部分推理。</p></li>
+</ul>
+<p>这些功能在 <a class="reference external" href="https://github.com/sgl-project/sglang/pull/6698">#6698</a>、<a class="reference external" href="https://github.com/sgl-project/sglang/pull/6855">#6855</a>、<a class="reference external" href="https://github.com/sgl-project/sglang/pull/6184">#6184</a>、<a class="reference external" href="https://github.com/sgl-project/sglang/pull/5966">#5966</a> 中实现。</p>
+</section>
+<section id="id4">
+<h2>轻量且可扩展<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>slime 专注于可定制性和性能：</p>
+<ol class="arabic simple">
+<li><p>提供了一个可定制的推理接口。</p></li>
+<li><p>使用 Ray 进行 GPU 管理和异步执行。</p></li>
+<li><p>集成 SGLang 用于推理，Megatron 用于训练。</p></li>
+<li><p>提供训练和推理之间的权重更新。</p></li>
+</ol>
+<p>很简单，对吧？slime 将复杂性从框架转移到用户定义的管道和核心库（SGLang 和 Megatron），从而形成一个轻量、易于维护的代码库。</p>
+<p>但它并不仅限于强化学习。</p>
+<p>由于其模块化设计和强大的后端，slime 可以通过最少的额外代码自然地扩展到其他后训练工作流：</p>
+<ul class="simple">
+<li><p><strong>SFT</strong>：加载 Megatron 并使用 token 预测损失。</p></li>
+<li><p><strong>Rejection Sampling</strong>：使用 SGLang 进行过滤，然后使用 Megatron SFT。</p></li>
+</ul>
+<p><em>（请注意，SFT 功能目前处于实验阶段。）</em></p>
+<p>除此之外，slime 的原生集成<strong>无缝连接了预训练到在线服务</strong>。我们可以使用 Megatron 进行预训练，切换到 slime（它集成了 Megatron 和 SGLang）进行后训练，最后直接使用 SGLang 进行评估和部署。这消除了转换检查点格式和对齐框架之间精度的繁琐且易出错的步骤。</p>
+<p>统一的管道将我们从繁琐的“胶水代码”中解放出来，让我们能够专注于真正重要的事情：更好的强化学习。太棒了！</p>
+</section>
+<section id="id5">
+<h2>发展蓝图<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>强化学习扩展的旅程才刚刚开始，slime 也在不断演进。在下一阶段，我们将专注于：</p>
+<ol class="arabic simple">
+<li><p>与 SGLang 团队合作，探索大规模 MoE 模型的最佳强化学习训练策略。</p></li>
+<li><p>支持更广泛的后训练工作流，加强从预训练到生产的桥梁。</p></li>
+<li><p>添加对原生 PyTorch 训练后端的支持，以降低入门门槛。</p></li>
+</ol>
+<p>我们希望 slime 能加速你的强化学习扩展之旅，并将你的创新想法变为现实。欢迎随时提出贡献和进行交流！</p>
+<p>特别感谢 AMD GenAI - Foundation Model Team 在第一天就提供了 AMD 硬件支持。</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../developer_guide/debug.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Debug 指南</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="release_v0.1.0.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">v0.1.0: 重新定义高性能 RL 训练框架</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">愿景</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">自定义才能自由</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">为性能而生</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">轻量且可扩展</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">发展蓝图</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By slime Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025-2025, slime.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 04, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
