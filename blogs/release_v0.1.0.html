@@ -432,7 +432,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-optimization-pushing-the-limits-of-rl-training-speed">Performance Optimization: Pushing the Limits of RL Training Speed</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doing-more-experiments-with-fewer-cards-fully-offloading-megatron">Doing More Experiments with Fewer Cards: Fully Offloading Megatron</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doing-more-experiments-with-fewer-gpus-fully-offloading-megatron">Doing More Experiments with Fewer GPUs: Fully Offloading Megatron</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-offload-gpu-tensors-generically">How to Offload GPU Tensors Generically</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-offload-nccl">How to Offload NCCL</a></li>
 </ul>
@@ -467,22 +467,22 @@ document.write(`
 <ul class="simple">
 <li><p><strong>Performance</strong>:</p>
 <ul>
-<li><p>Provides <strong>efficient inference for MoE models</strong>, especially with <code class="docutils literal notranslate"><span class="pre">fp8</span></code> rollout + <code class="docutils literal notranslate"><span class="pre">deepep</span></code> + <code class="docutils literal notranslate"><span class="pre">mtp</span></code>.</p></li>
+<li><p>Provides <strong>efficient inference for MoE models</strong>, especially with <strong>fp8 rollout + deepep + mtp</strong>.</p></li>
 <li><p>Designed a generic <strong>training framework memory offload solution</strong> to save more KV Cache space, thus increasing inference concurrency.</p></li>
 <li><p><strong>Faster parameter updates</strong>.</p></li>
 <li><p>Achieves more training with fewer GPUs through <strong>CPU Adam</strong>.</p></li>
-<li><p>Supports <strong>all of Megatron’s parallel strategies</strong> as well as <code class="docutils literal notranslate"><span class="pre">deepep</span></code>.</p></li>
+<li><p>Supports <strong>all of Megatron’s parallel strategies</strong> as well as <strong>deepep</strong>.</p></li>
 </ul>
 </li>
 <li><p><strong>Features</strong>:</p>
 <ul>
 <li><p>Added support for <strong>GSPO</strong> for MoE model training.</p></li>
-<li><p>Added support for <strong>TIS</strong> for <code class="docutils literal notranslate"><span class="pre">fp8</span></code> rollout.</p></li>
+<li><p>Added support for <strong>TIS</strong> for fp8 rollout.</p></li>
 </ul>
 </li>
 <li><p><strong>Correctness</strong>:</p>
 <ul>
-<li><p>Implemented <strong>Dense and MoE model CI</strong> to strictly check metrics like <code class="docutils literal notranslate"><span class="pre">kl</span></code>.</p></li>
+<li><p>Implemented <strong>Dense and MoE model CI</strong> to strictly check metrics like kl.</p></li>
 </ul>
 </li>
 </ul>
@@ -491,7 +491,7 @@ document.write(`
 <hr class="docutils" />
 <section id="performance-optimization-pushing-the-limits-of-rl-training-speed">
 <h2>Performance Optimization: Pushing the Limits of RL Training Speed<a class="headerlink" href="#performance-optimization-pushing-the-limits-of-rl-training-speed" title="Link to this heading">#</a></h2>
-<p>In traditional deep learning training, there’s a universal solution for speedup: <strong>add more cards</strong>. By reducing the amount of data processed per card, you can significantly lower end-to-end training latency.</p>
+<p>In traditional deep learning training, there’s a universal solution for speedup: <strong>add more GPUs</strong>. By reducing the amount of data processed per GPU, you can significantly lower end-to-end training latency.</p>
 <p>However, this method doesn’t work for RL training because <strong>inference latency cannot be reduced by adding more GPUs</strong>. Even with more GPUs, we still have to wait for the longest sample to finish decoding. While increasing throughput can improve the amount of training data per rollout, the off-policy issues caused by an excessively large inference batch size still have some limitations.</p>
 <p>I believe this is the biggest challenge for infrastructure under the current RL paradigm, which is:</p>
 <blockquote>
@@ -507,14 +507,14 @@ document.write(`
 <p>In addition to monitoring inference throughput, slime also monitors <code class="docutils literal notranslate"><span class="pre">perf/longest_sample_tokens_per_sec</span></code> to better understand the potential for performance optimization in the inference part.</p>
 </section>
 <hr class="docutils" />
-<section id="doing-more-experiments-with-fewer-cards-fully-offloading-megatron">
-<h2>Doing More Experiments with Fewer Cards: Fully Offloading Megatron<a class="headerlink" href="#doing-more-experiments-with-fewer-cards-fully-offloading-megatron" title="Link to this heading">#</a></h2>
+<section id="doing-more-experiments-with-fewer-gpus-fully-offloading-megatron">
+<h2>Doing More Experiments with Fewer GPUs: Fully Offloading Megatron<a class="headerlink" href="#doing-more-experiments-with-fewer-gpus-fully-offloading-megatron" title="Link to this heading">#</a></h2>
 <p>After optimizing the upper limit, we noticed another characteristic of RL training: as long as the <strong>KV Cache doesn’t overflow</strong>, increasing the inference batch size doesn’t significantly affect training latency.</p>
 <p><strong>KV Cache overflow</strong> occurs during inference when the response lengths of the data are all very long, leading to insufficient KV Cache space. This requires kicking out some half-generated data from the queue and then re-running <code class="docutils literal notranslate"><span class="pre">prefill</span></code> and subsequent inference steps after other data has been processed and freed up space. If a data point with a response length of 64k has to wait for 32k tokens to be decoded by other data during its inference, its total time is equivalent to decoding 96k tokens. This greatly impacts the RL training speed.</p>
-<p>Therefore, a more suitable training configuration is to calculate the minimum number of GPUs needed to prevent KV Cache overflow based on the inference batch size, the average response length, and the available KV Cache space on a single server. A group of these GPUs is then used for training. For example, if we have 512 cards and the calculation shows that 256 cards provide enough KV Cache, we should run two experiments in parallel instead of launching one experiment with all 512 cards.</p>
+<p>Therefore, a more suitable training configuration is to calculate the minimum number of GPUs needed to prevent KV Cache overflow based on the inference batch size, the average response length, and the available KV Cache space on a single server. A group of these GPUs is then used for training. For example, if we have 512 GPUs and the calculation shows that 256 GPUs provide enough KV Cache, we should run two experiments in parallel instead of launching one experiment with all 512 GPUs.</p>
 <p>Based on this consideration, we noticed two points for optimization:</p>
 <ol class="arabic simple">
-<li><p><strong>The optimal number of cards may not be sufficient to load the training part</strong>. Inference only needs to load the <code class="docutils literal notranslate"><span class="pre">fp8</span></code> parameters, while training generally requires more than 18 times the parameter size of GPU memory (bf16 param, fp32 grad, fp32 master param, fp32 m and v). To solve this, slime uses <strong>Megatron’s built-in CPU Adam</strong> to save GPU memory for the training part. This strategy allowed us to provide solutions for training GLM 4.5 355B-A32B with 8 nodes and DeepSeek R1 with 16 nodes.</p></li>
+<li><p><strong>The optimal number of GPUs may not be sufficient to load the training part</strong>. Inference only needs to load the <code class="docutils literal notranslate"><span class="pre">fp8</span></code> parameters, while training generally requires more than 18 times the parameter size of GPU memory (bf16 param, fp32 grad, fp32 master param, fp32 m and v). To solve this, slime uses <strong>Megatron’s built-in CPU Adam</strong> to save GPU memory for the training part. This strategy allowed us to provide solutions for training GLM 4.5 355B-A32B with 8 nodes and DeepSeek R1 with 16 nodes.</p></li>
 <li><p><strong>Increase the KV Cache space available per SGLang Server</strong>, which means increasing <code class="docutils literal notranslate"><span class="pre">--mem-fraction</span></code>. For the more common integrated training and inference tasks, the main limitation for <code class="docutils literal notranslate"><span class="pre">mem_fraction</span></code> is the residual GPU memory after offloading the training part to the CPU. Therefore, we need to find a generic way to offload the GPU memory used by the Megatron part.</p></li>
 </ol>
 <section id="how-to-offload-gpu-tensors-generically">
@@ -628,7 +628,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-optimization-pushing-the-limits-of-rl-training-speed">Performance Optimization: Pushing the Limits of RL Training Speed</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doing-more-experiments-with-fewer-cards-fully-offloading-megatron">Doing More Experiments with Fewer Cards: Fully Offloading Megatron</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doing-more-experiments-with-fewer-gpus-fully-offloading-megatron">Doing More Experiments with Fewer GPUs: Fully Offloading Megatron</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-offload-gpu-tensors-generically">How to Offload GPU Tensors Generically</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-offload-nccl">How to Offload NCCL</a></li>
 </ul>

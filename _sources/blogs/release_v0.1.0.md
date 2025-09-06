@@ -11,16 +11,16 @@ In a nutshell, this version can be summarized as follows:
 Specifically, this version brings the following improvements:
 
   - **Performance**:
-      - Provides **efficient inference for MoE models**, especially with `fp8` rollout + `deepep` + `mtp`.
+      - Provides **efficient inference for MoE models**, especially with **fp8 rollout + deepep + mtp**.
       - Designed a generic **training framework memory offload solution** to save more KV Cache space, thus increasing inference concurrency.
       - **Faster parameter updates**.
       - Achieves more training with fewer GPUs through **CPU Adam**.
-      - Supports **all of Megatron's parallel strategies** as well as `deepep`.
+      - Supports **all of Megatron's parallel strategies** as well as **deepep**.
   - **Features**:
       - Added support for **GSPO** for MoE model training.
-      - Added support for **TIS** for `fp8` rollout.
+      - Added support for **TIS** for fp8 rollout.
   - **Correctness**:
-      - Implemented **Dense and MoE model CI** to strictly check metrics like `kl`.
+      - Implemented **Dense and MoE model CI** to strictly check metrics like kl.
 
 We hope to use slime v0.1.0 to demonstrate our understanding of high-performance RL training frameworks and have it become a baseline for future performance comparisons.
 
@@ -30,7 +30,7 @@ Next, I'll elaborate on the design philosophy behind these features.
 
 ## Performance Optimization: Pushing the Limits of RL Training Speed
 
-In traditional deep learning training, there's a universal solution for speedup: **add more cards**. By reducing the amount of data processed per card, you can significantly lower end-to-end training latency.
+In traditional deep learning training, there's a universal solution for speedup: **add more GPUs**. By reducing the amount of data processed per GPU, you can significantly lower end-to-end training latency.
 
 However, this method doesn't work for RL training because **inference latency cannot be reduced by adding more GPUs**. Even with more GPUs, we still have to wait for the longest sample to finish decoding. While increasing throughput can improve the amount of training data per rollout, the off-policy issues caused by an excessively large inference batch size still have some limitations.
 
@@ -50,17 +50,17 @@ In addition to monitoring inference throughput, slime also monitors `perf/longes
 
 -----
 
-## Doing More Experiments with Fewer Cards: Fully Offloading Megatron
+## Doing More Experiments with Fewer GPUs: Fully Offloading Megatron
 
 After optimizing the upper limit, we noticed another characteristic of RL training: as long as the **KV Cache doesn't overflow**, increasing the inference batch size doesn't significantly affect training latency.
 
 **KV Cache overflow** occurs during inference when the response lengths of the data are all very long, leading to insufficient KV Cache space. This requires kicking out some half-generated data from the queue and then re-running `prefill` and subsequent inference steps after other data has been processed and freed up space. If a data point with a response length of 64k has to wait for 32k tokens to be decoded by other data during its inference, its total time is equivalent to decoding 96k tokens. This greatly impacts the RL training speed.
 
-Therefore, a more suitable training configuration is to calculate the minimum number of GPUs needed to prevent KV Cache overflow based on the inference batch size, the average response length, and the available KV Cache space on a single server. A group of these GPUs is then used for training. For example, if we have 512 cards and the calculation shows that 256 cards provide enough KV Cache, we should run two experiments in parallel instead of launching one experiment with all 512 cards.
+Therefore, a more suitable training configuration is to calculate the minimum number of GPUs needed to prevent KV Cache overflow based on the inference batch size, the average response length, and the available KV Cache space on a single server. A group of these GPUs is then used for training. For example, if we have 512 GPUs and the calculation shows that 256 GPUs provide enough KV Cache, we should run two experiments in parallel instead of launching one experiment with all 512 GPUs.
 
 Based on this consideration, we noticed two points for optimization:
 
-1.  **The optimal number of cards may not be sufficient to load the training part**. Inference only needs to load the `fp8` parameters, while training generally requires more than 18 times the parameter size of GPU memory (bf16 param, fp32 grad, fp32 master param, fp32 m and v). To solve this, slime uses **Megatron's built-in CPU Adam** to save GPU memory for the training part. This strategy allowed us to provide solutions for training GLM 4.5 355B-A32B with 8 nodes and DeepSeek R1 with 16 nodes.
+1.  **The optimal number of GPUs may not be sufficient to load the training part**. Inference only needs to load the `fp8` parameters, while training generally requires more than 18 times the parameter size of GPU memory (bf16 param, fp32 grad, fp32 master param, fp32 m and v). To solve this, slime uses **Megatron's built-in CPU Adam** to save GPU memory for the training part. This strategy allowed us to provide solutions for training GLM 4.5 355B-A32B with 8 nodes and DeepSeek R1 with 16 nodes.
 2.  **Increase the KV Cache space available per SGLang Server**, which means increasing `--mem-fraction`. For the more common integrated training and inference tasks, the main limitation for `mem_fraction` is the residual GPU memory after offloading the training part to the CPU. Therefore, we need to find a generic way to offload the GPU memory used by the Megatron part.
 
 ### How to Offload GPU Tensors Generically
