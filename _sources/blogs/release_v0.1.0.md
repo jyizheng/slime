@@ -83,7 +83,7 @@ A natural idea is to use this method to take over the entire training process in
 
 To continue reusing the native, cached allocator, we cannot use `CUDAPluggableAllocator`. Noticing again that slime's architecture has training and inference in different processes, we only need to **directly replace `cudaMalloc` and `cudaFree` used by `CUDACachingAllocator` in the training process with VMM APIs via `LD_PRELOAD`**. This allows us to completely and generically offload all GPU Tensors allocated by PyTorch.
 
-At the same time, we must also note one detail: VMM APIs and `cudaIPC APIs` (such as `cudaIpcGetMemHandle`) are incompatible. Therefore, for integrated training and inference tasks and DeepEP, we need to disable the `LD_PRELOAD` replacement and switch back to `cudaMalloc`.
+At the same time, we must also note one detail: VMM APIs and cudaIPC APIs (such as `cudaIpcGetMemHandle`) are incompatible. Therefore, for integrated training and inference tasks and DeepEP, we need to disable the `LD_PRELOAD` replacement and switch back to `cudaMalloc`.
 
 With help from the SGLang community, we updated `torch_memory_saver` for slime's needs, implementing this offload solution.
 
@@ -128,7 +128,7 @@ I also believe that before running benchmarks, you can analyze a framework's foc
   - Does it support MoE training? (Currently, large-scale experiments are focused on MoE)
   - Can the internal sglang `mem_fraction` or vllm `gpu_utilization` be adjusted to over 0.7? (Ensures KV Cache space)
   - Does it support fp8 or lower precision inference? (Reduces inference memory access, boosts speed)
-  - Does it support enabling deepep for both training and inference? (Optimizes MoE `all2all` communication)
+  - Does it support enabling deepep for both training and inference? (Optimizes MoE all2all communication)
   - Does it support speculative sampling? (Improves inference latency and throughput)
   - Does it have an efficient training backend, such as Megatron or torchtitan, and support all necessary parallelization strategies? (Reuses mature training optimizations)
 
@@ -138,7 +138,7 @@ slime v0.1.0 has made preliminary attempts at all the above optimizations, and t
 
 ## New Algorithm Support
 
-To better train MoE models and perform fp8 rollouts, we implemented **GSPO** and **TIS**. Additionally, community experts have helped implement algorithms like `reinforce++` and `reinforce++ baseline`.
+To better train MoE models and perform fp8 rollouts, we implemented **GSPO** and **TIS**. Additionally, community experts have helped implement algorithms like reinforce++ and reinforce++ baseline.
 
 -----
 
@@ -146,8 +146,8 @@ To better train MoE models and perform fp8 rollouts, we implemented **GSPO** and
 
 slime v0.1.0 adds **end-to-end CI**: we run single-machine GLM4 9B and Qwen3 30B-A3B training for each PR, ensuring correctness through strict checks. For example, we explicitly require:
 
-  - The recomputed `log prob` of the first rollout must be exactly equal to the `log prob` of the `reference model`.
-  - The `ppo_kl` of the first training step within each rollout must be exactly 0.
+  - The recomputed log prob of the first rollout must be exactly equal to the log prob of the reference model.
+  - The ppo_kl of the first training step within each rollout must be exactly 0.
 
 Such precise verification is rarely achieved in training frameworks, and it's something we are very proud of.
 

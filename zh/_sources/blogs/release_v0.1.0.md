@@ -41,7 +41,7 @@
 单条数据的解码速度决定了 RL 训练速度的上限。对于较大的 MoE 模型，目前主要有以下 3 种常规优化方案来提升这一上限，我们也在每个方向上都做了尝试：
 
 1. **通过量化来降低访存**：考虑到 RL 训练中不能进行长时间的 calibration，slime 选择进行 fp8 量化。
-2. **使用 deepep low latency 模式来降低跨机 `all2all` 的时延**：为了配合 deepep，slime 推荐使用 fp8 的 blockwise 量化来开启 SGLang 的相关配置。
+2. **使用 deepep low latency 模式来降低跨机 all2all 的时延**：为了配合 deepep，slime 推荐使用 fp8 的 blockwise 量化来开启 SGLang 的相关配置。
 3. **开启投机采样（Speculative Sampling）**：slime 允许推理部分加载任意的 draft model（目前还不支持训练中更新 draft model）。
 
 ![](../../_static/image/blogs/release_v0.1.0/overrall.png)
@@ -54,7 +54,7 @@ slime 也会在监控推理的吞吐之外，监控 `perf/longest_sample_tokens_
 
 在对上限进行优化后，我们注意到 RL 训练的另外一个特性：只要 **KV Cache 不溢出**，推理 batch size 的提升并不会明显影响训练的延迟。
 
-**KV Cache 溢出**指的是推理过程中，当数据的回复长度都很长时，KV Cache 空间不足，需要将某些生成到一半的数据先踢出队列，等其他数据推理完并腾出空间后，再重新进行 `prefill` 和后续的推理。如果一条回复长度为 64k 的数据在推理过程中等待了其他数据解码 32k token，相当于它的总时长对应了解码 96k token，这对 RL 训练速度影响很大。
+**KV Cache 溢出**指的是推理过程中，当数据的回复长度都很长时，KV Cache 空间不足，需要将某些生成到一半的数据先踢出队列，等其他数据推理完并腾出空间后，再重新进行 prefill 和后续的推理。如果一条回复长度为 64k 的数据在推理过程中等待了其他数据解码 32k token，相当于它的总时长对应了解码 96k token，这对 RL 训练速度影响很大。
 
 因此，一个比较合适的训练配置是根据推理部分的 batch size、数据的平均回复长度和单个 server 能预留的 KV Cache 空间，计算一个在 KV Cache 不溢出情况下的最少 GPU 数量，并以这些 GPU 为一组进行训练。例如，我们有 512 张卡，计算出来 256 卡的 KV Cache 就已经充足，那么就应该并行运行 2 个实验，而不是用 512 卡一起启动实验。
 

@@ -532,7 +532,7 @@ document.write(`
 <p><img alt="" src="../_images/cuda_vmm.png" /></p>
 <p>A natural idea is to use this method to take over the entire training process in RL. However, this prevents the reuse of PyTorch’s <code class="docutils literal notranslate"><span class="pre">CUDACachingAllocator</span></code>, and without the cache, memory fragmentation becomes more pronounced, easily leading to <strong>OOM</strong> during training.</p>
 <p>To continue reusing the native, cached allocator, we cannot use <code class="docutils literal notranslate"><span class="pre">CUDAPluggableAllocator</span></code>. Noticing again that slime’s architecture has training and inference in different processes, we only need to <strong>directly replace <code class="docutils literal notranslate"><span class="pre">cudaMalloc</span></code> and <code class="docutils literal notranslate"><span class="pre">cudaFree</span></code> used by <code class="docutils literal notranslate"><span class="pre">CUDACachingAllocator</span></code> in the training process with VMM APIs via <code class="docutils literal notranslate"><span class="pre">LD_PRELOAD</span></code></strong>. This allows us to completely and generically offload all GPU Tensors allocated by PyTorch.</p>
-<p>At the same time, we must also note one detail: VMM APIs and <code class="docutils literal notranslate"><span class="pre">cudaIPC</span> <span class="pre">APIs</span></code> (such as <code class="docutils literal notranslate"><span class="pre">cudaIpcGetMemHandle</span></code>) are incompatible. Therefore, for integrated training and inference tasks and DeepEP, we need to disable the <code class="docutils literal notranslate"><span class="pre">LD_PRELOAD</span></code> replacement and switch back to <code class="docutils literal notranslate"><span class="pre">cudaMalloc</span></code>.</p>
+<p>At the same time, we must also note one detail: VMM APIs and cudaIPC APIs (such as <code class="docutils literal notranslate"><span class="pre">cudaIpcGetMemHandle</span></code>) are incompatible. Therefore, for integrated training and inference tasks and DeepEP, we need to disable the <code class="docutils literal notranslate"><span class="pre">LD_PRELOAD</span></code> replacement and switch back to <code class="docutils literal notranslate"><span class="pre">cudaMalloc</span></code>.</p>
 <p>With help from the SGLang community, we updated <code class="docutils literal notranslate"><span class="pre">torch_memory_saver</span></code> for slime’s needs, implementing this offload solution.</p>
 </section>
 <section id="how-to-offload-nccl">
@@ -568,7 +568,7 @@ document.write(`
 <li><p>Does it support MoE training? (Currently, large-scale experiments are focused on MoE)</p></li>
 <li><p>Can the internal sglang <code class="docutils literal notranslate"><span class="pre">mem_fraction</span></code> or vllm <code class="docutils literal notranslate"><span class="pre">gpu_utilization</span></code> be adjusted to over 0.7? (Ensures KV Cache space)</p></li>
 <li><p>Does it support fp8 or lower precision inference? (Reduces inference memory access, boosts speed)</p></li>
-<li><p>Does it support enabling deepep for both training and inference? (Optimizes MoE <code class="docutils literal notranslate"><span class="pre">all2all</span></code> communication)</p></li>
+<li><p>Does it support enabling deepep for both training and inference? (Optimizes MoE all2all communication)</p></li>
 <li><p>Does it support speculative sampling? (Improves inference latency and throughput)</p></li>
 <li><p>Does it have an efficient training backend, such as Megatron or torchtitan, and support all necessary parallelization strategies? (Reuses mature training optimizations)</p></li>
 </ul>
@@ -577,15 +577,15 @@ document.write(`
 <hr class="docutils" />
 <section id="new-algorithm-support">
 <h2>New Algorithm Support<a class="headerlink" href="#new-algorithm-support" title="Link to this heading">#</a></h2>
-<p>To better train MoE models and perform fp8 rollouts, we implemented <strong>GSPO</strong> and <strong>TIS</strong>. Additionally, community experts have helped implement algorithms like <code class="docutils literal notranslate"><span class="pre">reinforce++</span></code> and <code class="docutils literal notranslate"><span class="pre">reinforce++</span> <span class="pre">baseline</span></code>.</p>
+<p>To better train MoE models and perform fp8 rollouts, we implemented <strong>GSPO</strong> and <strong>TIS</strong>. Additionally, community experts have helped implement algorithms like reinforce++ and reinforce++ baseline.</p>
 </section>
 <hr class="docutils" />
 <section id="correctness-verification">
 <h2>Correctness Verification<a class="headerlink" href="#correctness-verification" title="Link to this heading">#</a></h2>
 <p>slime v0.1.0 adds <strong>end-to-end CI</strong>: we run single-machine GLM4 9B and Qwen3 30B-A3B training for each PR, ensuring correctness through strict checks. For example, we explicitly require:</p>
 <ul class="simple">
-<li><p>The recomputed <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">prob</span></code> of the first rollout must be exactly equal to the <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">prob</span></code> of the <code class="docutils literal notranslate"><span class="pre">reference</span> <span class="pre">model</span></code>.</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">ppo_kl</span></code> of the first training step within each rollout must be exactly 0.</p></li>
+<li><p>The recomputed log prob of the first rollout must be exactly equal to the log prob of the reference model.</p></li>
+<li><p>The ppo_kl of the first training step within each rollout must be exactly 0.</p></li>
 </ul>
 <p>Such precise verification is rarely achieved in training frameworks, and it’s something we are very proud of.</p>
 <hr class="docutils" />
