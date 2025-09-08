@@ -54,7 +54,7 @@
     <link rel="prev" title="Debugging" href="../developer_guide/debug.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 06, 2025"/>
+    <meta name="docbuild:last-update" content="Sep 08, 2025"/>
   </head>
   
   
@@ -465,12 +465,12 @@ document.write(`
 <section id="docker">
 <h2>Docker<a class="headerlink" href="#docker" title="Link to this heading">#</a></h2>
 <p>You can download the prebuilt image from DockerHub: <a class="reference external" href="https://hub.docker.com/r/rlsys/slime/tags">rlsys/slime</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>rlsys/slime:slime_ubuntu22.04_rocm6.3.4-patch-numa-patch_sglang0.4.9_megatron-patch_ray2.47.1_apex_torch-memory-saver0.0.8-patch-vim
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>rlsys/slime:latest
 </pre></div>
 </div>
 <p>Or you can use the <a class="reference external" href="https://github.com/THUDM/slime/blob/main/docker/Dockerfile.rocm">Dockerfile.rocm</a> to build it on your side.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docker
-docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Dockerfile.rocm<span class="w"> </span>-t<span class="w"> </span>slime_ubuntu22.04_rocm6.3.4-patch-numa-patch_sglang0.4.9_megatron-patch_ray2.47.1_apex_torch-memory-saver0.0.8-patch-vim<span class="w"> </span>.
+docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Dockerfile.rocm<span class="w"> </span>-t<span class="w"> </span>rlsys/slime:latest<span class="w"> </span>.
 </pre></div>
 </div>
 <p>Acknowledgement: Thanks to <a class="reference external" href="https://www.microsoft.com/en-us/research/people/yangwang5/">Yang Wang</a> for working on the patch for this <a class="reference external" href="https://hub.docker.com/r/rlsys/rocm-6.3.4-patch/tags">ROCm base Docker image</a> to support virtual memory management on MI300X.</p>
@@ -479,7 +479,7 @@ docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
 <section id="environment-setup">
 <h3>Environment Setup<a class="headerlink" href="#environment-setup" title="Link to this heading">#</a></h3>
-<p>Based on the <a class="reference external" href="https://hub.docker.com/r/rlsys/slime/tags">rlsys/slime</a> image (pre-installed with SGLang 0.4.9 and Megatron-LM):</p>
+<p>Based on the <a class="reference external" href="https://hub.docker.com/r/rlsys/slime/tags">rlsys/slime</a> image (pre-installed with SGLang and Megatron-LM):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--device<span class="w"> </span>/dev/dri<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--device<span class="w"> </span>/dev/kfd<span class="w"> </span><span class="se">\</span>
@@ -495,7 +495,7 @@ docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </
 <span class="w">  </span>--ulimit<span class="w"> </span><span class="nv">memlock</span><span class="o">=</span>-1<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--ulimit<span class="w"> </span><span class="nv">stack</span><span class="o">=</span><span class="m">67108864</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-w<span class="w"> </span><span class="nv">$PWD</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>rlsys/slime:slime_ubuntu22.04_rocm6.3.4-patch-numa-patch_sglang0.4.9_megatron-patch_ray2.47.1_apex_torch-memory-saver0.0.8-patch-vim<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>rlsys/slime:latest<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>/bin/bash
 </pre></div>
 </div>
@@ -565,24 +565,6 @@ pkill<span class="w"> </span>-9<span class="w"> </span>python
 <span class="nb">export</span><span class="w"> </span><span class="nv">RAY_EXPERIMENTAL_NOSET_HIP_VISIBLE_DEVICES</span><span class="o">=</span><span class="si">${</span><span class="nv">RAY_EXPERIMENTAL_NOSET_HIP_VISIBLE_DEVICES</span><span class="k">:-</span><span class="s2">&quot;1&quot;</span><span class="si">}</span><span class="w"> </span><span class="c1"># Must set to 1</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">HIP_VISIBLE_DEVICES</span><span class="o">=</span><span class="si">${</span><span class="nv">HIP_VISIBLE_DEVICES</span><span class="k">:-</span><span class="s2">&quot;0,1,2,3,4,5,6,7&quot;</span><span class="si">}</span><span class="w"> </span><span class="c1">#You can choose which gpus to use</span>
 <span class="c1">####################</span>
-
-<span class="c1"># ### ROCm Support ### (If you do not istall, please install them)</span>
-<span class="c1"># # # Clone and install Megatron-LMi-amd_version</span>
-<span class="c1"># export MAX_JOBS=512</span>
-<span class="c1"># cd $SLIME_DIR</span>
-<span class="c1"># pip uninstall megatron-core -y</span>
-<span class="c1"># if [ ! -d &quot;Megatron-LM-amd_version&quot; ]; then</span>
-<span class="c1">#     git clone git@github.com:yushengsu-thu/Megatron-LM-amd_version.git</span>
-<span class="c1"># else</span>
-<span class="c1">#     echo &quot;Megatron-LM-amd_version directory already exists, skipping clone&quot;</span>
-<span class="c1"># fi</span>
-<span class="c1"># cd Megatron-LM-amd_version</span>
-<span class="c1"># pip install -vvv -e . </span>
-<span class="c1"># cd $SLIME_DIR</span>
-
-<span class="c1"># # Install slime</span>
-<span class="c1"># pip install -e .</span>
-<span class="c1"># ####################</span>
 
 <span class="c1"># will prevent ray from buffering stdout/stderr</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONBUFFERED</span><span class="o">=</span><span class="m">16</span>
@@ -709,7 +691,7 @@ ray<span class="w"> </span>start<span class="w"> </span>--head<span class="w"> <
 ray<span class="w"> </span>job<span class="w"> </span>submit<span class="w"> </span>--address<span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8265&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>--runtime-env-json<span class="o">=</span><span class="s1">&#39;{</span>
 <span class="s1">     &quot;env_vars&quot;: {</span>
-<span class="s1">        &quot;PYTHONPATH&quot;: &quot;&#39;</span><span class="si">${</span><span class="nv">SLIME_DIR</span><span class="si">}</span><span class="s1">&#39;/Megatron-LM-amd_version/&quot;,</span>
+<span class="s1">        &quot;PYTHONPATH&quot;: &quot;&#39;</span><span class="si">${</span><span class="nv">SLIME_DIR</span><span class="si">}</span><span class="s1">&#39;/Megatron-LM/&quot;,</span>
 <span class="s1">        &quot;CUDA_DEVICE_MAX_CONNECTIONS&quot;: &quot;1&quot;</span>
 <span class="s1">     }</span>
 <span class="s1">   }&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -834,7 +816,7 @@ By slime Team
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Sep 06, 2025.
+  Last updated on Sep 08, 2025.
   <br/>
 </p>
   </div>
