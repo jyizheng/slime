@@ -54,7 +54,7 @@
     <link rel="prev" title="slime Documentation" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 08, 2025"/>
+    <meta name="docbuild:last-update" content="Sep 09, 2025"/>
   </head>
   
   
@@ -602,7 +602,8 @@ Please make sure to check whether the parameters in the model configuration file
 <span class="w">   </span>--hf-checkpoint<span class="w"> </span>/root/GLM-Z1-9B-0414
 <span class="w">   </span><span class="c1"># Reference Model&#39;s Megatron format checkpoint</span>
 <span class="w">   </span>--ref-load<span class="w"> </span>/root/GLM-Z1-9B-0414_torch_dist
-<span class="w">   </span><span class="c1"># Actor model loading path. If empty, load from --ref-load</span>
+<span class="w">   </span><span class="c1"># Actor model loading path. Should typically match --save for checkpoint resumption</span>
+<span class="w">   </span><span class="c1"># If empty or doesn&#39;t contain a valid checkpoint, loads from --ref-load instead</span>
 <span class="w">   </span>--load<span class="w"> </span>/root/GLM-Z1-9B-0414_slime/
 <span class="w">   </span><span class="c1"># Model save path during training</span>
 <span class="w">   </span>--save<span class="w"> </span>/root/GLM-Z1-9B-0414_slime/
@@ -662,7 +663,7 @@ Please make sure to check whether the parameters in the model configuration file
 <span class="w">   </span>--n-samples-per-prompt<span class="w"> </span><span class="m">8</span>
 <span class="w">   </span>--num-steps-per-rollout<span class="w"> </span><span class="m">1</span>
 <span class="w">   </span>--global-batch-size<span class="w"> </span><span class="m">128</span>
-<span class="w">   </span>
+
 <span class="w">   </span><span class="c1"># Rollout sampling parameters</span>
 <span class="w">   </span>--rollout-max-response-len<span class="w"> </span><span class="m">8192</span>
 <span class="w">   </span>--rollout-temperature<span class="w"> </span><span class="m">0</span>.8
@@ -974,7 +975,7 @@ The <code class="docutils literal notranslate"><span class="pre">sample.metadata
             <span class="c1"># ... tokenization and appending ...</span>
             <span class="n">loss_masks</span> <span class="o">+=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">tool_tokens</span><span class="p">)</span> <span class="c1"># loss_mask = 0</span>
             <span class="n">full_response</span> <span class="o">+=</span> <span class="n">tool_output</span>
-            
+
         <span class="k">elif</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span>
             <span class="k">break</span> <span class="c1"># end loop</span>
 
@@ -1155,7 +1156,7 @@ By slime Team
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Sep 08, 2025.
+  Last updated on Sep 09, 2025.
   <br/>
 </p>
   </div>
