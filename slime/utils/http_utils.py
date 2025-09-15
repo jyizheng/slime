@@ -78,12 +78,10 @@ def terminate_process(process: multiprocessing.Process, timeout: float = 1.0) ->
 _http_client: httpx.AsyncClient = None
 
 
-def init_http_client(concurrency: int, use_http2: bool = False):
+def init_http_client(concurrency: int):
     global _http_client
     if _http_client is None:
         _http_client = httpx.AsyncClient(
-            http1=not use_http2,
-            http2=use_http2,
             limits=httpx.Limits(max_connections=concurrency),
             timeout=httpx.Timeout(None),
         )

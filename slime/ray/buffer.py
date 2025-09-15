@@ -25,10 +25,7 @@ class RolloutController:
     def __init__(self, args, wandb_run_id):
         self.args = args
         init_wandb_secondary(args, wandb_run_id)
-        init_http_client(
-            args.sglang_server_concurrency * args.rollout_num_gpus // args.rollout_num_gpus_per_engine,
-            use_http2=args.use_http2,
-        )
+        init_http_client(args.sglang_server_concurrency * args.rollout_num_gpus // args.rollout_num_gpus_per_engine)
 
         self.data_source = RolloutDataSourceWithBuffer(args)
 
