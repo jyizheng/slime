@@ -44,12 +44,17 @@ def train(args):
     start_rollout_ids = ray.get(
         actor_model.async_init(args, role="actor", with_ref=args.kl_coef != 0 or args.use_kl_loss)
     )
+
     assert len(set(start_rollout_ids)) == 1
     if args.start_rollout_id is None:
         args.start_rollout_id = start_rollout_ids[0]
 
     if args.rollout_global_dataset:
         ray.get(rollout_manager.load.remote(args.start_rollout_id - 1))
+
+    if args.use_critic:
+        ray.get(critic_init_handle)
+        ray.get(actor_model.async_connect(critic_model))
 
     if args.use_critic:
         ray.get(critic_init_handle)
@@ -70,12 +75,10 @@ def train(args):
             rollout_data_next_future = rollout_manager.generate.remote(rollout_id + 1)
 
         if args.use_critic:
-            ray.get(
-                [
-                    critic_model.async_train(rollout_id, rollout_data_curr_ref),
-                    actor_model.async_train(rollout_id, rollout_data_curr_ref),
-                ]
-            )
+            critic_train_handle = critic_model.async_train(rollout_id, rollout_data_curr_ref)
+            if rollout_id >= args.num_critic_only_steps:
+                ray.get(actor_model.async_train(rollout_id, rollout_data_curr_ref))
+            ray.get(critic_train_handle)
         else:
             ray.get(actor_model.async_train(rollout_id, rollout_data_curr_ref))
 
