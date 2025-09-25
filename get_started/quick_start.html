@@ -54,7 +54,7 @@
     <link rel="prev" title="slime Documentation" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 23, 2025"/>
+    <meta name="docbuild:last-update" content="Sep 25, 2025"/>
   </head>
   
   
@@ -434,6 +434,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-environment-setup">Basic Environment Setup</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hardware-support">Hardware Support</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-and-start-docker-container">Pull and Start Docker Container</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-slime">Install slime</a></li>
 </ul>
@@ -490,10 +491,23 @@ document.write(`
 <section id="basic-environment-setup">
 <h2>Basic Environment Setup<a class="headerlink" href="#basic-environment-setup" title="Link to this heading">#</a></h2>
 <p>Since slime may contain temporary patches for sglang/megatron, to avoid potential environment configuration issues, we strongly recommend <strong>users to use our latest Docker image</strong>, which comes pre-configured with all dependencies.</p>
+<section id="hardware-support">
+<h3>Hardware Support<a class="headerlink" href="#hardware-support" title="Link to this heading">#</a></h3>
+<p><strong>slime</strong> supports multiple NVIDIA GPU hardware platforms:</p>
 <ul class="simple">
+<li><p><strong>B200 Series</strong>: Fully supported with identical setup steps as H-series GPUs</p></li>
+<li><p><strong>H-Series (H100/H200)</strong>: Official support with comprehensive CI testing and stable performance</p></li>
+</ul>
+<p><strong>Important Notes</strong>:</p>
+<ul class="simple">
+<li><p>Latest Docker images are compatible with both B-series and H-series GPUs without additional configuration</p></li>
+<li><p>Megatron backend on H-series GPUs has CI protection, thoroughly validated, recommended for production environments</p></li>
+<li><p>B-series basic functionality is stable and suitable for development/testing, but currently lacks CI protection</p></li>
+<li><p>Both hardware platforms use identical installation and startup procedures</p></li>
 <li><p>For scenarios where Docker is not convenient, please refer to <a class="reference external" href="https://github.com/THUDM/slime/blob/main/build_conda.sh">build_conda.sh</a>;</p></li>
 <li><p>For AMD support, please refer to <a class="reference internal" href="../platform_support/amd_tutorial.html"><span class="std std-doc">AMD Usage Tutorial</span></a>.</p></li>
 </ul>
+</section>
 <section id="pull-and-start-docker-container">
 <h3>Pull and Start Docker Container<a class="headerlink" href="#pull-and-start-docker-container" title="Link to this heading">#</a></h3>
 <p>Please execute the following commands to pull the latest image and start an interactive container:</p>
@@ -1085,6 +1099,7 @@ ray<span class="w"> </span>start<span class="w"> </span>--address<span class="o"
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-environment-setup">Basic Environment Setup</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hardware-support">Hardware Support</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-and-start-docker-container">Pull and Start Docker Container</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-slime">Install slime</a></li>
 </ul>
@@ -1157,7 +1172,7 @@ By slime Team
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Sep 23, 2025.
+  Last updated on Sep 25, 2025.
   <br/>
 </p>
   </div>

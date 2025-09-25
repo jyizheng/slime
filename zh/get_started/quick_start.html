@@ -54,7 +54,7 @@
     <link rel="prev" title="slime 文档" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh"/>
-    <meta name="docbuild:last-update" content="2025 年 09 月 23 日"/>
+    <meta name="docbuild:last-update" content="2025 年 09 月 25 日"/>
   </head>
   
   
@@ -430,17 +430,18 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">基础环境搭建</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">硬件支持说明</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">拉取并启动 Docker 容器</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slime">安装 slime</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">模型与数据集下载</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型权重转换</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型与数据集下载</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">模型权重转换</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hugging-face-megatron">Hugging Face 格式 转换为 Megatron 格式</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#megatron-hugging-face">Megatron 格式 转换为 Hugging Face 格式</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">训练脚本与参数概览</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">训练脚本与参数概览</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-args">MODEL_ARGS: 模型配置参数</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ckpt-args">CKPT_ARGS: 检查点与路径参数</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout-args-rollout">ROLLOUT_ARGS: 数据生成（Rollout）参数</a></li>
@@ -451,7 +452,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sglang-args-sglang">SGLANG_ARGS: SGLang 服务参数</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">特性介绍</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">特性介绍</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colocated-actor-and-rollout">Colocated Actor and Rollout</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-sampling">Dynamic Sampling</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-rollout">Partial Rollout</a></li>
@@ -459,13 +460,13 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiturn">Multiturn 适配</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">适配思路总结</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">数据准备与映射</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">适配思路总结</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">数据准备与映射</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">步骤一：在数据集中构造 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 字段</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">步骤二：在训练脚本中指定映射</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">编写自定义生成函数</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">编写自定义奖励函数</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">在训练脚本中配置</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">步骤二：在训练脚本中指定映射</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">编写自定义生成函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">编写自定义奖励函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">在训练脚本中配置</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moe">大规模 MOE 模型的多机训练</a></li>
@@ -486,10 +487,23 @@ document.write(`
 <section id="id2">
 <h2>基础环境搭建<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>由于 slime 可能会包含针对 sglang/megatron 的临时补丁（patch）。为避免潜在的环境配置问题，强烈建议<strong>用户使用我们提供的最新 Docker 镜像</strong>，它已预置好所有依赖。</p>
+<section id="id3">
+<h3>硬件支持说明<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p><strong>slime</strong> 支持多种 NVIDIA GPU 硬件平台：</p>
 <ul class="simple">
+<li><p><strong>B200 系列</strong>：完全支持，运行步骤与 H 系列完全相同</p></li>
+<li><p><strong>H 系列 (H100/H200)</strong>：官方支持，具有完整的 CI 测试保护，运行稳定可靠</p></li>
+</ul>
+<p><strong>重要说明</strong>：</p>
+<ul class="simple">
+<li><p>最新的 Docker 镜像对 B 卡和 H 卡通用，无需额外配置</p></li>
+<li><p>Megatron 后端在 H 卡上具有 CI 保护，经过充分测试验证，推荐生产环境使用</p></li>
+<li><p>B 卡基本功能稳定，可作为开发和测试参考，但暂无 CI 保护</p></li>
+<li><p>两种硬件平台使用完全相同的安装和启动流程</p></li>
 <li><p>对于不方便使用 docker 的场景，请参考 <a class="reference internal" href="#./../../build_conda.sh"><span class="xref myst">build_conda.sh</span></a>；</p></li>
 <li><p>对于 AMD 支持，请参考 <a class="reference internal" href="#../en/amd_tutorial.md"><span class="xref myst">AMD 使用教程</span></a>。</p></li>
 </ul>
+</section>
 <section id="docker">
 <h3>拉取并启动 Docker 容器<a class="headerlink" href="#docker" title="Link to this heading">#</a></h3>
 <p>请执行以下命令，拉取最新镜像并启动一个交互式容器：</p>
@@ -515,8 +529,8 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </div>
 </section>
 </section>
-<section id="id3">
-<h2>模型与数据集下载<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h2>模型与数据集下载<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>可以从 Hugging Face、ModelScope 等平台下载所需的模型和数据集。以下是使用 <code class="docutils literal notranslate"><span class="pre">huggingface_hub</span></code> 下载示例资源的命令：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>huggingface_hub
 
@@ -533,8 +547,8 @@ hf<span class="w"> </span>download<span class="w"> </span>--repo-type<span class
 </pre></div>
 </div>
 </section>
-<section id="id4">
-<h2>模型权重转换<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h2>模型权重转换<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <section id="hugging-face-megatron">
 <h3>Hugging Face 格式 转换为 Megatron 格式<a class="headerlink" href="#hugging-face-megatron" title="Link to this heading">#</a></h3>
 <p>当使用 Megatron 作为训练后端时，需要先将 Hugging Face 格式的模型权重转换为 Megatron <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code> 格式。</p>
@@ -568,8 +582,8 @@ hf<span class="w"> </span>download<span class="w"> </span>--repo-type<span class
 <p>由于 Megatron 会对 embedding 做 padding，可能会出现转换出来的权重的 embedding 形状不匹配的问题。这时需要在转换时设置 <code class="docutils literal notranslate"><span class="pre">--vocab-size</span></code>。</p>
 </section>
 </section>
-<section id="id5">
-<h2>训练脚本与参数概览<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h2>训练脚本与参数概览<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <p>完成上述准备工作后，即可运行训练脚本。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/root/slime
 bash<span class="w"> </span>scripts/run-glm4-9B.sh
@@ -766,8 +780,8 @@ slime 使用 <code class="docutils literal notranslate"><span class="pre">sgl-ro
 </div>
 </section>
 </section>
-<section id="id6">
-<h2>特性介绍<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h2>特性介绍<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <section id="colocated-actor-and-rollout">
 <h3>Colocated Actor and Rollout<a class="headerlink" href="#colocated-actor-and-rollout" title="Link to this heading">#</a></h3>
 <p>在默认的配置下，训练（Actor）和推理（Rollout）的资源是分开指定的，通过 ray 给训练部分分配 <code class="docutils literal notranslate"><span class="pre">actor_num_nodes</span> <span class="pre">*</span> <span class="pre">actor_num_gpus_per_node</span></code> 张 GPU，给推理分配 <code class="docutils literal notranslate"><span class="pre">rollout_num_gpus</span></code> 张 GPU，也即训推分离。</p>
@@ -862,8 +876,8 @@ slime 使用 <code class="docutils literal notranslate"><span class="pre">sgl-ro
 <h2>Multiturn 适配<a class="headerlink" href="#multiturn" title="Link to this heading">#</a></h2>
 <p>slime 框架高度可扩展，支持复杂的 Agent 场景（如多轮交互与工具调用）。其核心机制是通过自定义函数，重写默认的数据生成 (Rollout) 与奖励计算 (Reward) 逻辑。</p>
 <p>本部分以一个基于 <a class="reference external" href="https://github.com/PeterGriffinJin/Search-R1">Search-R1</a> 的实现为例，说明如何适配 slime 以支持多轮交互。</p>
-<section id="id7">
-<h3>适配思路总结<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<section id="id8">
+<h3>适配思路总结<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <p>适配 slime 以支持多轮交互主要包含三个步骤：</p>
 <ol class="arabic simple">
 <li><p><strong>数据准备</strong>：将多轮交互数据集适配为 slime 的 <code class="docutils literal notranslate"><span class="pre">Sample</span></code> 对象。将对话历史、真实标签等映射到 <code class="docutils literal notranslate"><span class="pre">prompt</span></code> 和 <code class="docutils literal notranslate"><span class="pre">label</span></code> 字段，并将工具定义、中间状态等额外信息存入 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 字段，供后续函数调用。</p></li>
@@ -871,8 +885,8 @@ slime 使用 <code class="docutils literal notranslate"><span class="pre">sgl-ro
 <li><p><strong>实现自定义奖励函数</strong>：编写函数评估完整的交互轨迹，返回最终的奖励分数。</p></li>
 </ol>
 </section>
-<section id="id8">
-<h3>数据准备与映射<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<section id="id9">
+<h3>数据准备与映射<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
 <p>为了向自定义函数传递复杂的上下文信息，您需要在<strong>数据预处理阶段</strong>就将所有相关的额外字段聚合起来。</p>
 <p><strong>核心思想</strong>：将数据集中除 <code class="docutils literal notranslate"><span class="pre">prompt</span></code> 和 <code class="docutils literal notranslate"><span class="pre">label</span></code> 之外的所有附加信息（如 <code class="docutils literal notranslate"><span class="pre">session_id</span></code>, <code class="docutils literal notranslate"><span class="pre">user_profile</span></code>, <code class="docutils literal notranslate"><span class="pre">tool_code</span></code> 等）合并，构造成一个<strong>单一的、结构化的字段</strong>（例如，一个名为 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 的列，其内容为 JSON 字符串）。</p>
 </section>
@@ -913,8 +927,8 @@ slime 使用 <code class="docutils literal notranslate"><span class="pre">sgl-ro
 </table>
 </div>
 </section>
-<section id="id9">
-<h3>步骤二：在训练脚本中指定映射<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<section id="id10">
+<h3>步骤二：在训练脚本中指定映射<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
 <p>完成数据准备后，在训练脚本中，通过 <code class="docutils literal notranslate"><span class="pre">ROLLOUT_ARGS</span></code> 将这个预处理好的 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 列映射到 slime 的 <code class="docutils literal notranslate"><span class="pre">Sample.metadata</span></code> 字段。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ROLLOUT_ARGS</span><span class="o">=(</span>
 <span class="w">   </span><span class="c1"># 1. 指定预处理后的数据集文件</span>
@@ -934,8 +948,8 @@ slime 使用 <code class="docutils literal notranslate"><span class="pre">sgl-ro
 </div>
 <p>通过这种方式，您就可以在自定义的 <code class="docutils literal notranslate"><span class="pre">generate</span></code> 或 <code class="docutils literal notranslate"><span class="pre">reward</span></code> 函数中，通过 <code class="docutils literal notranslate"><span class="pre">sample.metadata['session_id']</span></code> 等方式，方便地访问到所有预先准备好的结构化信息。</p>
 </section>
-<section id="id10">
-<h3>编写自定义生成函数<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<section id="id11">
+<h3>编写自定义生成函数<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
 <p>首先，通过 <code class="docutils literal notranslate"><span class="pre">--custom-generate-function-path</span></code> 参数指定一个自定义的异步 Python 函数。</p>
 <p><strong>函数签名</strong>: <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">generate(args,</span> <span class="pre">sample:</span> <span class="pre">Sample,</span> <span class="pre">sampling_params)</span> <span class="pre">-&gt;</span> <span class="pre">Sample:</span></code></p>
 <p><strong>核心实现要点</strong>:</p>
@@ -986,14 +1000,14 @@ slime 使用 <code class="docutils literal notranslate"><span class="pre">sgl-ro
 </pre></div>
 </div>
 </section>
-<section id="id11">
-<h3>编写自定义奖励函数<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<section id="id12">
+<h3>编写自定义奖励函数<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
 <p>类似地，通过 <code class="docutils literal notranslate"><span class="pre">--custom-rm-path</span></code> 指定自定义奖励函数。</p>
 <p><strong>函数签名</strong>: <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span> <span class="pre">reward_func(args,</span> <span class="pre">sample:</span> <span class="pre">Sample,</span> <span class="pre">**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">float:</span></code></p>
 <p>该函数接收完整的 <code class="docutils literal notranslate"><span class="pre">Sample</span></code> 对象，根据最终交互结果计算得分。可以在此实现自定义计分逻辑，或调用外部的 Reward Model 服务。</p>
 </section>
-<section id="id12">
-<h3>在训练脚本中配置<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<section id="id13">
+<h3>在训练脚本中配置<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
 <p>最后，在训练脚本中，通过以下参数启用上述自定义函数：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CUSTOM_ARGS</span><span class="o">=(</span>
 <span class="w">   </span><span class="c1"># 指定自定义生成函数的路径 (格式: path.to.your.file:function_name)</span>
@@ -1083,17 +1097,18 @@ ray<span class="w"> </span>start<span class="w"> </span>--address<span class="o"
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">基础环境搭建</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">硬件支持说明</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">拉取并启动 Docker 容器</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slime">安装 slime</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">模型与数据集下载</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型权重转换</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模型与数据集下载</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">模型权重转换</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hugging-face-megatron">Hugging Face 格式 转换为 Megatron 格式</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#megatron-hugging-face">Megatron 格式 转换为 Hugging Face 格式</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">训练脚本与参数概览</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">训练脚本与参数概览</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-args">MODEL_ARGS: 模型配置参数</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ckpt-args">CKPT_ARGS: 检查点与路径参数</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout-args-rollout">ROLLOUT_ARGS: 数据生成（Rollout）参数</a></li>
@@ -1104,7 +1119,7 @@ ray<span class="w"> </span>start<span class="w"> </span>--address<span class="o"
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sglang-args-sglang">SGLANG_ARGS: SGLang 服务参数</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">特性介绍</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">特性介绍</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colocated-actor-and-rollout">Colocated Actor and Rollout</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-sampling">Dynamic Sampling</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-rollout">Partial Rollout</a></li>
@@ -1112,13 +1127,13 @@ ray<span class="w"> </span>start<span class="w"> </span>--address<span class="o"
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiturn">Multiturn 适配</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">适配思路总结</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">数据准备与映射</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">适配思路总结</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">数据准备与映射</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">步骤一：在数据集中构造 <code class="docutils literal notranslate"><span class="pre">metadata</span></code> 字段</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">步骤二：在训练脚本中指定映射</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">编写自定义生成函数</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">编写自定义奖励函数</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">在训练脚本中配置</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">步骤二：在训练脚本中指定映射</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">编写自定义生成函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">编写自定义奖励函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">在训练脚本中配置</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moe">大规模 MOE 模型的多机训练</a></li>
@@ -1155,7 +1170,7 @@ ray<span class="w"> </span>start<span class="w"> </span>--address<span class="o"
   
   <div class="footer-item">
     <p class="last-updated">
-  最后更新于 2025 年 09 月 23 日.
+  最后更新于 2025 年 09 月 25 日.
   <br/>
 </p>
   </div>
