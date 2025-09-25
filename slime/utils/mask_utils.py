@@ -57,7 +57,7 @@ class MultiTurnLossMaskGenerator:
             else:
                 loss_mask = [0] * len(message_ids)
 
-            if message.get("loss", 1) != 1:
+            if message.get("step_loss_mask", 1) != 1:
                 loss_mask = [0] * len(message_ids)
 
             all_loss_masks.extend(loss_mask)
@@ -84,7 +84,7 @@ class MultiTurnLossMaskGenerator:
             else:
                 loss_mask = [0] * len(message_ids)
 
-            if message.get("loss", 1) != 1:
+            if message.get("step_loss_mask", 1) != 1:
                 loss_mask = [0] * len(message_ids)
 
             all_loss_masks.extend(loss_mask)
@@ -102,7 +102,7 @@ class MultiTurnLossMaskGenerator:
         token_ids = prompt_tokens + response_tokens
         loss_mask = [0] * len(prompt_tokens) + [1] * response_length
 
-        if messages[-1].get("loss", 1) != 1:
+        if messages[-1].get("step_loss_mask", 1) != 1:
             loss_mask = [0] * len(token_ids)
         return token_ids, loss_mask
 
