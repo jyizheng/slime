@@ -613,7 +613,8 @@ document.write(`
 <span class="w">  </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solve the following math problem step by step. The last line of your response should be of the form Answer: \\boxed{$Answer} where $Answer is the answer to the problem.\n\nIn triangle $ABC$, $\\sin \\angle A = \\frac{4}{5}$ and $\\angle A &lt; 90^\\circ$. Let $D$ be a point outside triangle $ABC$ such that $\\angle BAD = \\angle DAC$ and $\\angle BDC = 90^\\circ$. Suppose that $AD = 1$ and that $\\frac{BD}{CD} = \\frac{3}{2}$. If $AB + AC$ can be expressed in the form $\\frac{a\\sqrt{b}}{c}$ where $a, b, c$ are pairwise relatively prime integers, find $a + b + c$.\n\nRemember to put your answer on its own line after \&quot;Answer:\&quot;.&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span>
+<span class="w">      </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;step_loss_mask&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">],</span>
 <span class="w">  </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;34&quot;</span>
@@ -626,7 +627,8 @@ document.write(`
 <span class="w">  </span>--apply-chat-template
 </pre></div>
 </div>
-<p>另外我们还提供了一个 metadata_key，默认为 <code class="docutils literal notranslate"><span class="pre">&quot;metadata&quot;</span></code>，读取后我们会把数据中的 metadata 加载进 slime，可能会对自定义数据生成或者自定义 reward model 有帮助。</p>
+<p>请注意，这里的 <code class="docutils literal notranslate"><span class="pre">step_loss_mask</span></code>（默认值为 1）字段为 SFT 阶段提供，若设置为 0，则会将该轮 <code class="docutils literal notranslate"><span class="pre">loss_mask</span></code> 设置为 0；若设置为 1，则使用正常 <code class="docutils literal notranslate"><span class="pre">loss_mask</span></code>。
+另外我们还提供了一个 metadata_key，默认为 <code class="docutils literal notranslate"><span class="pre">&quot;metadata&quot;</span></code>，读取后我们会把数据中的 metadata 加载进 slime，可能会对自定义数据生成或者自定义 reward model 有帮助。</p>
 </section>
 <section id="rl">
 <h3>RL 训练需要的超参<a class="headerlink" href="#rl" title="Link to this heading">#</a></h3>
