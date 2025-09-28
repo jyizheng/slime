@@ -17,6 +17,8 @@ def train(args):
     # create the rollout manager, with sglang engines inside.
     rollout_manager, num_rollout_per_epoch = create_rollout_manager(args, pgs["rollout"], wandb_run_id=wandb_run_id)
 
+    actor_model.set_rollout_manager(rollout_manager)
+
     if args.offload:
         ray.get(rollout_manager.onload.remote(tags=[GPU_MEMORY_TYPE_WEIGHTS]))
 
