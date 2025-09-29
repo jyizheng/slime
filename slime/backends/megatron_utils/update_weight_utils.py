@@ -305,6 +305,12 @@ class UpdateWeightFromTensor:
         self.param_info_buckets = get_param_info_buckets(self.args, self.model)
         self.weight_version = 0
 
+        start_rank = dist.get_rank() // self.args.rollout_num_gpus_per_engine * self.args.rollout_num_gpus_per_engine
+        end_rank = start_rank + self.args.rollout_num_gpus_per_engine
+        group_ranks = list(range(start_rank, end_rank))
+        self._ipc_gather_group = dist.new_group(ranks=group_ranks, backend="gloo")
+        self._ipc_gather_src = start_rank
+
     def connect_rollout_engines(self, rollout_engines, rollout_engine_lock):
         self.rollout_engines = rollout_engines
         colocate_engine_nums = (
@@ -331,13 +337,7 @@ class UpdateWeightFromTensor:
             start_rank = i * self.args.rollout_num_gpus_per_engine
             end_rank = (i + 1) * self.args.rollout_num_gpus_per_engine
             group_ranks = list(range(start_rank, end_rank))
-            new_group = dist.new_group(
-                ranks=group_ranks,
-                backend="gloo",
-            )
             if dist.get_rank() in group_ranks:
-                self._ipc_gather_src = start_rank
-                self._ipc_gather_group = new_group
                 self._ipc_engine = engine
 
     @torch.no_grad()

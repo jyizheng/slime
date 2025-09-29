@@ -149,6 +149,28 @@ class SGLangEngine(RayActor):
         response.raise_for_status()
         return response.json()
 
+    def health_generate(self, timeout: float = 5.0) -> bool:
+        """Run /health_generate on the underlying SGLang HTTP server.
+
+        Args:
+            timeout: Timeout for the health request in seconds.
+
+        Returns:
+            True if the server responds with HTTP 200.
+
+        Raises:
+            requests.RequestException: If the request fails for any reason, including timeout.
+        """
+        if self.node_rank != 0:
+            return True
+
+        response = requests.get(
+            f"http://{self.server_args.host}:{self.server_args.port}/health_generate",
+            timeout=timeout,
+        )
+        response.raise_for_status()
+        return True
+
     def update_weights_from_tensor(
         self,
         serialized_named_tensors: List[str],
@@ -188,6 +210,7 @@ class SGLangEngine(RayActor):
                 raise e
             except Exception as e:
                 print(f"Error flushing cache: {e}")
+                time.sleep(1)
                 continue
 
     def shutdown(self):
