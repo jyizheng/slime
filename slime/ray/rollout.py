@@ -54,6 +54,8 @@ class RolloutManager:
         # when doing multi-node serving, we will only send request to node-0 for each engine.
         self.rollout_engines = self.all_rollout_engines[:: self.nodes_per_engine]
         self.rollout_engine_lock = Lock.options(num_cpus=1, num_gpus=0).remote()
+
+        # fault tolerance
         self._health_monitor_thread = None
         self._health_monitor_stop_event = None
         self._health_check_interval = getattr(args, "rollout_health_check_interval", 10.0)
@@ -106,8 +108,7 @@ class RolloutManager:
         if not self.rollout_engines:
             return False
 
-        if self._health_monitor_thread and self._health_monitor_thread.is_alive():
-            return True
+        assert self._health_monitor_thread is None, "Health monitor thread is already running."
 
         self._health_monitor_stop_event = threading.Event()
         self._health_monitor_thread = threading.Thread(

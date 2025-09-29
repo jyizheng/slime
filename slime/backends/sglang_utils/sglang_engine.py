@@ -201,7 +201,7 @@ class SGLangEngine(RayActor):
         if self.node_rank != 0:
             return
         # flush cache will not return status_code 200 when there are pending requests
-        while True:
+        for _ in range(60):
             try:
                 response = requests.get(f"http://{self.server_args.host}:{self.server_args.port}/flush_cache")
                 if response.status_code == 200:
@@ -212,6 +212,8 @@ class SGLangEngine(RayActor):
                 print(f"Error flushing cache: {e}")
                 time.sleep(1)
                 continue
+        else:
+            raise TimeoutError("Timeout while flushing cache.")
 
     def shutdown(self):
         requests.post(
@@ -250,6 +252,14 @@ class SGLangEngine(RayActor):
                 "world_size": world_size,
                 "group_name": group_name,
                 "backend": backend,
+            },
+        )
+
+    def destroy_weights_update_group(self, group_name):
+        return self._make_request(
+            "destroy_weights_update_group",
+            {
+                "group_name": group_name,
             },
         )
 
