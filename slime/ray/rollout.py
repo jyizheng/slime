@@ -337,6 +337,9 @@ def init_rollout_engines(args, pg, all_rollout_engines):
         if rank // num_engines_per_node in visited_nodes:
             continue
         visited_nodes.add(rank // num_engines_per_node)
+        # TODO: currently when restarting engines, we will set port for all engines on this node starting with this rank.
+        # e.g. for 8 gpus, if we are restarting engine on gpu 3, we will set port for engine 3,4,5,6,7 on this node.
+        num_engines_on_this_node = num_engines_per_node - (rank % num_engines_per_node)
 
         def get_addr_and_ports():
             # use small ports to prevent ephemeral port between 32768 and 65536.
@@ -361,7 +364,7 @@ def init_rollout_engines(args, pg, all_rollout_engines):
 
         get_addr, get_port = get_addr_and_ports()
 
-        for i in range(num_engines_per_node):
+        for i in range(num_engines_on_this_node):
             addr_and_ports[rank + i]["port"] = get_port()
             addr_and_ports[rank + i]["nccl_port"] = get_port()
 
@@ -373,7 +376,7 @@ def init_rollout_engines(args, pg, all_rollout_engines):
                 for i in range(num_node_per_engine):
                     addr_and_ports[rank + i]["dist_init_addr"] = dist_init_addr
         else:
-            for i in range(num_engines_per_node):
+            for i in range(num_engines_on_this_node):
                 addr_and_ports[rank + i]["dist_init_addr"] = f"{get_addr()}:{get_port(6 + args.sglang_dp_size)}"
 
     for i, _ in rollout_engines:

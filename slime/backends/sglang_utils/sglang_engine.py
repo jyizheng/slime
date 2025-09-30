@@ -256,12 +256,16 @@ class SGLangEngine(RayActor):
         )
 
     def destroy_weights_update_group(self, group_name):
-        return self._make_request(
-            "destroy_weights_update_group",
-            {
-                "group_name": group_name,
-            },
-        )
+        try:
+            return self._make_request(
+                "destroy_weights_update_group",
+                {
+                    "group_name": group_name,
+                },
+            )
+        except:
+            # catch the case there the engine is just created and does not have the group.
+            pass
 
     def update_weights_from_distributed(
         self, names, dtypes, shapes, group_name, flush_cache=False, weight_version: Optional[str] = None
