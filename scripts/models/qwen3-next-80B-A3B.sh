@@ -27,6 +27,7 @@ MODEL_ARGS=(
    --ffn-hidden-size 5120
 
    --normalization RMSNorm
+   --apply-layernorm-1p
    --position-embedding-type rope
    --norm-epsilon 1e-6
    --rotary-percent 0.25
