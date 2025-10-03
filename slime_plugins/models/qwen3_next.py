@@ -7,9 +7,8 @@ from megatron.core.transformer.transformer_block import get_num_layers_to_build
 from transformers.activations import ACT2FN
 
 try:
-    from causal_conv1d import causal_conv1d_fn, causal_conv1d_update
-    from fla.modules import FusedRMSNormGated
-    from fla.ops.gated_delta_rule import chunk_gated_delta_rule, fused_recurrent_gated_delta_rule
+    from fla.modules import FusedRMSNormGated, ShortConvolution
+    from fla.ops.gated_delta_rule import chunk_gated_delta_rule
     from transformers.models.qwen3_next.modeling_qwen3_next import (
         Qwen3NextAttention,
         Qwen3NextRMSNorm,
@@ -45,13 +44,10 @@ class Qwen3NextGatedDeltaNet(nn.Module):
 
         # QKV
         self.conv_dim = self.key_dim * 2 + self.value_dim
-        self.conv1d = nn.Conv1d(
-            in_channels=self.conv_dim,
-            out_channels=self.conv_dim,
+        self.conv1d = ShortConvolution(
+            hidden_size=self.conv_dim,
             bias=False,
             kernel_size=self.conv_kernel_size,
-            groups=self.conv_dim,
-            padding=self.conv_kernel_size - 1,
         )
 
         # projection of the input hidden states
@@ -76,11 +72,6 @@ class Qwen3NextGatedDeltaNet(nn.Module):
         )
 
         self.out_proj = nn.Linear(self.value_dim, self.hidden_size, bias=False)
-
-        self.causal_conv1d_fn = causal_conv1d_fn
-        self.causal_conv1d_update = causal_conv1d_update
-        self.chunk_gated_delta_rule = chunk_gated_delta_rule
-        self.recurrent_gated_delta_rule = fused_recurrent_gated_delta_rule
 
     def fix_query_key_value_ordering(self, mixed_qkvz, mixed_ba):
         """
@@ -114,6 +105,7 @@ class Qwen3NextGatedDeltaNet(nn.Module):
     def forward(
         self,
         hidden_states: torch.Tensor,
+        cu_seqlens: torch.Tensor = None,
     ):
         projected_states_qkvz = self.in_proj_qkvz(hidden_states)
         projected_states_ba = self.in_proj_ba(hidden_states)
@@ -121,17 +113,12 @@ class Qwen3NextGatedDeltaNet(nn.Module):
         query, key, value = (x.reshape(x.shape[0], x.shape[1], -1) for x in (query, key, value))
 
         mixed_qkv = torch.cat((query, key, value), dim=-1)
-        mixed_qkv = mixed_qkv.transpose(1, 2)
 
-        mixed_qkv = self.causal_conv1d_fn(
+        mixed_qkv, _ = self.conv1d(
             x=mixed_qkv,
-            weight=self.conv1d.weight.squeeze(1),
-            bias=self.conv1d.bias,
-            activation=self.activation,
-            seq_idx=None,
+            cu_seqlens=cu_seqlens,
         )
 
-        mixed_qkv = mixed_qkv.transpose(1, 2)
         query, key, value = torch.split(
             mixed_qkv,
             [
@@ -152,7 +139,7 @@ class Qwen3NextGatedDeltaNet(nn.Module):
             query = query.repeat_interleave(self.num_v_heads // self.num_k_heads, dim=2)
             key = key.repeat_interleave(self.num_v_heads // self.num_k_heads, dim=2)
 
-        core_attn_out, last_recurrent_state = self.chunk_gated_delta_rule(
+        core_attn_out, last_recurrent_state = chunk_gated_delta_rule(
             query,
             key,
             value,
@@ -203,12 +190,13 @@ class Attention(HuggingfaceAttention):
 
         self.input_layernorm = Qwen3NextRMSNorm(self.hf_config.hidden_size, eps=self.hf_config.rms_norm_eps)
 
-    def hf_forward(self, hidden_states, position_ids):
+    def hf_forward(self, hidden_states, position_ids, packed_seq_params):
         hidden_states = self.input_layernorm(hidden_states)
 
         if self.layer_type == "linear_attention":
             hidden_states = self.linear_attn(
                 hidden_states=hidden_states,
+                cu_seqlens=packed_seq_params.cu_seqlens_q,
             )
         elif self.layer_type == "full_attention":
             # Self Attention

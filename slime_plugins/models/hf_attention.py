@@ -99,7 +99,7 @@ class HuggingfaceAttention(MegatronModule, ABC):
         position_ids = torch.cat(position_ids, dim=0).unsqueeze(0)
         hidden_states = hidden_states.permute(1, 0, 2)  # [bsz, seq_len, hidden_dim]
 
-        output = self.hf_forward(hidden_states, position_ids)
+        output = self.hf_forward(hidden_states, position_ids, packed_seq_params)
         bias = None
 
         if self.args.sequence_parallel:
@@ -111,5 +111,5 @@ class HuggingfaceAttention(MegatronModule, ABC):
         return output, bias
 
     @abstractmethod
-    def hf_forward(self, hidden_states, position_ids):
+    def hf_forward(self, hidden_states, position_ids, packed_seq_params):
         """Huggingface forward function"""
