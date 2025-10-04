@@ -135,7 +135,23 @@ class FSDPTrainRayActor(TrainRayActor):
         if self.args.debug_rollout_only:
             return
 
-        raise NotImplementedError()
+        # Only save on rank 0
+        if dist.get_rank() != 0:
+            return
+
+        import os
+        save_dir = os.path.join(self.args.output_dir, f"checkpoint-{iteration}")
+        os.makedirs(save_dir, exist_ok=True)
+
+        # Unwrap FSDP to get the underlying model
+        model_to_save = self.model.module if hasattr(self.model, "module") else self.model
+
+        # Save model in HuggingFace format
+        model_to_save.save_pretrained(save_dir)
+        if hasattr(self, "tokenizer") and self.tokenizer is not None:
+            self.tokenizer.save_pretrained(save_dir)
+        if hasattr(self, "hf_config") and self.hf_config is not None:
+            self.hf_config.save_pretrained(save_dir)
 
     def compute_log_prob(
         self,
