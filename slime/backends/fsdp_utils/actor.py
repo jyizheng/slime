@@ -1,16 +1,16 @@
 from contextlib import nullcontext
 from itertools import accumulate
+import logging
+from typing import Dict, Optional
 
 import ray
 import torch
 import torch.distributed as dist
+from PIL import Image
+from packaging import version
+from torch.distributed.tensor import DTensor
 from torch_memory_saver import torch_memory_saver
 from transformers import AutoConfig, AutoModelForCausalLM, AutoProcessor, AutoTokenizer
-import logging
-
-
-from torch.distributed.tensor import DTensor
-from packaging import version
 
 # Import FSDP v2 components based on PyTorch version
 if version.parse(torch.__version__) >= version.parse("2.6"):
@@ -179,13 +179,7 @@ class FSDPTrainRayActor(TrainRayActor):
             with timer(f"{store_prefix}log_probs") and torch.no_grad():
                 for batch in packed_batches:
                     with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
-                        model_args = {
-                            "input_ids": batch["tokens"].unsqueeze(0),
-                            "position_ids": batch["position_ids"].unsqueeze(0),
-                            "attention_mask": None,
-                        }
-                        if "pixel_values" in batch:
-                            model_args["pixel_values"] = batch["pixel_values"]
+                        model_args = self._build_model_inputs(batch)
                         logits = self.model(**model_args).logits
                     batch[f"{store_prefix}log_probs"] = gather_log_probs_packed(
                         logits, batch["tokens"], self.args.rollout_temperature
@@ -198,7 +192,99 @@ class FSDPTrainRayActor(TrainRayActor):
                 self.model.train()
                 torch.cuda.synchronize()
 
+    def _prepare_multimodal_inputs(self, prompt) -> Optional[Dict[str, torch.Tensor]]:
+        if not getattr(self, "vlm_processor", None):
+            return None
+        if not isinstance(prompt, list):
+            return None
+
+        images = []
+        for segment in prompt:
+            if not isinstance(segment, dict):
+                continue
+            if segment.get("type") != "image":
+                continue
+            path = segment.get("path")
+            if not path:
+                continue
+            try:
+                with Image.open(path) as img:
+                    images.append(img.convert("RGB"))
+            except Exception as exc:  # noqa: BLE001
+                logging.warning("Failed to load image %s: %s", path, exc)
+
+        if not images:
+            return None
+
+        processor_inputs = self.vlm_processor(images=images, return_tensors="pt")
+        tensor_inputs = {k: v for k, v in processor_inputs.items() if isinstance(v, torch.Tensor)}
+        if not tensor_inputs:
+            return None
+        return tensor_inputs
+
+    def _packed_data_with_multimodal(self, rollout_data):
+        prompts = rollout_data.get("prompt", [])
+        packed_batches = []
+        grad_accum = []
+
+        micro_batch_size = max(1, self.args.micro_batch_size)
+        samples_in_step = 0
+
+        for idx, tokens in enumerate(rollout_data["tokens"]):
+            loss_mask = rollout_data["loss_masks"][idx]
+            advantages = rollout_data["advantages"][idx]
+            returns = rollout_data["returns"][idx]
+            response_length = rollout_data["response_lengths"][idx]
+            reward = rollout_data["rewards"][idx]
+            raw_reward = rollout_data["raw_reward"][idx]
+
+            batch = {
+                "tokens": torch.tensor(tokens, dtype=torch.long),
+                "loss_masks": torch.tensor(loss_mask, dtype=torch.int),
+                "position_ids": torch.arange(len(tokens), dtype=torch.long),
+                "cu_seqlens": torch.tensor([0, len(tokens)], dtype=torch.int32),
+                "rewards": torch.tensor([reward], dtype=torch.float32),
+                "raw_rewards": [raw_reward],
+                "response_lengths": [response_length],
+                "advantages": torch.as_tensor(advantages, dtype=torch.float32),
+                "returns": torch.as_tensor(returns, dtype=torch.float32),
+            }
+
+            if prompts:
+                multimodal_inputs = self._prepare_multimodal_inputs(prompts[idx])
+                if multimodal_inputs is not None:
+                    batch["multimodal_inputs"] = multimodal_inputs
+
+            packed_batches.append(batch)
+
+            samples_in_step += 1
+            if samples_in_step == micro_batch_size:
+                grad_accum.append(len(packed_batches))
+                samples_in_step = 0
+
+        if samples_in_step:
+            grad_accum.append(len(packed_batches))
+
+        return packed_batches, grad_accum
+
+    def _build_model_inputs(self, batch: dict[str, torch.Tensor]):
+        device = torch.cuda.current_device()
+        model_args = {
+            "input_ids": batch["tokens"].to(device).unsqueeze(0),
+            "position_ids": batch["position_ids"].to(device).unsqueeze(0),
+            "attention_mask": None,
+        }
+
+        if "multimodal_inputs" in batch:
+            for key, value in batch["multimodal_inputs"].items():
+                model_args[key] = value.to(device)
+
+        return model_args
+
     def packed_data(self, rollout_data):
+        if self.args.multimodal_keys:
+            return self._packed_data_with_multimodal(rollout_data)
+
         # Pack sequences efficiently
         tokens = rollout_data["tokens"]
 
@@ -313,11 +399,8 @@ class FSDPTrainRayActor(TrainRayActor):
         self.optimizer.zero_grad(set_to_none=True)
         for mbs_id, packed_batch in enumerate(packed_batches):
             with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
-                logits = self.model(
-                    input_ids=packed_batch["tokens"].unsqueeze(0),
-                    attention_mask=None,
-                    position_ids=packed_batch["position_ids"].unsqueeze(0),
-                ).logits
+                model_args = self._build_model_inputs(packed_batch)
+                logits = self.model(**model_args).logits
 
             # Handle packed sequences
             log_probs = gather_log_probs_packed(logits, packed_batch["tokens"], packed_batch["cu_seqlens"])

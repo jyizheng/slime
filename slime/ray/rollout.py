@@ -250,6 +250,9 @@ class RolloutManager:
             "sample_indices": [sample.index for sample in samples],
         }
 
+        if samples[0].prompt is not None:
+            train_data["prompt"] = [sample.prompt for sample in samples]
+
         # loss mask
         # TODO: compress the loss mask
         loss_masks = []
