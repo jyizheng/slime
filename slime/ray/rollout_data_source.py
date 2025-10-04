@@ -34,6 +34,7 @@ class RolloutDataSource:
                 max_length=args.rollout_max_prompt_len,
                 prompt_key=args.input_key,
                 label_key=args.label_key,
+                multimodal_keys=args.multimodal_keys,
                 metadata_key=args.metadata_key,
                 tool_key=args.tool_key,
                 apply_chat_template=args.apply_chat_template,
